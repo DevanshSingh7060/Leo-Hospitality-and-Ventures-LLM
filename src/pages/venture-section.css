@@ -1,0 +1,59 @@
+.venture-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .venture-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.venture-section.reverse .venture-section__image {
+  order: 2;
+}
+
+.venture-section.reverse .venture-section__content {
+  order: 1;
+}
+
+.venture-section__image {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.venture-section__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.venture-section__content {
+  padding: 10vh 4vw;
+}
+
+/* Skip link – visually hidden but focusable */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  outline: 2px solid var(--color-forest);
+}
