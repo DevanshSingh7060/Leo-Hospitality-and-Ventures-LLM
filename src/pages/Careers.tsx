@@ -100,7 +100,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
     }
 
     const newErrors: Record<string, string> = {}
-    const requiredFields: keyof typeof form[] = [
+    const requiredFields: (keyof typeof form)[] = [
       "name",
       "phone",
       "email",
@@ -218,7 +218,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                 className="grid gap-5 rounded-none border border-line bg-cream/60 p-8 lg:p-10"
               >
                 {/* Honeypot */}
-                <div className="sr-only aria-hidden pointer-events-none">
+                <div className="sr-only pointer-events-none" aria-hidden="true">
                   <input
                     type="text"
                     name="website_url"
@@ -229,7 +229,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                   />
                 </div>
 
-                <div
+                <fieldset
                   className="grid gap-5 sm:grid-cols-2"
                   disabled={submitting}
                 >
@@ -243,7 +243,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                       placeholder="Your name"
                     />
                     {errors.name && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.name}
                       </p>
                     )}
@@ -260,7 +260,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                       placeholder="+91"
                     />
                     {errors.phone && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.phone}
                       </p>
                     )}
@@ -277,7 +277,7 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                       placeholder="you@email.com"
                     />
                     {errors.email && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.email}
                       </p>
                     )}
@@ -305,14 +305,14 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                       <option value="Cloud Kitchen">Cloud Kitchen</option>
                     </Select>
                     {errors.interest && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.interest}
                       </p>
                     )}
                   </Field>
-                </div>
+                </fieldset>
 
-                <div className="mt-2" disabled={submitting}>
+                <div className="mt-2">
                   <FileField
                     name="cv"
                     label="Upload CV"
@@ -330,13 +330,13 @@ export function Careers({ go }: { go: (p: PageId) => void }) {
                     }}
                   />
                   {errors.cv && (
-                    <p className="mt-1 text-xs text-red-600 font-medium">
+                    <p className="field-error mt-1 text-xs text-red-600 font-medium">
                       {errors.cv}
                     </p>
                   )}
                 </div>
 
-                <div disabled={submitting}>
+                <div>
                   <Field label="A note (optional)">
                     <Textarea
                       name="message"

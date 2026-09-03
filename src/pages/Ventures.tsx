@@ -10,14 +10,6 @@ import "./venture-section.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function SkipLink() {
-  return (
-    <a href="#main-content" className="skip-link">
-      Skip content
-    </a>
-  );
-}
-
 function VentureSection({
   venture,
   reverse,
@@ -53,7 +45,6 @@ function VentureSection({
       ref={containerRef}
       className={`venture-section ${reverse ? "reverse" : ""}`}
     >
-      <SkipLink />
       <div className="venture-section__image" ref={imageRef}>
         <img
           src={images[0]}
@@ -90,7 +81,7 @@ function VentureSection({
             ))}
           </ul>
           {cta && (
-            <Button className="mt-8" onClick={() => go(cta)}>
+            <Button className="mt-8" onClick={() => go(cta as PageId)}>
               Partner With Us <Arrow />
             </Button>
           )}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Arrow } from "../lib/ui"
 import type { PageId } from "../lib/pages"
 
-export const NAV_ITEMS: { id: PageId label: string }[] = [
+export const NAV_ITEMS: { id: PageId; label: string }[] = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "ventures", label: "Ventures" },
@@ -95,14 +95,18 @@ export function Nav({
               <button
                 key={it.id}
                 onClick={() => go(it.id)}
-                className={`relative text-[0.82rem] font-medium tracking-wide transition-colors text-ink-soft hover:text-forest ${
+                className={`group relative text-[0.82rem] font-medium tracking-wide transition-colors text-ink-soft hover:text-forest ${
                   page === it.id ? "text-forest font-semibold" : ""
                 }`}
               >
                 {it.label}
-                {page === it.id && (
-                  <span className="absolute -bottom-1.5 left-0 h-px w-full bg-forest" />
-                )}
+                <span
+                  className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-forest transition-transform duration-300 ease-out ${
+                    page === it.id
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                />
               </button>
             ))}
           </nav>
@@ -151,6 +155,8 @@ export function Nav({
         className={`fixed inset-0 z-40 bg-cream/98 backdrop-blur-md flex flex-col justify-between p-8 pt-28 transition-transform duration-500 xl:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
+        aria-hidden={!open}
+        inert={!open ? true : undefined}
       >
         <nav className="flex flex-col gap-5 text-left overflow-y-auto max-h-[70vh]">
           {NAV_ITEMS.map((it, idx) => (

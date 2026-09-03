@@ -148,7 +148,7 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
                 src={p.src}
                 alt={p.cat}
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:group-hover:scale-100"
               />
               <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <span className="text-xs font-semibold tracking-wider text-paper uppercase bg-forest/80 px-3 py-1.5 rounded-none backdrop-blur-sm">
@@ -169,9 +169,12 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
       {/* Lightbox Overlay */}
       {lightboxIdx !== null && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-ink/95 backdrop-blur-md transition-opacity duration-300"
+          className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-ink/95 backdrop-blur-md ${
+            reducedMotion ? "" : "animate-backdrop"
+          }`}
           onClick={() => setLightboxIdx(null)}
           role="dialog"
+          aria-modal="true"
           aria-label="Image Lightbox"
         >
           {/* Close button */}
@@ -212,7 +215,9 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
 
           {/* Main Visual Frame */}
           <div
-            className="max-w-[85vw] max-h-[80vh] flex flex-col items-center justify-center transition-all duration-300 transform scale-100"
+            className={`max-w-[85vw] max-h-[80vh] flex flex-col items-center justify-center ${
+              reducedMotion ? "" : "animate-lightbox"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <img

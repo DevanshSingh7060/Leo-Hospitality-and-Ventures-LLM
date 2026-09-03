@@ -112,7 +112,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
 
     // Comprehensive validate fields
     const newErrors: Record<string, string> = {}
-    const requiredFields: keyof typeof form[] = [
+    const requiredFields: (keyof typeof form)[] = [
       "companyName",
       "contactPerson",
       "category",
@@ -246,7 +246,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                 className="grid gap-6 rounded-none border border-line bg-cream/50 p-8 lg:p-10"
               >
                 {/* Honeypot field for bot mitigation */}
-                <div className="sr-only aria-hidden pointer-events-none">
+                <div className="sr-only pointer-events-none" aria-hidden="true">
                   <input
                     type="text"
                     name="website_url"
@@ -273,7 +273,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="Registered business name"
                       />
                       {errors.companyName && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.companyName}
                         </p>
                       )}
@@ -289,7 +289,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="Full name of representative"
                       />
                       {errors.contactPerson && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.contactPerson}
                         </p>
                       )}
@@ -313,7 +313,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         ))}
                       </Select>
                       {errors.category && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.category}
                         </p>
                       )}
@@ -330,7 +330,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="10-digit number"
                       />
                       {errors.phone && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.phone}
                         </p>
                       )}
@@ -347,7 +347,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="firm@email.com"
                       />
                       {errors.email && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.email}
                         </p>
                       )}
@@ -363,7 +363,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="e.g. Mumbai (Western Suburbs)"
                       />
                       {errors.city && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.city}
                         </p>
                       )}
@@ -381,7 +381,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                       placeholder="Registered operating address"
                     />
                     {errors.address && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.address}
                       </p>
                     )}
@@ -406,7 +406,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="e.g. Dairy, Dry goods, Vegetables"
                       />
                       {errors.productCats && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.productCats}
                         </p>
                       )}
@@ -441,7 +441,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                         placeholder="14-digit license number"
                       />
                       {errors.fssaiNo && (
-                        <p className="mt-1 text-xs text-red-600 font-medium">
+                        <p className="field-error mt-1 text-xs text-red-600 font-medium">
                           {errors.fssaiNo}
                         </p>
                       )}
@@ -475,14 +475,14 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                       }}
                     />
                     {errors.fssai && (
-                      <p className="mt-1.5 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1.5 text-xs text-red-600 font-medium">
                         {errors.fssai}
                       </p>
                     )}
                   </div>
                 </fieldset>
 
-                <div className="mt-2" disabled={submitting}>
+                <div className="mt-2">
                   <Field label="Additional Message / Comments">
                     <Textarea
                       name="message"

@@ -35,7 +35,8 @@ export function PageHero({
             src={image}
             alt=""
             className="h-full w-full object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent" />
         </div>

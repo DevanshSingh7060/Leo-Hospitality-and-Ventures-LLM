@@ -1,4 +1,5 @@
 import { IMG } from "./ui"
+import type { PageId } from "./pages"
 
 export interface Venture {
   id: string
@@ -14,7 +15,7 @@ export interface Venture {
     svgPath?: string
     style: React.CSSProperties
   }[]
-  cta?: string
+  cta?: PageId
 }
 
 export const VENTURES_DATA: Venture[] = [

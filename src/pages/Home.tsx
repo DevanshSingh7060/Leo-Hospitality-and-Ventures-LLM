@@ -282,7 +282,7 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
               {PROJECTS_DATA.map((proj, idx) => (
                 <button
                   key={proj.name}
-                  ref={(el) => (tabRefs.current[idx] = el)}
+                  ref={(el) => { tabRefs.current[idx] = el }}
                   role="tab"
                   aria-selected={activeTab === idx}
                   aria-controls={`panel-${idx}`}
@@ -384,7 +384,7 @@ function ServiceCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => go("services")}
-      className="group cursor-pointer rounded-none border border-line bg-paper p-8 transition-colors duration-200 hover:border-forest flex flex-col justify-between min-h-[320px]"
+      className="group card-lift cursor-pointer rounded-none border border-line bg-paper p-8 hover:border-forest flex flex-col justify-between min-h-[320px]"
     >
       <div>
         <div className="flex items-start justify-between">

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from "react"
+import { useEffect, useState } from "react"
 import type { PageId } from "./lib/pages"
 import { Nav } from "./components/Nav"
 import { Footer } from "./components/Footer"
@@ -27,23 +27,29 @@ export default function App() {
 
   const overHero = page === "home"
 
-  const PAGES: Record<PageId, ReactElement> = {
-    home: <Home go={go} />,
-    about: <About go={go} />,
-    ventures: <Ventures go={go} />,
-    services: <Services go={go} />,
-    experience: <Experience go={go} />,
-    gallery: <Gallery go={go} />,
-    franchise: <Franchise go={go} />,
-    careers: <Careers go={go} />,
-    vendor: <Vendor go={go} />,
-    contact: <Contact go={go} />,
+  const renderPage = () => {
+    switch (page) {
+      case "home": return <Home go={go} />
+      case "about": return <About go={go} />
+      case "ventures": return <Ventures go={go} />
+      case "services": return <Services go={go} />
+      case "experience": return <Experience go={go} />
+      case "gallery": return <Gallery go={go} />
+      case "franchise": return <Franchise go={go} />
+      case "careers": return <Careers go={go} />
+      case "vendor": return <Vendor go={go} />
+      case "contact": return <Contact go={go} />
+    }
   }
 
   return (
     <div className="min-h-full bg-cream">
       <Nav page={page} go={go} overHero={overHero} />
-      <main>{PAGES[page]}</main>
+      <main id="main-content">
+        <div key={page} className="page-enter">
+          {renderPage()}
+        </div>
+      </main>
       <Footer go={go} />
     </div>
   )

@@ -16,6 +16,17 @@
   --color-bronze: #a9814f;
 }
 
+/* --- Motion design tokens (one coherent motion language) --- */
+:root {
+  --dur-fast: 140ms; /* micro-interactions: press, small hovers */
+  --dur-normal: 300ms; /* component transitions: cards, errors, modals */
+  --dur-slow: 700ms; /* page / section entrances */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card: 0 16px 34px -20px rgba(32, 29, 24, 0.4);
+}
+
 html,
 body,
 #root {
@@ -59,8 +70,65 @@ html:hover::-webkit-scrollbar-thumb {
   100% { transform: scale(1.06) translateY(0); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
 .animate-kenburns {
   animation: kenburns 22s ease-in-out infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 350ms ease-out both;
+}
+
+/* --- Reusable interaction utilities --- */
+@keyframes fieldError {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes lightboxIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@layer utilities {
+  /* Interactive card hover lift — subtle elevation for clickable cards */
+  .card-lift {
+    transition:
+      transform var(--dur-normal) var(--ease-standard),
+      box-shadow var(--dur-normal) var(--ease-standard),
+      border-color var(--dur-normal) var(--ease-standard);
+    will-change: transform;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+  /* Validation error entrance */
+  .field-error {
+    animation: fieldError var(--dur-normal) var(--ease-entrance) both;
+  }
+  /* Page transition on navigation (opacity-only to keep GSAP sticky/pin intact) */
+  .page-enter {
+    animation: pageIn var(--dur-normal) var(--ease-standard) both;
+  }
+  /* Modal / lightbox entrance */
+  .animate-backdrop {
+    animation: backdropIn var(--dur-normal) var(--ease-standard) both;
+  }
+  .animate-lightbox {
+    animation: lightboxIn var(--dur-normal) var(--ease-entrance) both;
+  }
 }
 
 /* --- Wipe-in Button Animations --- */
@@ -214,5 +282,20 @@ html:hover::-webkit-scrollbar-thumb {
   .btn-wipe-secondary:hover {
     background-color: var(--color-forest-deep) !important;
     color: var(--color-paper) !important;
+  }
+  .animate-fadeIn,
+  .field-error,
+  .page-enter,
+  .animate-backdrop,
+  .animate-lightbox {
+    animation: none !important;
+  }
+  .card-lift {
+    transition: border-color 200ms ease !important;
+    will-change: auto;
+  }
+  .card-lift:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 }

@@ -101,7 +101,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     }
 
     const newErrors: Record<string, string> = {}
-    const requiredFields: keyof typeof form[] = [
+    const requiredFields: (keyof typeof form)[] = [
       "name",
       "phone",
       "email",
@@ -228,7 +228,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                 className="grid gap-5 rounded-none bg-paper p-8 text-ink lg:p-10"
               >
                 {/* Honeypot */}
-                <div className="sr-only aria-hidden pointer-events-none">
+                <div className="sr-only pointer-events-none" aria-hidden="true">
                   <input
                     type="text"
                     name="website_url"
@@ -239,7 +239,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                   />
                 </div>
 
-                <div
+                <fieldset
                   className="grid gap-5 sm:grid-cols-2"
                   disabled={submitting}
                 >
@@ -253,7 +253,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       placeholder="Your full name"
                     />
                     {errors.name && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.name}
                       </p>
                     )}
@@ -279,7 +279,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       placeholder="Contact number"
                     />
                     {errors.phone && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.phone}
                       </p>
                     )}
@@ -296,12 +296,12 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       placeholder="you@company.com"
                     />
                     {errors.email && (
-                      <p className="mt-1 text-xs text-red-600 font-medium">
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.email}
                       </p>
                     )}
                   </Field>
-                </div>
+                </fieldset>
 
                 <Field label="Enquiry Type" required>
                   <Select
@@ -322,7 +322,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                     <option value="Other">Other</option>
                   </Select>
                   {errors.type && (
-                    <p className="mt-1 text-xs text-red-600 font-medium">
+                    <p className="field-error mt-1 text-xs text-red-600 font-medium">
                       {errors.type}
                     </p>
                   )}
@@ -338,7 +338,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                     placeholder="Tell us about your space, brand or idea…"
                   />
                   {errors.message && (
-                    <p className="mt-1 text-xs text-red-600 font-medium">
+                    <p className="field-error mt-1 text-xs text-red-600 font-medium">
                       {errors.message}
                     </p>
                   )}

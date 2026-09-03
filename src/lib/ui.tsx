@@ -84,7 +84,7 @@ export function Button({
   ...rest
 }: BtnProps) {
   const base =
-    "group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-forest focus-visible:ring-offset-cream disabled:opacity-50"
+    "group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-forest focus-visible:ring-offset-cream active:scale-[0.97] motion-reduce:active:scale-100 disabled:opacity-50 disabled:active:scale-100"
   const styles: Record<string, string> = {
     primary:
       "btn-wipe-primary text-paper shadow-[0_1px_0_rgba(255,255,255,0.15)_inset]",
@@ -142,8 +142,8 @@ export function Field({
   children: ReactNode
 }) {
   return (
-    <label className="block">
-      <span className="mb-2 flex items-baseline gap-1 text-[0.82rem] font-medium tracking-wide text-ink-soft">
+    <label className="group block">
+      <span className="mb-2 flex items-baseline gap-1 text-[0.82rem] font-medium tracking-wide text-ink-soft transition-colors duration-200 group-focus-within:text-forest">
         {label}
         {required && <span className="text-bronze">*</span>}
       </span>
@@ -291,7 +291,7 @@ export function FileField({
         </div>
       </Field>
       {error && (
-        <p className="mt-1 text-xs text-red-600 font-medium">{error}</p>
+        <p className="field-error mt-1 text-xs text-red-600 font-medium">{error}</p>
       )}
     </div>
   )
