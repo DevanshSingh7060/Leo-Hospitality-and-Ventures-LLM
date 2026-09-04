@@ -47,15 +47,16 @@ function Hero({ go }: { go: (p: PageId) => void }) {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-cream">
       {/* Background visual with parallax overlay */}
-      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
           src={IMG.heroInterior}
           alt="Warm luxury hospitality room"
           data-parallax-hero-bg="0.2"
-          className="absolute inset-0 w-full h-[125%] -top-[12%] object-cover opacity-60"
+          className="absolute inset-0 w-full h-[125%] -top-[12%] object-cover opacity-90"
         />
-        {/* Soft light wash for maximum text contrast */}
-        <div className="absolute inset-0 bg-cream/80 z-0 backdrop-blur-[0.5px]" />
+        {/* Directional wash — keeps the headline legible on the left while letting the image show through on the right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cream/90 via-cream/60 to-cream/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-cream/75 to-transparent" />
       </div>
 
       <div className="mx-auto w-full max-w-[1440px] px-6 pt-32 pb-16 lg:px-12 relative z-10">
@@ -737,7 +738,15 @@ export function Home({ go }: { go: (p: PageId) => void }) {
 export function CTA({ go }: { go: (p: PageId) => void }) {
   return (
     <section className="relative overflow-hidden bg-forest py-24 text-paper lg:py-32">
-      <div className="mx-auto max-w-[1440px] px-6 text-center lg:px-12">
+      {/* Ambient depth — decorative, non-interactive */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="ambient-drift absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-bronze/20 blur-3xl" />
+        <div className="ambient-drift-slow absolute -right-20 -bottom-10 h-80 w-80 rounded-full bg-forest-soft/40 blur-3xl" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-[1440px] px-6 text-center lg:px-12">
         <Reveal>
           <Kicker tone="light">Let&rsquo;s build something together</Kicker>
           <h2

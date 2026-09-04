@@ -150,7 +150,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
           </>
         }
         lead="Whether you have a space, a brand or capital, there's a partnership model that fits. Here's where we usually start."
-        image={IMG.chefSink}
+        image={IMG.bodhiTree}
       />
 
       <Section className="py-16 lg:py-24">

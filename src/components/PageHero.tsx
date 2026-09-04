@@ -1,4 +1,5 @@
-import { Kicker, Reveal } from "../lib/ui"
+import { useRef } from "react"
+import { Kicker, Reveal, useParallax } from "../lib/ui"
 
 export function PageHero({
   kicker,
@@ -11,6 +12,8 @@ export function PageHero({
   lead: string
   image: string
 }) {
+  const imgRef = useRef<HTMLImageElement>(null)
+  useParallax(imgRef, { amount: 6 })
   return (
     <section className="relative overflow-hidden pt-28 lg:pt-36">
       <div className="mx-auto grid max-w-[1440px] items-end gap-10 px-6 pb-16 lg:grid-cols-[1.15fr_1fr] lg:px-12 lg:pb-24">
@@ -32,9 +35,10 @@ export function PageHero({
       <Reveal className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="relative aspect-[16/7] overflow-hidden rounded-none bg-line">
           <img
+            ref={imgRef}
             src={image}
             alt=""
-            className="h-full w-full object-cover"
+            className="absolute inset-x-0 -top-[10%] h-[120%] w-full object-cover"
             loading="eager"
             fetchPriority="high"
           />

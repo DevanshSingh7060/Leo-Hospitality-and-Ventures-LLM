@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, Arrow } from "../lib/ui"
+import { Arrow } from "../lib/ui"
 import type { PageId } from "../lib/pages"
 
 export const NAV_ITEMS: { id: PageId; label: string }[] = [
@@ -18,7 +18,6 @@ export const NAV_ITEMS: { id: PageId; label: string }[] = [
 export function Nav({
   page,
   go,
-  overHero,
 }: {
   page: PageId
   go: (p: PageId) => void
@@ -36,99 +35,89 @@ export function Nav({
 
   // Lock scroll when mobile menu is open
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
-    }
+    document.body.style.overflow = open ? "hidden" : ""
     return () => {
       document.body.style.overflow = ""
     }
   }, [open])
 
-  const solid = scrolled || !overHero || open
+  const goTo = (p: PageId) => {
+    go(p)
+    setOpen(false)
+  }
 
   return (
-    <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          solid
-            ? "border-b border-line/50 bg-cream/95 backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
-        }`}
-      >
-        <div
-          className={`mx-auto flex max-w-[1440px] items-center justify-between px-6 transition-all duration-300 lg:px-12 ${
-            scrolled ? "py-2.5" : "py-5"
+    <header className="fixed inset-x-0 top-0 z-50 pointer-events-none">
+      {/* Floating pill */}
+      <div className="relative z-20 mx-auto max-w-[1240px] px-4 pt-4 md:px-6">
+        <nav
+          aria-label="Main navigation"
+          className={`pointer-events-auto flex h-14 items-center justify-between gap-3 rounded-full pl-2 pr-2 transition-all duration-500 ease-out md:pl-3 ${
+            scrolled || open
+              ? "border border-line/70 bg-cream/92 shadow-[0_10px_34px_-12px_rgba(32,29,24,0.28)] backdrop-blur-2xl"
+              : "border border-line/50 bg-cream/80 shadow-[0_8px_28px_-16px_rgba(32,29,24,0.2)] backdrop-blur-xl"
           }`}
         >
+          {/* Logo */}
           <button
-            onClick={() => {
-              go("home")
-              setOpen(false)
-            }}
-            className="flex items-center gap-3 text-left"
+            onClick={() => goTo("home")}
+            className="group flex shrink-0 items-center gap-2.5 pl-1"
             aria-label="Leo Hospitality & Ventures — home"
           >
             <span
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-forest/30 bg-forest text-paper text-lg font-semibold"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-forest text-base font-semibold text-paper transition-transform duration-500 ease-out group-hover:-rotate-6 group-hover:scale-105"
               style={{ fontFamily: "var(--font-display)" }}
             >
               L
             </span>
-            <span className="leading-tight">
+            <span className="hidden leading-tight sm:block">
               <span
                 className="block text-[0.95rem] font-semibold tracking-tight text-ink"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Leo Hospitality
               </span>
-              <span className="block text-[0.62rem] tracking-[0.24em] uppercase text-ink-soft">
+              <span className="block text-[0.55rem] uppercase tracking-[0.24em] text-ink-soft">
                 & Ventures LLP
               </span>
             </span>
           </button>
 
-          {/* Desktop Nav */}
-          <nav className="hidden items-center gap-6 xl:flex">
+          {/* Desktop links */}
+          <div className="hidden items-center gap-0.5 xl:flex">
             {NAV_ITEMS.slice(0, 8).map((it) => (
               <button
                 key={it.id}
                 onClick={() => go(it.id)}
-                className={`group relative text-[0.82rem] font-medium tracking-wide transition-colors text-ink-soft hover:text-forest ${
-                  page === it.id ? "text-forest font-semibold" : ""
+                aria-current={page === it.id ? "page" : undefined}
+                className={`rounded-full px-3.5 py-2 text-[0.8rem] font-medium tracking-wide transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 ${
+                  page === it.id
+                    ? "bg-forest/10 text-forest"
+                    : "text-ink-soft hover:bg-forest/5 hover:text-forest"
                 }`}
               >
                 {it.label}
-                <span
-                  className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-forest transition-transform duration-300 ease-out ${
-                    page === it.id
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100"
-                  }`}
-                />
               </button>
             ))}
-          </nav>
+          </div>
 
-          <div className="flex items-center gap-3">
-            {/* CTA always visible in desktop and mobile */}
-            <Button
-              variant="primary"
-              className="!px-5 !py-2.5 max-sm:!px-4 text-xs font-semibold"
-              onClick={() => {
-                go("franchise")
-                setOpen(false)
-              }}
+          {/* Right cluster */}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => goTo("franchise")}
+              className="hidden h-10 items-center justify-center gap-1.5 rounded-full bg-forest px-5 text-xs font-semibold text-paper transition-all duration-300 ease-out hover:bg-forest-deep active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 focus-visible:ring-offset-cream md:inline-flex"
             >
               Partner With Us <Arrow />
-            </Button>
+            </button>
+
+            {/* Hamburger */}
             <button
-              className="xl:hidden z-50 p-1 text-ink"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-300 hover:bg-forest/5 xl:hidden"
               onClick={() => setOpen((o) => !o)}
-              aria-label="Toggle menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
             >
-              <div className="flex flex-col gap-1.5 w-6 h-5 justify-center">
+              <div className="flex h-5 w-6 flex-col justify-center gap-1.5">
                 <span
                   className={`h-0.5 w-6 bg-current transition-all duration-300 ${
                     open ? "translate-y-2 rotate-45" : ""
@@ -147,67 +136,63 @@ export function Nav({
               </div>
             </button>
           </div>
-        </div>
-      </header>
+        </nav>
+      </div>
 
-      {/* Full-screen mobile slide-in menu overlay */}
+      {/* Mobile menu — full-screen fade below the pill */}
       <div
-        className={`fixed inset-0 z-40 bg-cream/98 backdrop-blur-md flex flex-col justify-between p-8 pt-28 transition-transform duration-500 xl:hidden ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-x-0 bottom-0 top-[84px] z-10 flex flex-col bg-cream/98 backdrop-blur-xl transition-opacity duration-300 xl:hidden ${
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden={!open}
         inert={!open ? true : undefined}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
       >
-        <nav className="flex flex-col gap-5 text-left overflow-y-auto max-h-[70vh]">
-          {NAV_ITEMS.map((it, idx) => (
-            <button
-              key={it.id}
-              onClick={() => {
-                go(it.id)
-                setOpen(false)
-              }}
-              style={{ transitionDelay: open ? `${idx * 45}ms` : "0ms" }}
-              className={`text-2xl font-display text-ink text-left transition-all duration-500 transform ${
-                open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
-              }`}
-            >
-              <span className="font-sans text-xs text-bronze mr-3">
-                0{idx + 1}
-              </span>
-              <span
-                className={
+        <nav className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-6">
+          <div className="flex flex-col gap-1.5">
+            {NAV_ITEMS.map((it, idx) => (
+              <button
+                key={it.id}
+                onClick={() => goTo(it.id)}
+                style={{ transitionDelay: open ? `${idx * 40}ms` : "0ms" }}
+                className={`flex items-center gap-3 rounded-full px-5 py-3.5 text-left text-lg font-medium transition-all duration-300 ease-out motion-reduce:transition-none ${
+                  open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
+                } ${
                   page === it.id
-                    ? "text-forest border-b-2 border-forest pb-0.5"
-                    : "text-ink"
-                }
+                    ? "bg-forest text-paper"
+                    : "text-ink-soft hover:bg-forest/5 hover:text-forest"
+                }`}
               >
-                {it.label}
-              </span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="border-t border-line pt-6 space-y-3">
-          <p className="text-[0.65rem] tracking-[0.24em] text-ink-soft uppercase font-semibold">
-            Leo Hospitality & Ventures LLP
-          </p>
-          <div className="flex flex-col gap-1 text-xs">
-            <a
-              href="mailto:connect@leohospitality.in"
-              className="text-forest font-medium hover:underline"
-            >
-              connect@leohospitality.in
-            </a>
-            <a
-              href="tel:+912200000000"
-              className="text-ink-soft hover:text-forest"
-            >
-              +91 22 0000 0000
-            </a>
+                <span
+                  className={`text-xs ${page === it.id ? "text-paper/70" : "text-bronze"}`}
+                >
+                  0{idx + 1}
+                </span>
+                <span style={{ fontFamily: "var(--font-display)" }}>
+                  {it.label}
+                </span>
+              </button>
+            ))}
           </div>
-        </div>
+
+          <div className="mt-auto pt-8">
+            <button
+              onClick={() => goTo("franchise")}
+              className="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-forest text-base font-semibold text-paper transition-transform duration-200 active:scale-[0.98]"
+            >
+              Partner With Us <Arrow />
+            </button>
+            <p className="mt-5 text-center text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-ink-soft">
+              <span className="text-bronze">●</span> Creating experiences across
+              India
+            </p>
+          </div>
+        </nav>
       </div>
-    </>
+    </header>
   )
 }
+
 export default Nav

@@ -4,33 +4,55 @@ import {
   useState,
   type ButtonHTMLAttributes,
   type ReactNode,
+  type RefObject,
 } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import heroInterior from "../assets/heroInterior.jpg"
+import bodhiTree from "../assets/bodhiTree.jpg"
+import diningRoom from "../assets/diningRoom.jpg"
+import lamps from "../assets/lamps.jpg"
+import woodTable from "../assets/woodTable.jpg"
+import breakfast from "../assets/breakfast.jpg"
+import souffle from "../assets/souffle.jpg"
+import latteArt from "../assets/latteArt.jpg"
+import pieLatte from "../assets/pieLatte.jpg"
+import dessertPlatter from "../assets/dessertPlatter.jpg"
+import coffeeHand from "../assets/coffeeHand.jpg"
+import deliveryBag from "../assets/deliveryBag.jpg"
+import containers from "../assets/containers.jpg"
+import chefBoard from "../assets/chefBoard.jpg"
+import chefBowl from "../assets/chefBowl.jpg"
+import chefPrep from "../assets/chefPrep.jpg"
+import chefKnife from "../assets/chefKnife.jpg"
+import chefSink from "../assets/chefSink.jpg"
+import eventDessert from "../assets/eventDessert.jpg"
+import cupcakes from "../assets/cupcakes.jpg"
 
-/* ---------- Imagery ---------- */
-const u = (id: string, w = 1400, h = 1000) =>
-  `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
+gsap.registerPlugin(ScrollTrigger)
 
+/* ---------- Imagery (bundled locally so images load same-origin) ---------- */
 export const IMG = {
-  heroInterior: u("photo-1667388969250-1c7220bf3f37", 2000, 1300),
-  bodhiTree: u("photo-1636405189493-181ecf851006", 1200, 1500),
-  diningRoom: u("photo-1679312061521-d7d619a8cfb7", 1200, 1500),
-  lamps: u("photo-1552960226-639240203497", 1600, 1000),
-  woodTable: u("photo-1602232037779-30b01ac3c457", 1200, 1500),
-  breakfast: u("photo-1782852364023-16bac0b4b664", 1200, 1400),
-  souffle: u("photo-1762631934838-b13725dc85e5", 1400, 1000),
-  latteArt: u("photo-1760306081298-93e10f2be897", 1200, 1500),
-  pieLatte: u("photo-1770820768473-4ab1bfc87a93", 1200, 1500),
-  dessertPlatter: u("photo-1774921664989-8b414d43407f", 1400, 1000),
-  coffeeHand: u("photo-1770199062670-c76b46db2f25", 1200, 1500),
-  deliveryBag: u("photo-1600728619239-d2a73f7aa541", 1400, 1000),
-  containers: u("photo-1580680849701-fb0eebfb2c28", 1200, 1500),
-  chefBoard: u("photo-1622021142947-da7dedc7c39a", 1600, 1000),
-  chefBowl: u("photo-1581349485608-9469926a8e5e", 1200, 1500),
-  chefPrep: u("photo-1577219492769-b63a779fac28", 1200, 1500),
-  chefKnife: u("photo-1566554273541-37a9ca77b91f", 1200, 1500),
-  chefSink: u("photo-1629407119384-d42320c3e576", 1600, 1000),
-  eventDessert: u("photo-1729875749490-cb5984d780ec", 1400, 1000),
-  cupcakes: u("photo-1583331030773-1ac64d1d00db", 1200, 1500),
+  heroInterior,
+  bodhiTree,
+  diningRoom,
+  lamps,
+  woodTable,
+  breakfast,
+  souffle,
+  latteArt,
+  pieLatte,
+  dessertPlatter,
+  coffeeHand,
+  deliveryBag,
+  containers,
+  chefBoard,
+  chefBowl,
+  chefPrep,
+  chefKnife,
+  chefSink,
+  eventDessert,
+  cupcakes,
 }
 
 /* ---------- Reveal on scroll ---------- */
@@ -308,4 +330,30 @@ export function usePrefersReducedMotion() {
     return () => mq.removeEventListener("change", onChange)
   }, [])
   return reduced
+}
+
+/* ---------- Subtle scroll parallax (GSAP, reduced-motion aware) ---------- */
+export function useParallax(
+  ref: RefObject<HTMLElement | null>,
+  { amount = 8 }: { amount?: number } = {},
+) {
+  const reduced = usePrefersReducedMotion()
+  useEffect(() => {
+    const el = ref.current
+    if (!el || reduced) return
+    const anim = gsap.to(el, {
+      yPercent: amount,
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    })
+    return () => {
+      anim.scrollTrigger?.kill()
+      anim.kill()
+    }
+  }, [ref, amount, reduced])
 }

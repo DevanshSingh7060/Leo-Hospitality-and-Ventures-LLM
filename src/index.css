@@ -131,6 +131,23 @@ html:hover::-webkit-scrollbar-thumb {
   }
 }
 
+/* --- Ambient background glow (slow, GPU-friendly drift) --- */
+@keyframes ambientDrift {
+  0%,
+  100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(18px, -22px, 0); }
+}
+@layer utilities {
+  .ambient-drift {
+    animation: ambientDrift 16s ease-in-out infinite;
+    will-change: transform;
+  }
+  .ambient-drift-slow {
+    animation: ambientDrift 24s ease-in-out infinite reverse;
+    will-change: transform;
+  }
+}
+
 /* --- Wipe-in Button Animations --- */
 .btn-wipe-primary {
   position: relative;
@@ -297,5 +314,10 @@ html:hover::-webkit-scrollbar-thumb {
   .card-lift:hover {
     transform: none !important;
     box-shadow: none !important;
+  }
+  .ambient-drift,
+  .ambient-drift-slow {
+    animation: none !important;
+    will-change: auto;
   }
 }
