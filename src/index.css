@@ -64,6 +64,16 @@ html:hover::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--color-ink) 22%, transparent);
 }
 
+/* Full-section scroll-snap (Home page only, via .snap-page on <html>) */
+html.snap-page {
+  scroll-snap-type: y proximity;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.snap-page {
+    scroll-snap-type: none;
+  }
+}
+
 @keyframes kenburns {
   0% { transform: scale(1.06) translateY(0); }
   50% { transform: scale(1.01) translateY(-0.5%); }

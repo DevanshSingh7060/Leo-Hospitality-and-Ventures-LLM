@@ -25,6 +25,14 @@ export default function App() {
     document.title = "Leo Hospitality & Ventures LLP — Creating Experiences"
   }, [])
 
+  // Enable full-section scroll-snap only on the Home page.
+  useEffect(() => {
+    const root = document.documentElement
+    if (page === "home") root.classList.add("snap-page")
+    else root.classList.remove("snap-page")
+    return () => root.classList.remove("snap-page")
+  }, [page])
+
   const overHero = page === "home"
 
   const renderPage = () => {

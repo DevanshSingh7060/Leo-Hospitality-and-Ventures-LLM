@@ -45,7 +45,7 @@ function Hero({ go }: { go: (p: PageId) => void }) {
   })
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-cream">
+    <section className="relative flex min-h-screen items-center overflow-hidden bg-cream snap-start snap-always">
       {/* Background visual with parallax overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
@@ -126,7 +126,7 @@ function VentureSlide({
 
   return (
     <div
-      className={`grid grid-cols-1 lg:grid-cols-2 min-h-screen relative border-b border-line bg-cream ${panelClass}`}
+      className={`grid grid-cols-1 lg:grid-cols-2 min-h-screen relative border-b border-line bg-cream snap-start snap-always ${panelClass}`}
     >
       {/* 1. STICKY IMAGE COLUMN (CSS ONLY) */}
       <div
@@ -579,8 +579,8 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       <Hero go={go} />
 
       {/* WHO WE ARE */}
-      <section className="bg-cream py-24 lg:py-36 border-t border-line/30 who-we-are-section">
-        <div className="mx-auto grid max-w-[1440px] gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12 items-center">
+      <section className="bg-cream py-24 lg:py-36 border-t border-line/30 who-we-are-section min-h-screen flex items-center snap-start snap-always">
+        <div className="mx-auto grid w-full max-w-[1440px] gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12 items-center">
           {/* Left Column: Visual representation resolving empty space issue (No shadow, sharp corners) */}
           <div className="relative overflow-hidden aspect-[4/5] bg-[#16331f] rounded-none border border-line/20">
             <img
