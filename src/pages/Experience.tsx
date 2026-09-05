@@ -28,10 +28,10 @@ function HorizontalProjectCards() {
       const distance = () => track.scrollWidth - window.innerWidth
 
       // Pin the section when the first panel hits the top, then convert the
-      // reserved vertical scroll into horizontal movement. GSAP holds the page
-      // (vertical scroll is "locked" into the track) until the last panel is
-      // reached, then unpins and vertical scrolling resumes automatically.
-      const master = gsap.to(track, {
+      // reserved vertical scroll into horizontal movement. The page's vertical
+      // scroll is held (locked into the track) until the last panel, then it
+      // unpins and vertical scrolling resumes — so the two never run at once.
+      gsap.to(track, {
         x: () => -distance(),
         ease: "none",
         scrollTrigger: {
@@ -39,11 +39,11 @@ function HorizontalProjectCards() {
           start: "top top",
           end: () => "+=" + distance(),
           pin: true,
-          scrub: 1, // smoothing → premium, no jitter
+          scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           snap: {
-            snapTo: 1 / (count - 1), // settle on each panel
+            snapTo: 1 / (count - 1),
             duration: { min: 0.2, max: 0.5 },
             ease: "power1.inOut",
           },
@@ -52,40 +52,6 @@ function HorizontalProjectCards() {
           },
         },
       })
-
-      // Parallax: each panel's image pans horizontally slower than the panel as
-      // it crosses the viewport, adding depth. Driven off the horizontal scroll
-      // via `containerAnimation` (the panel's own left→right transit).
-      const panels = gsap.utils.toArray<HTMLElement>("[data-panel]", track)
-      panels.forEach((panel) => {
-        const img = panel.querySelector<HTMLElement>("[data-parallax-img]")
-        if (!img) return
-        gsap.fromTo(
-          img,
-          { xPercent: -8 },
-          {
-            xPercent: 8,
-            ease: "none",
-            scrollTrigger: {
-              trigger: panel,
-              containerAnimation: master,
-              start: "left right",
-              end: "right left",
-              scrub: true,
-            },
-          },
-        )
-      })
-
-      // Auto‑slide: every 3 seconds advance to the next panel.
-      let autoIdx = 0
-      const autoPlay = setInterval(() => {
-        autoIdx = (autoIdx + 1) % count
-        setActiveIdx(autoIdx)
-        gsap.to(track, { x: -autoIdx * window.innerWidth, duration: 0.5, ease: "power1.out" })
-      }, 2000)
-      // Clean up interval on unmount/revert.
-      ctx.add(() => clearInterval(autoPlay))
     }, section)
 
     return () => ctx.revert()
