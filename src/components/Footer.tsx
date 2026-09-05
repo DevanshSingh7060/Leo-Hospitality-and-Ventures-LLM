@@ -13,10 +13,13 @@ export function Footer({ go }: { go: (p: PageId) => void }) {
         <div className="grid gap-12 border-b border-white/10 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:py-20">
           <div>
             <span
-              className="text-2xl font-semibold tracking-tight"
+              className="flex items-baseline gap-2"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Leo Hospitality
+              <span className="text-3xl font-semibold tracking-tight">Leo</span>
+              <span className="text-xl font-medium tracking-tight text-paper/80">
+                Hospitality
+              </span>
             </span>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-paper/65">
               Creating experiences. Building hospitality brands. A management

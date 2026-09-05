@@ -121,8 +121,8 @@ function VentureSlide({
   const reducedMotion = usePrefersReducedMotion()
   const isEven = index % 2 === 0
 
-  const panelClass = isEven ? "venture-panel-bodhi" : "venture-panel-revive"
-  const propClass = isEven ? "floating-prop-bodhi" : "floating-prop-revive"
+  const panelClass = isEven ? "venture-panel-bodhi" : "venture-panel-revyve"
+  const propClass = isEven ? "floating-prop-bodhi" : "floating-prop-revyve"
 
   return (
     <div
@@ -130,9 +130,8 @@ function VentureSlide({
     >
       {/* 1. STICKY IMAGE COLUMN (CSS ONLY) */}
       <div
-        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden bg-[#16331f] pointer-events-none ${
-          isEven ? "lg:order-1" : "lg:order-2"
-        }`}
+        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden bg-[#16331f] pointer-events-none ${isEven ? "lg:order-1" : "lg:order-2"
+          }`}
       >
         {/* Soft textured asset visualizer */}
         <div className="absolute inset-0 bg-[#16331f] flex items-center justify-center text-paper/30 font-mono text-xs uppercase tracking-widest">
@@ -168,9 +167,8 @@ function VentureSlide({
 
       {/* Sibling Content Column - Scrolls Normally */}
       <div
-        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-cream min-h-[60vh] lg:min-h-screen ${
-          isEven ? "lg:order-2" : "lg:order-1"
-        }`}
+        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-cream min-h-[60vh] lg:min-h-screen ${isEven ? "lg:order-2" : "lg:order-1"
+          }`}
       >
         <Reveal>
           <span className="kicker text-bronze">{venture.tag}</span>
@@ -234,7 +232,7 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
     if (isHovered || reducedMotion) return
     const timer = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % PROJECTS_DATA.length)
-    }, 8000)
+    }, 2000)
     return () => clearInterval(timer)
   }, [isHovered, reducedMotion])
 
@@ -291,11 +289,10 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                   tabIndex={activeTab === idx ? 0 : -1}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
                   onClick={() => setActiveTab(idx)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 uppercase ${
-                    activeTab === idx
-                      ? "bg-forest text-paper shadow-sm"
-                      : "text-ink-soft hover:bg-paper/80 hover:text-forest"
-                  }`}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 uppercase ${activeTab === idx
+                    ? "bg-forest text-paper shadow-sm"
+                    : "text-ink-soft hover:bg-paper/80 hover:text-forest"
+                    }`}
                 >
                   0{idx + 1} &middot; {proj.name}
                 </button>
@@ -312,9 +309,8 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                     role="tabpanel"
                     id={`panel-${idx}`}
                     aria-labelledby={`tab-${idx}`}
-                    className={`transition-opacity duration-300 ${
-                      reducedMotion ? "" : "animate-fadeIn"
-                    }`}
+                    className={`transition-opacity duration-300 ${reducedMotion ? "" : "animate-fadeIn"
+                      }`}
                   >
                     <span className="kicker text-bronze">{proj.type}</span>
                     <h3
@@ -354,9 +350,8 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                 key={proj.name}
                 src={proj.img}
                 alt={proj.name}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-                  activeTab === idx ? "opacity-100 z-10" : "opacity-0 z-0"
-                } ${reducedMotion ? "transition-none duration-0" : ""}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${activeTab === idx ? "opacity-100 z-10" : "opacity-0 z-0"
+                  } ${reducedMotion ? "transition-none duration-0" : ""}`}
                 loading="lazy"
               />
             ))}
@@ -537,12 +532,12 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       },
     })
 
-    // 3. Ventures Slide 2 (Revive Roots)
-    const triggerV2 = gsap.to(".floating-prop-revive", {
+    // 3. Ventures Slide 2 (Revyve Roots)
+    const triggerV2 = gsap.to(".floating-prop-revyve", {
       yPercent: -25,
       ease: "none",
       scrollTrigger: {
-        trigger: ".venture-panel-revive",
+        trigger: ".venture-panel-revyve",
         start: "top bottom",
         end: "bottom top",
         scrub: true,

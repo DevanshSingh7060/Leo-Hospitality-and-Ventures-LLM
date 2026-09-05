@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
 import { Arrow } from "../lib/ui"
+import logo from "../assets/LEO LOGO FINAL-01.png";
 import type { PageId } from "../lib/pages"
 
 export const NAV_ITEMS: { id: PageId; label: string }[] = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
+  { id: "about", label: "About us" },
+  { id: "contact", label: "Contact us" },
+  { id: "vendor", label: "Vendor Registration" },
   { id: "ventures", label: "Ventures" },
   { id: "services", label: "Services" },
   { id: "experience", label: "Experience" },
@@ -52,11 +55,10 @@ export function Nav({
       <div className="relative z-20 mx-auto max-w-[1240px] px-4 pt-4 md:px-6">
         <nav
           aria-label="Main navigation"
-          className={`pointer-events-auto flex h-14 items-center justify-between gap-3 rounded-full pl-2 pr-2 transition-all duration-500 ease-out md:pl-3 ${
-            scrolled || open
+          className={`pointer-events-auto flex h-14 items-center justify-between gap-3 rounded-full pl-2 pr-2 transition-all duration-500 ease-out md:pl-3 ${scrolled || open
               ? "border border-line/70 bg-cream/92 shadow-[0_10px_34px_-12px_rgba(32,29,24,0.28)] backdrop-blur-2xl"
               : "border border-line/50 bg-cream/80 shadow-[0_8px_28px_-16px_rgba(32,29,24,0.2)] backdrop-blur-xl"
-          }`}
+            }`}
         >
           {/* Logo */}
           <button
@@ -64,20 +66,22 @@ export function Nav({
             className="group flex shrink-0 items-center gap-2.5 pl-1"
             aria-label="Leo Hospitality & Ventures — home"
           >
-            <span
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-forest text-base font-semibold text-paper transition-transform duration-500 ease-out group-hover:-rotate-6 group-hover:scale-105"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              L
-            </span>
+
+                <img src={logo} alt="Leo Logo" className="h-9 w-9 object-contain" />
+                
             <span className="hidden leading-tight sm:block">
               <span
-                className="block text-[0.95rem] font-semibold tracking-tight text-ink"
+                className="flex items-baseline gap-1.5"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Leo Hospitality
+                <span className="text-2xl font-semibold tracking-tight text-ink leading-none">
+                  Leo
+                </span>
+                <span className="text-base font-medium tracking-tight text-ink-soft leading-none">
+                  Hospitality
+                </span>
               </span>
-              <span className="block text-[0.55rem] uppercase tracking-[0.24em] text-ink-soft">
+              <span className="mt-0.5 block text-[0.55rem] uppercase tracking-[0.24em] text-ink-soft">
                 & Ventures LLP
               </span>
             </span>
@@ -90,11 +94,10 @@ export function Nav({
                 key={it.id}
                 onClick={() => go(it.id)}
                 aria-current={page === it.id ? "page" : undefined}
-                className={`rounded-full px-3.5 py-2 text-[0.8rem] font-medium tracking-wide transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 ${
-                  page === it.id
+                className={`rounded-full px-3.5 py-2 text-[0.8rem] font-medium tracking-wide transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 ${page === it.id
                     ? "bg-forest/10 text-forest"
                     : "text-ink-soft hover:bg-forest/5 hover:text-forest"
-                }`}
+                  }`}
               >
                 {it.label}
               </button>
@@ -119,19 +122,16 @@ export function Nav({
             >
               <div className="flex h-5 w-6 flex-col justify-center gap-1.5">
                 <span
-                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${
-                    open ? "translate-y-2 rotate-45" : ""
-                  }`}
+                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "translate-y-2 rotate-45" : ""
+                    }`}
                 />
                 <span
-                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${
-                    open ? "opacity-0" : ""
-                  }`}
+                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "opacity-0" : ""
+                    }`}
                 />
                 <span
-                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${
-                    open ? "-translate-y-2 -rotate-45" : ""
-                  }`}
+                  className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "-translate-y-2 -rotate-45" : ""
+                    }`}
                 />
               </div>
             </button>
@@ -141,9 +141,8 @@ export function Nav({
 
       {/* Mobile menu — full-screen fade below the pill */}
       <div
-        className={`fixed inset-x-0 bottom-0 top-[84px] z-10 flex flex-col bg-cream/98 backdrop-blur-xl transition-opacity duration-300 xl:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        className={`fixed inset-x-0 bottom-0 top-[84px] z-10 flex flex-col bg-cream/98 backdrop-blur-xl transition-opacity duration-300 xl:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+          }`}
         aria-hidden={!open}
         inert={!open ? true : undefined}
         role="dialog"
@@ -157,13 +156,11 @@ export function Nav({
                 key={it.id}
                 onClick={() => goTo(it.id)}
                 style={{ transitionDelay: open ? `${idx * 40}ms` : "0ms" }}
-                className={`flex items-center gap-3 rounded-full px-5 py-3.5 text-left text-lg font-medium transition-all duration-300 ease-out motion-reduce:transition-none ${
-                  open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
-                } ${
-                  page === it.id
+                className={`flex items-center gap-3 rounded-full px-5 py-3.5 text-left text-lg font-medium transition-all duration-300 ease-out motion-reduce:transition-none ${open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
+                  } ${page === it.id
                     ? "bg-forest text-paper"
                     : "text-ink-soft hover:bg-forest/5 hover:text-forest"
-                }`}
+                  }`}
               >
                 <span
                   className={`text-xs ${page === it.id ? "text-paper/70" : "text-bronze"}`}

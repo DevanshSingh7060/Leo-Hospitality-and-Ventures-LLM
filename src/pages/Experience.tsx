@@ -76,6 +76,16 @@ function HorizontalProjectCards() {
           },
         )
       })
+
+      // Auto‑slide: every 3 seconds advance to the next panel.
+      let autoIdx = 0
+      const autoPlay = setInterval(() => {
+        autoIdx = (autoIdx + 1) % count
+        setActiveIdx(autoIdx)
+        gsap.to(track, { x: -autoIdx * window.innerWidth, duration: 0.5, ease: "power1.out" })
+      }, 2000)
+      // Clean up interval on unmount/revert.
+      ctx.add(() => clearInterval(autoPlay))
     }, section)
 
     return () => ctx.revert()

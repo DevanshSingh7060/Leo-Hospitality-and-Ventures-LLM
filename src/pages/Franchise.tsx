@@ -16,7 +16,7 @@ import type { PageId } from "../lib/pages"
 const CATEGORIES = [
   {
     t: "Franchise a Venture",
-    d: "Bring Revive Roots or a future concept to your city with a turnkey playbook and our operational backing.",
+    d: "Bring Revyve Roots or a future concept to your city with a turnkey playbook and our operational backing.",
   },
   {
     t: "Management Partnership",

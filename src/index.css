@@ -158,6 +158,78 @@ html.snap-page {
   }
 }
 
+/* --- Gallery motion --- */
+@keyframes galleryIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@keyframes lightboxImgIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@layer utilities {
+  .gallery-item {
+    animation: galleryIn 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .lightbox-img {
+    animation: lightboxImgIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .float-img {
+    animation: floatY 7s ease-in-out infinite;
+    will-change: transform;
+  }
+  .gallery-enter-left {
+    animation: galleryInLeft 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .gallery-enter-right {
+    animation: galleryInRight 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes galleryInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-120px) rotate(-4deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes galleryInRight {
+  from {
+    opacity: 0;
+    transform: translateX(120px) rotate(4deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* --- Wipe-in Button Animations --- */
 .btn-wipe-primary {
   position: relative;
@@ -329,5 +401,12 @@ html.snap-page {
   .ambient-drift-slow {
     animation: none !important;
     will-change: auto;
+  }
+  .gallery-item,
+  .lightbox-img,
+  .float-img,
+  .gallery-enter-left,
+  .gallery-enter-right {
+    animation: none !important;
   }
 }

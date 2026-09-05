@@ -25,7 +25,7 @@ tokens, type scale, spacing scale, button/CTA components, form components):
    - Hero: full-bleed premium hospitality photo/video panel, company name, 
      positioning line, two CTAs ("Explore Our Ventures", "Partner With Us")
    - "Who We Are" — concise intro block + Read More
-   - "Our Ventures" — feature Café Bodhi Tree and Revive Roots Cloud Kitchen as 
+   - "Our Ventures" — feature Café Bodhi Tree and Revyve Roots Cloud Kitchen as 
      two strong editorial cards/panels (photo-led, not generic grid cards), 
      plus a visually lighter "Future Ventures" placeholder card
    - "What We Do" — 5 services as an icon+label row or minimal card set: 
@@ -39,7 +39,7 @@ tokens, type scale, spacing scale, button/CTA components, form components):
    quote block styled like a trust signal, not a personality cult.
 
 3. OUR VENTURES — two full editorial sections: Café Bodhi Tree (café/restaurant 
-   imagery, ambience-led) and Revive Roots Cloud Kitchen (franchise-forward 
+   imagery, ambience-led) and Revyve Roots Cloud Kitchen (franchise-forward 
    language, operational/delivery imagery), plus a Future Ventures section 
    with a flexible card layout for entries not yet announced.
 
