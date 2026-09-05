@@ -121,8 +121,8 @@ function VentureSlide({
   const reducedMotion = usePrefersReducedMotion()
   const isEven = index % 2 === 0
 
-  const panelClass = isEven ? "venture-panel-bodhi" : "venture-panel-revyve"
-  const propClass = isEven ? "floating-prop-bodhi" : "floating-prop-revyve"
+  const panelClass = isEven ? "venture-panel-bodhi" : "venture-panel-ryvive"
+  const propClass = isEven ? "floating-prop-bodhi" : "floating-prop-ryvive"
 
   return (
     <div
@@ -532,12 +532,12 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       },
     })
 
-    // 3. Ventures Slide 2 (Revyve Roots)
-    const triggerV2 = gsap.to(".floating-prop-revyve", {
+    // 3. Ventures Slide 2 (Ryvive Roots)
+    const triggerV2 = gsap.to(".floating-prop-ryvive", {
       yPercent: -25,
       ease: "none",
       scrollTrigger: {
-        trigger: ".venture-panel-revyve",
+        trigger: ".venture-panel-ryvive",
         start: "top bottom",
         end: "bottom top",
         scrub: true,

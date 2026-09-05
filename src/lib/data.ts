@@ -64,9 +64,9 @@ export const VENTURES_DATA: Venture[] = [
     ],
   },
   {
-    id: "revyve-roots",
+    id: "ryvive-roots",
     tag: "Cloud Kitchen · Franchise-ready",
-    name: "Revyve Roots Cloud Kitchen",
+    name: "Ryvive Roots Cloud Kitchen",
     tagline: "Operational delivery-first kitchen ventures built for scale.",
     copy: "A standardized cloud kitchen operation engineered for consistent food preparation, rapid delivery logistics, and clean franchise expansion playbooks across cities.",
     points: [

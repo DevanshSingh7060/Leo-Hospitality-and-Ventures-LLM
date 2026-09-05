@@ -22,7 +22,7 @@ const TIMELINE = [
   {
     y: "2023",
     t: "Own ventures",
-    d: "Launched Café Bodhi Tree and incubated Revyve Roots.",
+    d: "Launched Café Bodhi Tree and incubated Ryvive Roots.",
   },
   {
     y: "2025",
