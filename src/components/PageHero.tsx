@@ -6,11 +6,17 @@ export function PageHero({
   title,
   lead,
   image,
+  imageAlt = "",
+  graphic = false,
 }: {
   kicker: string
   title: React.ReactNode
   lead: string
   image: string
+  /** Leave empty for purely decorative photography. */
+  imageAlt?: string
+  /** Vector illustration: shown uncropped and without the photo brightness lift. */
+  graphic?: boolean
 }) {
   const imgRef = useRef<HTMLImageElement>(null)
   useParallax(imgRef, { amount: 6 })
@@ -33,16 +39,22 @@ export function PageHero({
         </Reveal>
       </div>
       <Reveal className="mx-auto max-w-[1440px] px-6 lg:px-12">
-        <div className="relative aspect-[16/7] overflow-hidden rounded-none bg-line">
+        <div className="relative aspect-[16/7] overflow-hidden rounded-none bg-cream">
           <img
             ref={imgRef}
             src={image}
-            alt=""
-            className="absolute inset-x-0 -top-[10%] h-[120%] w-full object-cover"
+            alt={imageAlt}
+            className={`absolute inset-x-0 -top-[10%] h-[120%] w-full ${
+              graphic ? "object-contain" : "object-cover"
+            }`}
+            style={
+              graphic
+                ? undefined
+                : { filter: "saturate(1.04) brightness(1.05)" }
+            }
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent" />
         </div>
       </Reveal>
     </section>

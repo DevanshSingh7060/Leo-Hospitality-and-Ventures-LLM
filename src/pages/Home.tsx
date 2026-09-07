@@ -46,17 +46,18 @@ function Hero({ go }: { go: (p: PageId) => void }) {
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-cream snap-start snap-always">
-      {/* Background visual with parallax overlay */}
+      {/* Background visual with parallax drift — kept at full brightness */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
           src={IMG.heroInterior}
           alt="Warm luxury hospitality room"
           data-parallax-hero-bg="0.2"
-          className="absolute inset-0 w-full h-[125%] -top-[12%] object-cover opacity-90"
+          className="absolute inset-0 w-full h-[125%] -top-[12%] object-cover"
+          style={{ filter: "saturate(1.04) brightness(1.06)" }}
         />
-        {/* Directional wash — keeps the headline legible on the left while letting the image show through on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cream/90 via-cream/60 to-cream/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-cream/75 to-transparent" />
+        {/* Single directional wash — only as strong as the headline needs on the
+            left, fading to a clear, bright image on the right. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/55 to-transparent" />
       </div>
 
       <div className="mx-auto w-full max-w-[1440px] px-6 pt-32 pb-16 lg:px-12 relative z-10">
@@ -126,30 +127,26 @@ function VentureSlide({
 
   return (
     <div
-      className={`grid grid-cols-1 lg:grid-cols-2 min-h-screen relative border-b border-line bg-cream snap-start snap-always ${panelClass}`}
+      className={`grid grid-cols-1 lg:grid-cols-2 min-h-screen relative border-b border-white/10 bg-forest-deep snap-start snap-always ${panelClass}`}
     >
       {/* 1. STICKY IMAGE COLUMN (CSS ONLY) */}
       <div
-        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden bg-[#16331f] pointer-events-none ${isEven ? "lg:order-1" : "lg:order-2"
+        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden pointer-events-none ${isEven ? "lg:order-1" : "lg:order-2"
           }`}
       >
-        {/* Soft textured asset visualizer */}
-        <div className="absolute inset-0 bg-[#16331f] flex items-center justify-center text-paper/30 font-mono text-xs uppercase tracking-widest">
-          <img
-            src={venture.images[0]}
-            alt={venture.name}
-            className="w-full h-full object-cover opacity-35"
-            loading="lazy"
-          />
-          <div className="absolute bottom-6 left-6 bg-black/45 px-3 py-1.5 backdrop-blur-sm text-[10px] tracking-widest uppercase">
-            Awaiting Client Photography &middot; {venture.name}
-          </div>
-        </div>
+        {/* Bright, unshaded photograph */}
+        <img
+          src={venture.images[0]}
+          alt={venture.name}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "saturate(1.04) brightness(1.05)" }}
+          loading="lazy"
+        />
 
         {/* 2. SCROLL-LINKED DRIFT: Single floating prop element per section (GSAP scrubbed) */}
         {!reducedMotion && venture.floatingAsset[0] && (
           <div
-            className={`${propClass} absolute select-none pointer-events-none z-20 text-[#a9814f] opacity-80`}
+            className={`${propClass} absolute select-none pointer-events-none z-20 text-paper/80`}
             style={venture.floatingAsset[0].style}
           >
             <svg
@@ -167,26 +164,26 @@ function VentureSlide({
 
       {/* Sibling Content Column - Scrolls Normally */}
       <div
-        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-cream min-h-[60vh] lg:min-h-screen ${isEven ? "lg:order-2" : "lg:order-1"
+        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-forest-deep min-h-[60vh] lg:min-h-screen ${isEven ? "lg:order-2" : "lg:order-1"
           }`}
       >
         <Reveal>
           <span className="kicker text-bronze">{venture.tag}</span>
           <h3
-            className="mt-4 text-4xl sm:text-5xl text-[#1a2e22] tracking-tight font-normal"
+            className="mt-4 text-4xl sm:text-5xl text-paper tracking-tight font-normal"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {venture.name}
           </h3>
           <p
-            className="mt-2 text-lg italic text-[#a97c50]"
+            className="mt-2 text-lg italic text-bronze"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {venture.tagline}
           </p>
         </Reveal>
         <Reveal delay={150}>
-          <p className="mt-6 text-[#201d18] leading-relaxed text-sm lg:text-base">
+          <p className="mt-6 text-paper/80 leading-relaxed text-sm lg:text-base">
             {venture.copy}
           </p>
 
@@ -194,21 +191,25 @@ function VentureSlide({
             {venture.points.map((pt) => (
               <li
                 key={pt}
-                className="flex items-start gap-2.5 text-sm text-[#201d18]/85"
+                className="flex items-start gap-2.5 text-sm text-paper/80"
               >
-                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-forest" />
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-bronze" />
                 {pt}
               </li>
             ))}
           </ul>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <Button onClick={() => go("ventures")}>
+            <Button
+              variant="light"
+              className="!border-paper/60 !bg-paper !text-forest hover:!bg-cream"
+              onClick={() => go("ventures")}
+            >
               Discover Venture <Arrow />
             </Button>
             {venture.cta && (
               <Button
-                variant="secondary"
+                variant="light"
                 onClick={() => go(venture.cta as PageId)}
               >
                 Partner With Us
@@ -344,18 +345,18 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
           </div>
 
           {/* Right Block: Image Visualizer with Sharp Edges */}
-          <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-none overflow-hidden bg-line border border-line/45">
+          <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-none overflow-hidden bg-cream border border-line/45">
             {PROJECTS_DATA.map((proj, idx) => (
               <img
                 key={proj.name}
                 src={proj.img}
                 alt={proj.name}
+                style={{ filter: "saturate(1.04) brightness(1.05)" }}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${activeTab === idx ? "opacity-100 z-10" : "opacity-0 z-0"
                   } ${reducedMotion ? "transition-none duration-0" : ""}`}
                 loading="lazy"
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent pointer-events-none z-20" />
           </div>
         </div>
       </div>
@@ -485,16 +486,16 @@ function StatItem({
   return (
     <div
       ref={ref}
-      className="text-center p-6 border-r border-line/60 last:border-r-0 max-md:border-r-0 max-md:border-b max-md:border-line/60 max-md:last:border-b-0"
+      className="text-center p-6 border-r border-white/15 last:border-r-0 max-md:border-r-0 max-md:border-b max-md:border-white/15 max-md:last:border-b-0"
     >
       <span
-        className="block text-5xl sm:text-6xl lg:text-7xl font-light text-forest tracking-tight"
+        className="block text-5xl sm:text-6xl lg:text-7xl font-light text-paper tracking-tight"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {count}
         {suffix}
       </span>
-      <span className="mt-3 block text-xs tracking-widest text-ink-soft uppercase font-semibold">
+      <span className="mt-3 block text-xs tracking-widest text-bronze uppercase font-semibold">
         {label}
       </span>
     </div>
@@ -574,18 +575,16 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       <Hero go={go} />
 
       {/* WHO WE ARE */}
-      <section className="bg-cream py-24 lg:py-36 border-t border-line/30 who-we-are-section min-h-screen flex items-center snap-start snap-always">
+      <section className="bg-paper py-24 lg:py-36 border-t border-line/30 who-we-are-section min-h-screen flex items-center snap-start snap-always">
         <div className="mx-auto grid w-full max-w-[1440px] gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12 items-center">
-          {/* Left Column: Visual representation resolving empty space issue (No shadow, sharp corners) */}
-          <div className="relative overflow-hidden aspect-[4/5] bg-[#16331f] rounded-none border border-line/20">
+          {/* Left Column: bright, unshaded photograph */}
+          <div className="relative overflow-hidden aspect-[4/5] bg-cream rounded-none">
             <img
               src={IMG.diningRoom}
               alt="Leo Hospitality dining setup"
-              className="who-we-are-img absolute inset-0 w-full h-[125%] -top-[12%] object-cover opacity-60"
+              className="who-we-are-img absolute inset-0 w-full h-[125%] -top-[12%] object-cover"
+              style={{ filter: "saturate(1.04) brightness(1.05)" }}
             />
-            <div className="absolute bottom-6 left-6 bg-black/45 px-3 py-1.5 backdrop-blur-sm text-[10px] text-paper font-mono uppercase tracking-widest">
-              Awaiting Client Photography &middot; Operations
-            </div>
           </div>
 
           {/* Right Column: Verbatim mission language from brief */}
@@ -626,13 +625,13 @@ export function Home({ go }: { go: (p: PageId) => void }) {
         </div>
       </section>
 
-      {/* SCROLL-DRIVEN "OUR VENTURES" SECTION */}
-      <section className="bg-paper border-y border-line/45">
+      {/* SCROLL-DRIVEN "OUR VENTURES" SECTION — DARK BAND */}
+      <section data-tone="dark" className="bg-forest-deep">
         <div className="mx-auto max-w-[1440px] px-6 py-20 lg:px-12 lg:py-24 text-left">
           <Reveal>
-            <Kicker>Our Ventures</Kicker>
+            <Kicker tone="light">Our Ventures</Kicker>
             <h2
-              className="mt-4 text-4xl sm:text-5xl leading-tight tracking-[-0.02em] max-w-2xl font-normal text-[#1a2e22]"
+              className="mt-4 text-4xl sm:text-5xl leading-tight tracking-[-0.02em] max-w-2xl font-normal text-paper"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Ventures we build and operate.
@@ -651,34 +650,34 @@ export function Home({ go }: { go: (p: PageId) => void }) {
             />
           ))}
         </div>
+      </section>
 
-        {/* Future Ventures panel (visually quieter/lighter, no parallax, flat design) */}
-        <div className="bg-cream py-24 border-t border-line/50">
-          <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-            <Reveal className="max-w-xl">
-              <span className="kicker text-bronze">Future Ventures</span>
-              <h2
-                className="mt-4 text-3xl sm:text-4xl text-[#1a2e22] font-normal tracking-tight"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Incubating new concepts.
-              </h2>
-              <p className="mt-4 text-ink-soft leading-relaxed text-sm lg:text-base">
-                We are currently conceptualising additional hospitality concepts
-                spanning bakery, speciality tearooms, and lifestyle dining
-                options. Details will be announced as projects approach opening.
-              </p>
-              <button
-                onClick={() => go("ventures")}
-                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-forest hover:text-forest-deep focus:underline focus:outline-none"
-              >
-                View all pipeline details{" "}
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </button>
-            </Reveal>
-          </div>
+      {/* FUTURE VENTURES — LIGHT BAND */}
+      <section className="bg-cream py-24 border-b border-line/50">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+          <Reveal className="max-w-xl">
+            <span className="kicker text-bronze">Future Ventures</span>
+            <h2
+              className="mt-4 text-3xl sm:text-4xl text-[#1a2e22] font-normal tracking-tight"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Incubating new concepts.
+            </h2>
+            <p className="mt-4 text-ink-soft leading-relaxed text-sm lg:text-base">
+              We are currently conceptualising additional hospitality concepts
+              spanning bakery, speciality tearooms, and lifestyle dining
+              options. Details will be announced as projects approach opening.
+            </p>
+            <button
+              onClick={() => go("ventures")}
+              className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-forest hover:text-forest-deep focus:underline focus:outline-none"
+            >
+              View all pipeline details{" "}
+              <span className="transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </Reveal>
         </div>
       </section>
 
@@ -705,11 +704,11 @@ export function Home({ go }: { go: (p: PageId) => void }) {
         </div>
       </section>
 
-      {/* STATS / PRESENCE SECTION */}
-      <section className="bg-cream py-16 lg:py-24 border-y border-line/60">
+      {/* STATS / PRESENCE SECTION — DARK BAND */}
+      <section data-tone="dark" className="bg-forest py-16 lg:py-24">
         <div className="mx-auto max-w-[1200px] px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-line">
-            {STATS_DATA.map((stat, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {STATS_DATA.map((stat) => (
               <StatItem
                 key={stat.label}
                 value={stat.value}
@@ -732,7 +731,10 @@ export function Home({ go }: { go: (p: PageId) => void }) {
 
 export function CTA({ go }: { go: (p: PageId) => void }) {
   return (
-    <section className="relative overflow-hidden bg-forest py-24 text-paper lg:py-32">
+    <section
+      data-tone="dark"
+      className="relative overflow-hidden bg-forest py-24 text-paper lg:py-32"
+    >
       {/* Ambient depth — decorative, non-interactive */}
       <div
         aria-hidden="true"

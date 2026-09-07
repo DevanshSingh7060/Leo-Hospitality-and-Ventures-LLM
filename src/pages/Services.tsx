@@ -156,14 +156,14 @@ export function Services({ go }: { go: (p: PageId) => void }) {
                           ))}
                         </ul>
 
-                        <div className="relative min-h-[200px] overflow-hidden rounded-none bg-line">
+                        <div className="relative min-h-[200px] overflow-hidden rounded-none bg-cream">
                           <img
                             src={SERVICE_IMAGES[i]}
                             alt={s.t}
                             loading="lazy"
+                            style={{ filter: "saturate(1.04) brightness(1.05)" }}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.03] motion-reduce:hover:scale-100"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-ink/35 to-transparent" />
                         </div>
                       </div>
                     </div>

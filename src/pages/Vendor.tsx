@@ -22,6 +22,43 @@ const VENDOR_CATS = [
   "Other F&B Raw Material Suppliers",
 ]
 
+// Richer category cards with supporting copy and a distinct icon each.
+const VENDOR_CATEGORY_CARDS: { t: string; d: string; icon: string }[] = [
+  {
+    t: "Food Vendors & Suppliers",
+    d: "Packaged goods, dairy, proteins and dry stores for daily kitchen operations.",
+    icon: "M3 7h18M6 7v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7M9 4h6a1 1 0 0 1 1 1v2H8V5a1 1 0 0 1 1-1z",
+  },
+  {
+    t: "Vegetable & Fresh Produce",
+    d: "Farm-fresh vegetables, fruit and herbs delivered on a dependable schedule.",
+    icon: "M12 2c1 3 4 4 4 8a4 4 0 0 1-8 0c0-4 3-5 4-8zM12 22v-6",
+  },
+  {
+    t: "Beverage Suppliers",
+    d: "Juices, mixers, dairy alternatives and bottled beverages across formats.",
+    icon: "M7 3h10l-1 5v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8L7 3zM7.5 8h9",
+  },
+  {
+    t: "Coffee Suppliers",
+    d: "Speciality beans, roasts and café consumables for our coffee programmes.",
+    icon: "M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8zm13 1h1.5a2.5 2.5 0 0 1 0 5H17M6 3v2m4-2v2m4-2v2",
+  },
+  {
+    t: "Other F&B Raw Materials",
+    d: "Packaging, disposables, cleaning supplies and specialised ingredients.",
+    icon: "M3 9l9-5 9 5-9 5-9-5zm0 0v6l9 5 9-5V9",
+  },
+]
+
+// Reasons a vendor should register — used in the form sidebar.
+const VENDOR_BENEFITS = [
+  "Steady, forecasted demand across multiple venues and cloud kitchens",
+  "Transparent onboarding with clear payment and compliance terms",
+  "A single procurement point of contact for orders and support",
+  "Room to grow with us as we expand into new cities",
+]
+
 export function Vendor({ go }: { go: (p: PageId) => void }) {
   const [submitting, setSubmitting] = useState(false)
   const [sent, setSent] = useState(false)
@@ -182,24 +219,64 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
             <span className="italic text-forest">kitchens we run.</span>
           </>
         }
-        lead="We onboard reliable F&B, fresh-produce and raw-material vendors across our venues and cloud kitchens. Register below to be considered for empanelment."
+        lead="Great food starts with great suppliers. We partner with reliable F&B, fresh-produce and raw-material vendors across our cafés, restaurants and cloud kitchens. Register below to join our supplier network."
         image={IMG.chefBowl}
       />
 
       {/* categories */}
       <Section className="py-14 lg:py-20">
-        <Reveal>
+        <Reveal className="max-w-2xl">
           <Kicker>Vendor Categories</Kicker>
+          <h2
+            className="mt-5 text-3xl leading-tight tracking-[-0.02em] text-[#1a2e22] sm:text-4xl"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
+          >
+            The supply partners we{" "}
+            <span className="italic text-forest">work with.</span>
+          </h2>
+          <p className="mt-4 leading-relaxed text-ink-soft">
+            If your business fits one of the categories below, we would love to
+            hear from you. Not sure where you fit? Register anyway — our
+            procurement team reviews every submission.
+          </p>
         </Reveal>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {VENDOR_CATS.map((c, i) => (
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {VENDOR_CATEGORY_CARDS.map((c, i) => (
             <Reveal
-              key={c}
-              delay={i * 50}
-              className="flex items-center gap-4 rounded-none border border-line bg-paper px-5 py-4"
+              key={c.t}
+              delay={i * 60}
+              className="group flex flex-col gap-4 rounded-none border border-line bg-paper p-6 transition-all duration-300 hover:-translate-y-1 hover:border-forest hover:shadow-[0_16px_40px_-24px_rgba(32,29,24,0.4)]"
             >
-              <span className="font-display text-lg text-bronze">0{i + 1}</span>
-              <span className="text-sm font-medium text-ink">{c}</span>
+              <div className="flex items-center justify-between">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-line text-forest transition-colors duration-300 group-hover:border-forest group-hover:bg-forest/10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d={c.icon} />
+                  </svg>
+                </span>
+                <span className="font-display text-2xl text-line transition-colors duration-300 group-hover:text-bronze">
+                  0{i + 1}
+                </span>
+              </div>
+              <div>
+                <h3
+                  className="text-xl tracking-[-0.01em] text-ink transition-colors duration-300 group-hover:text-forest"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {c.t}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  {c.d}
+                </p>
+              </div>
             </Reveal>
           ))}
         </div>
@@ -207,18 +284,46 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
 
       {/* form */}
       <section className="bg-paper py-16 lg:py-24 border-t border-line/40">
-        <div className="mx-auto max-w-[1000px] px-6 lg:px-12">
-          <Reveal>
+        <div className="mx-auto grid max-w-[1180px] gap-10 px-6 lg:grid-cols-[0.82fr_1.18fr] lg:gap-14 lg:px-12">
+          {/* Left: intro + benefits sidebar */}
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
             <Kicker>Registration Form</Kicker>
             <h2
               className="mt-5 text-4xl leading-tight tracking-[-0.02em] sm:text-5xl"
               style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
             >
-              Tell us about your firm.
+              Tell us about{" "}
+              <span className="italic text-forest">your firm.</span>
             </h2>
+            <p className="mt-5 max-w-md leading-relaxed text-ink-soft">
+              It takes about three minutes. Share your details and compliance
+              documents, and our procurement team will take it from there.
+            </p>
+
+            <div className="mt-8 rounded-none border border-line bg-forest-deep p-7 text-paper">
+              <h3 className="kicker text-bronze">Why partner with us</h3>
+              <ul className="mt-5 space-y-4">
+                {VENDOR_BENEFITS.map((b) => (
+                  <li key={b} className="flex items-start gap-3 text-sm leading-relaxed text-paper/85">
+                    <svg
+                      className="mt-0.5 h-4 w-4 shrink-0 text-bronze"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
 
-          <Reveal delay={100} className="mt-10">
+          <Reveal delay={100}>
             {sent ? (
               <div className="rounded-none border border-line bg-cream/60 p-10 text-center animate-fadeIn">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forest/10 text-forest text-3xl font-bold">
@@ -231,9 +336,9 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
                   Registration received.
                 </h3>
                 <p className="mx-auto mt-4 max-w-md text-ink-soft leading-relaxed">
-                  Thank you. Our procurement team will review your FSSAI
-                  credentials and catalog, and we will reach out if there is an
-                  operational fit.
+                  Thank you for registering. Our procurement team will review
+                  your FSSAI credentials and product catalogue, and reach out if
+                  there is a good operational fit.
                 </p>
                 <Button className="mt-8" onClick={() => go("home")}>
                   Back to home <Arrow />
@@ -243,7 +348,7 @@ export function Vendor({ go }: { go: (p: PageId) => void }) {
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="grid gap-6 rounded-none border border-line bg-cream/50 p-8 lg:p-10"
+                className="grid gap-6 rounded-none border border-line bg-cream/50 p-8 shadow-[0_20px_60px_-40px_rgba(32,29,24,0.5)] lg:p-10"
               >
                 {/* Honeypot field for bot mitigation */}
                 <div className="sr-only pointer-events-none" aria-hidden="true">

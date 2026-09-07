@@ -177,7 +177,10 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
       </Section>
 
       {/* ENQUIRY FORM */}
-      <section className="bg-forest-deep py-20 text-paper lg:py-28">
+      <section
+        data-tone="dark"
+        className="bg-forest-deep py-20 text-paper lg:py-28"
+      >
         <div className="mx-auto grid max-w-[1440px] gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:gap-20 lg:px-12">
           <Reveal>
             <Kicker tone="light">Business Enquiry</Kicker>

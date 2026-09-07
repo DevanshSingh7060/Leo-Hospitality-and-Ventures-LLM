@@ -148,7 +148,10 @@ export function About({ go }: { go: (p: PageId) => void }) {
       </Section>
 
       {/* QUOTE — trust signal */}
-      <section className="bg-forest-deep py-24 text-paper lg:py-32">
+      <section
+        data-tone="dark"
+        className="bg-forest-deep py-24 text-paper lg:py-32"
+      >
         <Section>
           <Reveal className="mx-auto max-w-4xl text-center">
             <span className="font-display text-6xl text-bronze">&ldquo;</span>

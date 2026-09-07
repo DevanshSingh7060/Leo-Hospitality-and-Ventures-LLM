@@ -8,7 +8,7 @@ export function Footer({ go }: { go: (p: PageId) => void }) {
   const [sent, setSent] = useState(false)
 
   return (
-    <footer className="bg-forest-deep text-paper">
+    <footer data-tone="dark" className="bg-forest-deep text-paper">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="grid gap-12 border-b border-white/10 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:py-20">
           <div>

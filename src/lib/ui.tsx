@@ -18,7 +18,7 @@ import souffle from "../assets/souffle.jpg"
 import latteArt from "../assets/latteArt.jpg"
 import pieLatte from "../assets/pieLatte.jpg"
 import dessertPlatter from "../assets/dessertPlatter.jpg"
-import coffeeHand from "../assets/coffeeHand.jpg"
+import greeting from "../assets/greeting.svg"
 import deliveryBag from "../assets/deliveryBag.jpg"
 import containers from "../assets/containers.jpg"
 import chefBoard from "../assets/chefBoard.jpg"
@@ -43,7 +43,7 @@ export const IMG = {
   latteArt,
   pieLatte,
   dessertPlatter,
-  coffeeHand,
+  greeting,
   deliveryBag,
   containers,
   chefBoard,

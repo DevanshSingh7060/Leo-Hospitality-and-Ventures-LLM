@@ -1,0 +1,139 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1600 700"
+  width="1600"
+  height="700"
+  role="img"
+  aria-label="Two people greeting each other in a café setting"
+>
+  <!-- Cream ground matches --color-cream so the panel sits seamlessly on the page -->
+  <rect width="1600" height="700" fill="#f6f1e7" />
+
+  <!-- Soft bronze halo behind the greeting -->
+  <circle cx="800" cy="360" r="232" fill="#a9814f" opacity="0.08" />
+
+  <!-- ARCHITECTURE: arched windows set back behind the room -->
+  <g
+    fill="none"
+    stroke="#a9814f"
+    stroke-opacity="0.3"
+    stroke-width="3"
+    stroke-linecap="round"
+  >
+    <path d="M380 540 V450 A70 70 0 0 1 520 450 V540" />
+    <path d="M450 380 V540" />
+    <path d="M1080 540 V450 A70 70 0 0 1 1220 450 V540" />
+    <path d="M1150 380 V540" />
+  </g>
+
+  <!-- Pendant lamps -->
+  <g
+    fill="none"
+    stroke="#a9814f"
+    stroke-opacity="0.5"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M300 0 V150" />
+    <path d="M268 150 Q300 106 332 150 Z" />
+    <path d="M1270 0 V196" />
+    <path d="M1242 196 Q1270 156 1298 196 Z" />
+  </g>
+
+  <!-- Floor -->
+  <path
+    d="M120 600 H1480"
+    stroke="#a9814f"
+    stroke-opacity="0.35"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <!-- Potted plant, left -->
+  <g
+    fill="none"
+    stroke="#234a36"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M160 540 C160 500 142 480 130 464" />
+    <path d="M160 540 C160 496 178 474 192 458" />
+    <path d="M160 540 C158 512 150 494 144 480" />
+  </g>
+  <path
+    d="M132 542 L143 598 H177 L188 542 Z"
+    fill="none"
+    stroke="#a9814f"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Bistro table with two cups, right -->
+  <g
+    fill="none"
+    stroke="#a9814f"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <ellipse cx="1370" cy="504" rx="78" ry="16" />
+    <path d="M1370 520 V596" />
+    <path d="M1336 598 H1404" />
+  </g>
+  <g
+    fill="none"
+    stroke="#234a36"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M1332 476 H1356 V486 A12 9 0 0 1 1332 486 Z" />
+    <path d="M1356 479 A7 6 0 0 1 1356 490" />
+    <path d="M1384 476 H1408 V486 A12 9 0 0 1 1384 486 Z" />
+    <path d="M1408 479 A7 6 0 0 1 1408 490" />
+  </g>
+
+  <!-- THE GREETING: two figures, in the same thin forest line-work as the site icons -->
+  <g
+    fill="none"
+    stroke="#234a36"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <!-- Figure turned in from the left -->
+    <circle cx="680" cy="250" r="54" />
+    <path d="M680 304 V326" />
+    <path d="M614 470 C614 378 636 326 680 326 C724 326 746 378 746 470" />
+    <path d="M648 470 V584" />
+    <path d="M714 470 V584" />
+    <path d="M744 360 Q772 374 786 400" />
+    <path d="M616 362 Q596 410 604 458" />
+
+    <!-- Figure turned in from the right -->
+    <circle cx="920" cy="250" r="54" />
+    <path d="M920 304 V326" />
+    <path d="M986 470 C986 378 964 326 920 326 C876 326 854 378 854 470" />
+    <path d="M886 470 V584" />
+    <path d="M952 470 V584" />
+    <path d="M856 360 Q828 374 814 400" />
+    <path d="M984 362 Q1004 410 996 458" />
+  </g>
+
+  <!-- Clasped hands, picked out in bronze as the focal accent -->
+  <ellipse
+    cx="800"
+    cy="400"
+    rx="32"
+    ry="22"
+    fill="#f6f1e7"
+    stroke="#a9814f"
+    stroke-width="4.5"
+  />
+  <g stroke="#a9814f" stroke-width="3" stroke-linecap="round">
+    <path d="M787 393 H813" />
+    <path d="M787 408 H813" />
+  </g>
+</svg>
