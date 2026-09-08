@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { IMG } from "../lib/ui"
-import logo from "../assets/LEO LOGO FINAL-01.png"
+import logoDark from "../assets/LEO Logo-dark.svg"
+import logoLight from "../assets/LEO Logo-light.svg"
 import type { PageId } from "../lib/pages"
 
 export const NAV_ITEMS: { id: PageId; label: string }[] = [
@@ -32,9 +33,6 @@ const CREAM = "#f6f1e7"
 const INK = "#201d18"
 const BRONZE = "#a9814f"
 
-/* Filter that recolours the dark logo artwork to cream over dark sections. */
-const LOGO_TO_CREAM =
-  "brightness(0) saturate(100%) invert(93%) sepia(8%) saturate(400%) hue-rotate(20deg) brightness(103%) contrast(92%)"
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)"
 
@@ -146,9 +144,8 @@ function Drawer({
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-[9998] flex justify-end overflow-hidden ${
-        open ? "pointer-events-auto" : "pointer-events-none"
-      }`}
+      className={`fixed inset-0 z-[9998] flex justify-end overflow-hidden ${open ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       aria-hidden={!open}
       inert={!open ? true : undefined}
     >
@@ -178,9 +175,9 @@ function Drawer({
             {/* Logo + tagline */}
             <div className="flex shrink-0 flex-col">
               <img
-                src={logo}
+                src={logoLight}
                 alt="Leo Hospitality & Ventures"
-                className="w-[120px] object-contain"
+                className="w-[170px] object-contain"
               />
               <p
                 className="mt-[2vh] max-w-[290px]"
@@ -449,46 +446,17 @@ export function Nav({
             {/* Logo */}
             <button
               onClick={() => go("home")}
-              className="flex shrink-0 items-center gap-3 transition-opacity duration-300 hover:opacity-90"
+              className="flex shrink-0 items-center transition-opacity duration-300 hover:opacity-90"
               aria-label="Leo Hospitality & Ventures — home"
             >
               <img
-                src={logo}
+                src={overDark ? logoDark : logoLight}
                 alt="Leo Hospitality & Ventures"
+                className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-opacity duration-300"
                 style={{
-                  height: "56px",
-                  width: "auto",
-                  objectFit: "contain",
                   opacity: 0.95,
-                  transition: "filter 0.5s ease",
-                  filter: overDark ? LOGO_TO_CREAM : "none",
                 }}
               />
-              <span className="hidden leading-tight sm:block">
-                <span
-                  className="flex items-baseline gap-1.5"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  <span
-                    className="text-xl font-semibold leading-none tracking-tight transition-colors duration-500"
-                    style={{ color: headerText }}
-                  >
-                    Leo
-                  </span>
-                  <span
-                    className="text-sm font-medium leading-none tracking-tight transition-colors duration-500"
-                    style={{ color: headerMuted }}
-                  >
-                    Hospitality
-                  </span>
-                </span>
-                <span
-                  className="mt-0.5 block text-[0.5rem] uppercase tracking-[0.24em] transition-colors duration-500"
-                  style={{ color: headerMuted }}
-                >
-                  &amp; Ventures LLP
-                </span>
-              </span>
             </button>
 
             {/* Desktop links */}
