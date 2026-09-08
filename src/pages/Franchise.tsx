@@ -205,7 +205,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
 
           <Reveal delay={100}>
             {sent ? (
-              <div className="rounded-none bg-paper p-10 text-ink text-center animate-fadeIn">
+              <div className="glass-light rounded-none p-10 text-ink text-center animate-fadeIn">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forest/10 text-forest text-3xl font-bold">
                   ✓
                 </div>
@@ -391,4 +391,4 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     </>
   )
 }
-export default Franchise
+// export default Franchise

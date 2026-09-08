@@ -1,19 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@300..700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-display: 'Playfair Display', 'Cormorant Garamond', 'Fraunces', ui-serif, Georgia, serif;
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
-  --color-cream: #f6f1e7;
-  --color-paper: #fbf8f1;
-  --color-ink: #201d18;
-  --color-ink-soft: #5b544a;
-  --color-line: #e2d9c8;
-  --color-forest: #234a36;
-  --color-forest-deep: #16331f;
-  --color-forest-soft: #38624a;
-  --color-bronze: #a9814f;
+  /* Official Brand Palette — Natural, Elegant, Modern, Balanced */
+  --color-primary: #526b31;        /* #526B31: Main brand color (buttons, headers, highlights) */
+  --color-secondary: #eee6db;      /* #EEE6DB: Backgrounds, sections, cards */
+  --color-dark-green: #3e5225;     /* #3E5225: Hover states, active elements, dark bands */
+  --color-accent-green: #8a9a6b;   /* #8A9A6B: Icons, borders, subtle highlights */
+  --color-light-green: #c5d0b3;    /* #C5D0B3: Soft backgrounds, badges, tags */
+  --color-warm-beige: #d7c9b1;     /* #D7C9B1: Section backgrounds, dividers */
+  --color-light-neutral: #f8f6f1;  /* #F8F6F1: Page background, clean space */
+  --color-text-main: #2e2e2e;      /* #2E2E2E: Headings, body text */
+  --color-extra-light: #fcfbf7;    /* #FCFBF7: Cards, alternate sections */
+  --color-muted-green: #a3b18a;    /* #A3B18A: Charts, icons, accents */
+  --color-accent-brown: #b89f7a;   /* #B89F7A: Buttons, CTAs (alternative) */
+  --color-soft-rose: #d9bfb7;      /* #D9BFB7: Notifications, gentle highlights */
+  --color-error: #c97f72;          /* #C97F72: Warnings, error messages */
+
+  /* Aliased design tokens mapped directly to the official palette */
+  --color-cream: #f8f6f1;          /* Light Neutral (#F8F6F1) */
+  --color-paper: #eee6db;          /* Secondary (#EEE6DB) */
+  --color-ink: #2e2e2e;            /* Text Color (#2E2E2E) */
+  --color-ink-soft: #5e5e5e;       /* Secondary text tone */
+  --color-line: #d7c9b1;           /* Warm Beige divider (#D7C9B1) */
+  --color-forest: #526b31;         /* Primary (#526B31) */
+  --color-forest-deep: #3e5225;    /* Dark Green (#3E5225) */
+  --color-forest-soft: #8a9a6b;    /* Accent Green (#8A9A6B) */
+  --color-bronze: #b89f7a;         /* Accent Brown (#B89F7A) */
 }
 
 /* --- Motion design tokens (one coherent motion language) --- */
@@ -24,7 +40,7 @@
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-card: 0 16px 34px -20px rgba(32, 29, 24, 0.4);
+  --shadow-card: 0 16px 34px -20px rgba(46, 46, 46, 0.25);
 }
 
 html,
@@ -34,16 +50,16 @@ body,
 }
 
 body {
-  background-color: var(--color-cream);
-  color: var(--color-ink);
+  background-color: var(--color-light-neutral);
+  color: var(--color-text-main);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--color-forest);
-  color: var(--color-paper);
+  background: var(--color-primary);
+  color: var(--color-extra-light);
 }
 
 /* hide scrollbars until scrolling */
@@ -138,6 +154,36 @@ html.snap-page {
   }
   .animate-lightbox {
     animation: lightboxIn var(--dur-normal) var(--ease-entrance) both;
+  }
+}
+
+/* --- Frosted glass surfaces (glassmorphism) ---
+   These read best over imagery or colour; over flat cream/paper they are
+   barely visible by design. .glass-dark = light text on a dark frost,
+   .glass-light = dark text on a bright frost. */
+@layer utilities {
+  .glass-dark {
+    background: rgba(62, 82, 37, 0.55);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border: 1px solid rgba(248, 246, 241, 0.18);
+    box-shadow: 0 20px 50px -28px rgba(46, 46, 46, 0.5);
+  }
+  .glass-light {
+    background: rgba(248, 246, 241, 0.65);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border: 1px solid rgba(215, 201, 177, 0.5);
+    box-shadow: 0 20px 50px -30px rgba(46, 46, 46, 0.2);
+  }
+  /* Graceful fallback: without backdrop-filter, lean on opacity for legibility */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-dark {
+      background: rgba(62, 82, 37, 0.88);
+    }
+    .glass-light {
+      background: rgba(248, 246, 241, 0.92);
+    }
   }
 }
 

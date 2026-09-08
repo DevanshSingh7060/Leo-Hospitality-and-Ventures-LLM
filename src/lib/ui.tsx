@@ -61,11 +61,13 @@ export function Reveal({
   className = "",
   delay = 0,
   as: Tag = "div",
+  style,
 }: {
   children: ReactNode
   className?: string
   delay?: number
   as?: any
+  style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLElement>(null)
   const [seen, setSeen] = useState(false)
@@ -87,7 +89,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as any}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
       className={`reveal ${seen ? "in" : ""} ${className}`}
     >
       {children}
@@ -357,3 +359,77 @@ export function useParallax(
     }
   }, [ref, amount, reduced])
 }
+
+/* ---------- Interactive Mouse-Reactive Spotlight Card ---------- */
+export function SpotlightCard({
+  children,
+  className = "",
+  spotlightColor = "rgba(169, 129, 79, 0.16)",
+  spotlightSize = 380,
+  onClick,
+  style,
+  onMouseEnter,
+  onMouseLeave,
+  ...rest
+}: {
+  children: ReactNode
+  className?: string
+  spotlightColor?: string
+  spotlightSize?: number
+  onClick?: () => void
+  style?: React.CSSProperties
+  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void
+  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void
+  [key: string]: any
+}) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+  const reducedMotion = usePrefersReducedMotion()
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reducedMotion || !cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    })
+  }
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsHovered(true)
+    if (onMouseEnter) onMouseEnter(e)
+  }
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsHovered(false)
+    if (onMouseLeave) onMouseLeave(e)
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      style={style}
+      className={`relative overflow-hidden ${className}`}
+      {...rest}
+    >
+      {/* Interactive cursor spotlight */}
+      {!reducedMotion && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-500 ease-out"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            background: `radial-gradient(${spotlightSize}px circle at ${coords.x}px ${coords.y}px, ${spotlightColor}, transparent 80%)`,
+          }}
+        />
+      )}
+      {children}
+    </div>
+  )
+}
+

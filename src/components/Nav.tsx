@@ -28,10 +28,12 @@ const BAR_LINKS: PageId[] = [
   "contact",
 ]
 
-/* Palette mirrors the tokens in index.css */
-const CREAM = "#f6f1e7"
-const INK = "#201d18"
-const BRONZE = "#a9814f"
+/* Palette mirrors the official brand palette in index.css */
+const CREAM = "#f8f6f1"
+const INK = "#2e2e2e"
+const BRONZE = "#b89f7a"
+const PRIMARY = "#526b31"
+const DARK_GREEN = "#3e5225"
 
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)"
@@ -165,30 +167,33 @@ function Drawer({
       {isDesktop ? (
         /* ---- Desktop: cream editorial panel ---- */
         <div
-          className={`${panelBase} w-[420px] overflow-hidden`}
-          style={{ ...panelStyle, background: "#f5f1e8" }}
+          className={`${panelBase} w-[420px] overflow-y-auto`}
+          style={{ ...panelStyle, background: "#f5f1e8", scrollbarWidth: "none" }}
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
         >
-          <div className="flex h-full flex-col justify-between px-10 pb-[3vh] pt-[4vh]">
+          <div className="flex min-h-full flex-col px-10 pb-8 pt-8">
             {/* Logo + tagline */}
             <div className="flex shrink-0 flex-col">
               <img
                 src={logoLight}
                 alt="Leo Hospitality & Ventures"
-                className="w-[170px] object-contain"
+                className="w-[160px] object-contain"
               />
               <p
-                className="mt-[2vh] max-w-[290px]"
-                style={{ fontSize: "13px", lineHeight: 1.8, color: "rgba(30,25,21,0.72)" }}
+                className="mt-3 max-w-[290px]"
+                style={{ fontSize: "12.5px", lineHeight: 1.7, color: "rgba(30,25,21,0.65)" }}
               >
                 Creating experiences. Building hospitality brands.
               </p>
             </div>
 
+            {/* Divider */}
+            <div className="my-5 h-px w-full shrink-0" style={{ background: "rgba(30,25,21,0.08)" }} />
+
             {/* Links */}
-            <nav className="mt-[3vh] flex min-h-0 flex-1 flex-col justify-center gap-2 overflow-y-auto">
+            <nav className="flex flex-col gap-[6px]">
               {NAV_ITEMS.map((it, i) => (
                 <button
                   key={it.id}
@@ -198,49 +203,52 @@ function Drawer({
                   }}
                   style={{
                     fontFamily: "var(--font-display)",
-                    transitionDelay: open ? `${120 + i * 35}ms` : "0ms",
+                    transitionDelay: open ? `${80 + i * 30}ms` : "0ms",
                     transitionTimingFunction: EASE,
                     opacity: open ? 1 : 0,
                     transform: open ? "translateX(0)" : "translateX(14px)",
                     color: page === it.id ? "#234a36" : "rgba(30,25,21,0.78)",
                   }}
-                  className="block w-fit text-[21px] font-light leading-none transition-all duration-500 hover:text-[#a9814f] motion-reduce:transition-none"
+                  className="block w-fit py-[5px] text-[20px] font-light leading-none transition-all duration-500 hover:text-[#a9814f] motion-reduce:transition-none"
                 >
                   {it.label}
                 </button>
               ))}
             </nav>
 
+            {/* Divider */}
+            <div className="my-5 h-px w-full shrink-0" style={{ background: "rgba(30,25,21,0.08)" }} />
+
             {/* Imagery */}
-            <div className="my-[2vh] flex shrink-0 flex-col items-center gap-3">
-              <div className="flex w-full justify-center gap-3">
+            <div className="flex shrink-0 flex-col items-center gap-2">
+              <div className="flex w-full justify-center gap-2">
                 {[IMG.bodhiTree, IMG.latteArt].map((src) => (
-                  <div key={src} className="overflow-hidden rounded-[8px]">
+                  <div key={src} className="overflow-hidden rounded-[8px] flex-1">
                     <img
                       src={src}
                       alt=""
-                      className="h-[9vh] max-h-[88px] min-h-[48px] w-auto aspect-[154/92] object-cover transition-transform duration-700 hover:scale-[1.04]"
+                      className="h-[72px] w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
                     />
                   </div>
                 ))}
               </div>
-              <div className="overflow-hidden rounded-[8px]">
+              <div className="overflow-hidden rounded-[8px] w-full">
                 <img
                   src={IMG.diningRoom}
                   alt=""
-                  className="h-[12vh] max-h-[124px] min-h-[64px] w-auto aspect-[320/132] object-cover transition-transform duration-700 hover:scale-[1.04]"
+                  className="h-[80px] w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
                 />
               </div>
             </div>
 
             {/* Socials */}
-            <div className="flex shrink-0 items-center justify-center gap-8">
+            <div className="mt-5 flex shrink-0 items-center justify-center gap-7">
               {SOCIALS.map(({ label, Icon, href }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/10 text-[#2b2622] transition-all duration-300 hover:-translate-y-[1px] hover:border-black/20"
+                  className="flex h-[36px] w-[36px] items-center justify-center rounded-full border border-black/10 text-[#2b2622] transition-all duration-300 hover:-translate-y-[1px] hover:border-black/20"
                 >
                   <Icon size={16} />
                 </a>
@@ -248,10 +256,10 @@ function Drawer({
             </div>
 
             {/* Address */}
-            <div className="mt-[2vh] shrink-0 border-t border-black/5 pt-5">
+            <div className="mt-5 shrink-0 border-t border-black/5 pt-5">
               <div
                 className="text-center"
-                style={{ fontSize: "13px", lineHeight: 2, color: "rgba(30,25,21,0.72)" }}
+                style={{ fontSize: "12.5px", lineHeight: 1.9, color: "rgba(30,25,21,0.65)" }}
               >
                 Leo Hospitality &amp; Ventures LLP
                 <br />
@@ -266,23 +274,23 @@ function Drawer({
         /* ---- Mobile: dark drawer ---- */
         <div
           className={`${panelBase} flex w-[85%] max-w-[420px] flex-col md:w-[480px] md:max-w-none`}
-          style={{ ...panelStyle, background: "#16331f" }}
+          style={{ ...panelStyle, background: DARK_GREEN }}
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
         >
           <div
-            className="flex h-full flex-1 flex-col overflow-y-auto px-6 pb-10 pt-24 md:px-12"
+            className="flex h-full flex-1 flex-col overflow-y-auto px-6 pb-8 pt-[72px] md:px-12"
             style={{ scrollbarWidth: "none" }}
           >
             <p
-              className="mb-8 text-[10px] uppercase tracking-[0.2em]"
+              className="mb-6 text-[10px] uppercase tracking-[0.2em]"
               style={{ color: BRONZE }}
             >
-              Menu
+              Explore
             </p>
 
-            <nav className="flex flex-col gap-4">
+            <nav className="flex flex-col gap-3">
               {NAV_ITEMS.map((it, i) => (
                 <button
                   key={it.id}
@@ -299,7 +307,7 @@ function Drawer({
                     opacity: open ? 1 : 0,
                     transform: open ? "translateX(0)" : "translateX(20px)",
                   }}
-                  className="block w-fit text-[22px] leading-none transition-all duration-500 hover:text-[#a9814f] md:text-[26px] motion-reduce:transition-none"
+                  className="block w-fit text-[20px] leading-none transition-all duration-500 hover:text-[#b89f7a] md:text-[24px] motion-reduce:transition-none"
                 >
                   {it.label}
                 </button>
@@ -307,20 +315,9 @@ function Drawer({
             </nav>
 
             <div
-              className="my-8 h-px w-full shrink-0"
+              className="my-6 h-px w-full shrink-0"
               style={{ background: "rgba(246,241,231,0.1)" }}
             />
-
-            <button
-              onClick={() => {
-                go("franchise")
-                close()
-              }}
-              className="flex h-14 w-full shrink-0 items-center justify-center gap-2 rounded-full text-base font-semibold transition-transform duration-200 active:scale-[0.98]"
-              style={{ background: BRONZE, color: "#16331f" }}
-            >
-              Partner With Us
-            </button>
 
             <div className="flex-grow" />
 
@@ -333,7 +330,7 @@ function Drawer({
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="transition-transform duration-300 hover:scale-110 hover:text-[#a9814f]"
+                  className="transition-transform duration-300 hover:scale-110 hover:text-[#b89f7a]"
                   style={{ color: CREAM }}
                 >
                   <Icon size={18} />
@@ -419,9 +416,9 @@ export function Nav({
     }
   }, [open])
 
-  const headerText = overDark ? CREAM : INK
-  const headerMuted = overDark ? "rgba(246,241,231,0.72)" : "rgba(32,29,24,0.72)"
-  const headerBorder = overDark ? "rgba(246,241,231,0.15)" : "rgba(32,29,24,0.15)"
+  const headerText = overDark ? CREAM : "#3e5225"
+  const headerMuted = overDark ? "rgba(248,246,241,0.88)" : "rgba(46,46,46,0.85)"
+  const headerBorder = overDark ? "rgba(248,246,241,0.15)" : "rgba(215,201,177,0.4)"
   const burgerColor = open ? (isDesktop ? BRONZE : CREAM) : headerText
 
   return (
@@ -431,14 +428,21 @@ export function Nav({
         style={{
           background: scrolled
             ? overDark
-              ? "rgba(22,51,31,0.9)"
-              : "rgba(246,241,231,0.92)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(16px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
+              ? "rgba(62,82,37,0.94)"
+              : "rgba(248,246,241,0.95)"
+            : overDark
+              ? "rgba(62,82,37,0.45)"
+              : "rgba(248,246,241,0.5)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
           borderBottom: scrolled
             ? `1px solid ${headerBorder}`
-            : "1px solid transparent",
+            : overDark
+              ? "1px solid rgba(248,246,241,0.15)"
+              : "1px solid rgba(215,201,177,0.35)",
+          boxShadow: scrolled
+            ? "0 10px 30px -10px rgba(0,0,0,0.08)"
+            : "0 4px 20px -4px rgba(0,0,0,0.03)",
         }}
       >
         <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-14">
@@ -452,15 +456,15 @@ export function Nav({
               <img
                 src={overDark ? logoDark : logoLight}
                 alt="Leo Hospitality & Ventures"
-                className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-opacity duration-300"
+                className="h-9 w-auto shrink-0 object-contain transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] sm:h-10 lg:h-9 xl:h-11"
                 style={{
-                  opacity: 0.95,
+                  opacity: 0.98,
                 }}
               />
             </button>
 
             {/* Desktop links */}
-            <nav className="hidden items-center gap-11 lg:flex">
+            <nav className="hidden items-center gap-6 lg:flex xl:gap-9">
               {BAR_LINKS.map((id) => {
                 const item = NAV_ITEMS.find((n) => n.id === id)
                 if (!item) return null
@@ -470,14 +474,16 @@ export function Nav({
                     key={id}
                     onClick={() => go(id)}
                     aria-current={isCurrent ? "page" : undefined}
-                    className="relative uppercase tracking-[0.2em] transition-colors duration-300"
+                    className="relative shrink-0 whitespace-nowrap uppercase tracking-[0.14em] transition-colors duration-300 font-medium xl:tracking-[0.2em]"
                     style={{
-                      fontSize: "13px",
-                      fontWeight: 500,
+                      fontSize: "12.5px",
                       color: isCurrent ? headerText : headerMuted,
+                      textShadow: overDark
+                        ? "0 1px 2px rgba(0,0,0,0.3)"
+                        : "0 1px 1px rgba(255,255,255,0.6)",
                     }}
                     onMouseEnter={(e) => {
-                      if (!isCurrent) e.currentTarget.style.color = headerText
+                      if (!isCurrent) e.currentTarget.style.color = BRONZE
                     }}
                     onMouseLeave={(e) => {
                       if (!isCurrent) e.currentTarget.style.color = headerMuted
@@ -491,7 +497,7 @@ export function Nav({
                           left: 0,
                           right: 0,
                           bottom: "-6px",
-                          height: "1px",
+                          height: "1.5px",
                           background: BRONZE,
                         }}
                       />
@@ -501,56 +507,43 @@ export function Nav({
               })}
             </nav>
 
-            {/* Right cluster */}
-            <div className="flex items-center gap-2 md:gap-4">
-              <button
-                onClick={() => go("franchise")}
-                className="hidden items-center gap-2 uppercase tracking-[0.2em] transition-colors duration-300 md:inline-flex"
-                style={{ fontSize: "12px", fontWeight: 500, color: headerMuted }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = headerText
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = headerMuted
-                }}
-              >
-                <IconHandshake size={14} /> Partner
-              </button>
-
-              {/* Compact partner action on mobile */}
-              <button
-                onClick={() => go("franchise")}
-                className="inline-flex h-10 w-10 items-center justify-center transition-transform duration-300 hover:scale-105 md:hidden"
-                style={{ color: headerMuted }}
-                aria-label="Partner with us"
-              >
-                <IconHandshake size={19} />
-              </button>
-
-              {/* Burger — present on both mobile and desktop */}
+            {/* Right cluster: Burger Menu Button */}
+            <div className="flex shrink-0 items-center gap-2 md:gap-4">
               <button
                 onClick={() => setOpen((o) => !o)}
-                className="relative z-[9999] ml-1 flex h-11 w-11 items-center justify-center md:ml-2"
+                className="relative z-[9999] flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
+                style={{
+                  background: open
+                    ? "transparent"
+                    : overDark
+                      ? "rgba(255,255,255,0.1)"
+                      : "rgba(255,255,255,0.5)",
+                  border: open
+                    ? "none"
+                    : overDark
+                      ? "1px solid rgba(255,255,255,0.2)"
+                      : "1px solid rgba(20,45,28,0.15)",
+                }}
               >
-                <span className="relative block h-[18px] w-[26px]">
+                <span className="relative block h-[16px] w-[22px]">
                   <span
                     className="absolute left-0 top-0 block h-[1.5px] w-full rounded-full transition-all duration-[350ms] motion-reduce:transition-none"
                     style={{
                       background: burgerColor,
-                      transform: open ? "translateY(8px) rotate(45deg)" : "none",
+                      transform: open ? "translateY(7px) rotate(45deg)" : "none",
                     }}
                   />
                   <span
-                    className="absolute left-0 top-[8px] block h-[1.5px] w-full rounded-full transition-opacity duration-200 motion-reduce:transition-none"
+                    className="absolute left-0 top-[7px] block h-[1.5px] w-full rounded-full transition-opacity duration-200 motion-reduce:transition-none"
                     style={{ background: burgerColor, opacity: open ? 0 : 1 }}
                   />
                   <span
-                    className="absolute left-0 top-[16px] block h-[1.5px] w-full rounded-full transition-all duration-[350ms] motion-reduce:transition-none"
+                    className="absolute left-0 top-[14px] block h-[1.5px] w-full rounded-full transition-all duration-[350ms] motion-reduce:transition-none"
                     style={{
                       background: burgerColor,
-                      transform: open ? "translateY(-8px) rotate(-45deg)" : "none",
+                      transform: open ? "translateY(-7px) rotate(-45deg)" : "none",
                     }}
                   />
                 </span>

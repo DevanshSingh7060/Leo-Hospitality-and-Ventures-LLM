@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import type { PageId } from "./lib/pages"
 import { Nav } from "./components/Nav"
 import { Footer } from "./components/Footer"
+import { IntroSplash } from "./components/IntroSplash"
 import { Home } from "./pages/Home"
 import { About } from "./pages/About"
 import { Ventures } from "./pages/Ventures"
@@ -15,6 +16,8 @@ import { Contact } from "./pages/Contact"
 
 export default function App() {
   const [page, setPage] = useState<PageId>("home")
+  // Intro splash is on hold — kept wired but disabled. Flip to `true` to re-enable.
+  const [showIntro, setShowIntro] = useState(false) // just to on banner make it true
 
   const go = (p: PageId) => {
     setPage(p)
@@ -43,7 +46,7 @@ export default function App() {
       case "services": return <Services go={go} />
       case "experience": return <Experience go={go} />
       case "gallery": return <Gallery go={go} />
-      case "franchise": return <Franchise go={go} />
+      // case "franchise": return <Franchise go={go} />
       case "careers": return <Careers go={go} />
       case "vendor": return <Vendor go={go} />
       case "contact": return <Contact go={go} />
@@ -52,6 +55,7 @@ export default function App() {
 
   return (
     <div className="min-h-full bg-cream">
+      {showIntro && <IntroSplash onEnter={() => setShowIntro(false)} />}
       <Nav page={page} go={go} overHero={overHero} />
       <main id="main-content">
         <div key={page} className="page-enter">

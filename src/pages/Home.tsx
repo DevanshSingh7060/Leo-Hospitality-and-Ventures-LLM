@@ -5,6 +5,7 @@ import {
   Kicker,
   Reveal,
   IMG,
+  SpotlightCard,
   usePrefersReducedMotion,
 } from "../lib/ui"
 import {
@@ -45,65 +46,76 @@ function Hero({ go }: { go: (p: PageId) => void }) {
   })
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-cream snap-start snap-always">
-      {/* Background visual with parallax drift — kept at full brightness */}
+    <section
+      data-tone="dark"
+      className="relative flex min-h-screen items-center overflow-hidden bg-ink snap-start snap-always"
+    >
+      {/* Dark, calm background with gentle parallax drift */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src={IMG.heroInterior}
-          alt="Warm luxury hospitality room"
+          src={IMG.lamps}
+          alt="Intimate, warmly lit fine-dining room"
           data-parallax-hero-bg="0.2"
           className="absolute inset-0 w-full h-[125%] -top-[12%] object-cover"
-          style={{ filter: "saturate(1.04) brightness(1.06)" }}
+          style={{ filter: "contrast(1.12) saturate(1.12)" }}
         />
-        {/* Single directional wash — only as strong as the headline needs on the
-            left, fading to a clear, bright image on the right. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/55 to-transparent" />
+        {/* Calm dark scrims — left-weighted for text legibility, plus depth
+            at the top (nav) and bottom (grounding). */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/45" />
       </div>
 
-      <div className="mx-auto w-full max-w-[1440px] px-6 pt-32 pb-16 lg:px-12 relative z-10">
-        <div style={heroItemStyle(0)}>
-          <Kicker tone="forest">
-            Hospitality Management | Restaurant & Café Operations | Cloud
-            Kitchens | Business Ventures
-          </Kicker>
-        </div>
+      <div className="mx-auto w-full max-w-[1440px] px-6 pt-36 pb-16 sm:pt-40 lg:pt-44 lg:px-12 relative z-10">
+        <div className="max-w-3xl">
+          <div style={heroItemStyle(0)}>
+            <div className="inline-block text-[11px] sm:text-xs uppercase tracking-[0.22em] font-semibold text-bronze">
+              Hospitality Management &bull; Restaurant &amp; Café Operations
+              &bull; Cloud Kitchens &bull; Business Ventures
+            </div>
+          </div>
 
-        <h1
-          className="mt-6 max-w-4xl text-[3rem] leading-[0.98] tracking-[-0.02em] text-[#1a2e22] sm:text-7xl lg:text-[5.5rem]"
-          style={{
-            ...heroItemStyle(150),
-            fontFamily: "var(--font-display)",
-            fontWeight: 400,
-          }}
-        >
-          Creating Experiences.
-          <br />
-          <span className="italic text-[#a97c50]">Building</span> Hospitality
-          Brands.
-        </h1>
+          <h1
+            className="mt-6 text-[2.85rem] leading-[1.08] tracking-[-0.015em] text-paper sm:text-6xl lg:text-[4.35rem]"
+            style={{
+              ...heroItemStyle(150),
+              fontFamily: "var(--font-display)",
+              fontWeight: 400,
+              textShadow: "0 2px 34px rgba(0,0,0,0.55)",
+            }}
+          >
+            Creating Experiences.
+            <br />
+            <span className="italic font-normal text-bronze">Building</span>{" "}
+            Hospitality Brands.
+          </h1>
 
-        <p
-          className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-[#201d18] opacity-90"
-          style={heroItemStyle(280)}
-        >
-          We provide operational oversight, concept formulation, and management
-          systems for restaurants, cafés, clubhouse dining, and delivery-first
-          kitchen ventures.
-        </p>
+          <p
+            className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-paper/85"
+            style={{
+              ...heroItemStyle(280),
+              textShadow: "0 1px 16px rgba(0,0,0,0.5)",
+            }}
+          >
+            We provide operational oversight, concept formulation, and
+            management systems for restaurants, cafés, clubhouse dining, and
+            delivery-first kitchen ventures.
+          </p>
 
-        <div className="mt-10 flex flex-wrap gap-4" style={heroItemStyle(400)}>
-          <Button onClick={() => go("ventures")}>
-            Explore Our Ventures <Arrow />
-          </Button>
-          <Button variant="secondary" onClick={() => go("franchise")}>
-            Partner With Us
-          </Button>
+          <div className="mt-8 flex flex-wrap gap-4" style={heroItemStyle(400)}>
+            <Button onClick={() => go("ventures")}>
+              Explore Our Ventures <Arrow />
+            </Button>
+            <Button variant="light" onClick={() => go("franchise")}>
+              Partner With Us
+            </Button>
+          </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-forest/60 lg:flex z-10">
-        <span className="kicker text-[0.62rem]">Scroll</span>
-        <span className="h-10 w-px animate-pulse bg-forest/40" />
+      {/* Scroll cue */}
+      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-paper/60 lg:flex z-10">
+        <span className="text-[0.62rem] uppercase tracking-[0.28em]">Scroll</span>
+        <span className="h-10 w-px animate-pulse bg-paper/40" />
       </div>
     </section>
   )
@@ -263,7 +275,7 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
         <Reveal>
           <Kicker>Experience</Kicker>
           <h2
-            className="mt-5 text-4xl sm:text-5xl leading-tight tracking-[-0.02em] text-[#1a2e22]"
+            className="mt-5 text-4xl sm:text-5xl leading-tight tracking-[-0.02em] text-ink"
             style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
           >
             Proven rooms,{" "}
@@ -364,7 +376,16 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
   )
 }
 
-/* ---------- SERVICE CARD WITH FLAT DESIGN & SHARP CORNERS ---------- */
+/* Image pairing for each service */
+const SERVICE_IMAGES = [
+  { img: IMG.diningRoom, alt: "Restaurant and café dining space" },
+  { img: IMG.dessertPlatter, alt: "Plated culinary menu presentation" },
+  { img: IMG.woodTable, alt: "Interior setup ready for opening night" },
+  { img: IMG.containers, alt: "Cloud kitchen delivery dispatch operations" },
+  { img: IMG.chefBoard, alt: "Culinary standards and kitchen preparation board" },
+]
+
+/* ---------- LUXURY EDITORIAL SERVICE CARD ---------- */
 function ServiceCard({
   service,
   index,
@@ -375,30 +396,58 @@ function ServiceCard({
   go: (p: PageId) => void
 }) {
   const [hovered, setHovered] = useState(false)
+  const imageInfo = SERVICE_IMAGES[index] || {
+    img: IMG.diningRoom,
+    alt: service.t,
+  }
 
   return (
-    <div
+    <SpotlightCard
+      spotlightColor="rgba(184, 159, 122, 0.18)"
+      spotlightSize={420}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => go("services")}
-      className="group card-lift cursor-pointer rounded-none border border-line bg-paper p-8 hover:border-forest flex flex-col justify-between min-h-[320px]"
+      className="group flex h-full flex-col justify-between border border-line bg-extra-light shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-bronze hover:shadow-2xl cursor-pointer"
+      style={{
+        boxShadow: hovered
+          ? "0 24px 50px -15px rgba(62, 82, 37, 0.12), inset 0 1px 0 rgba(255,255,255,0.9)"
+          : "0 4px 20px -2px rgba(46, 46, 46, 0.04)",
+      }}
     >
       <div>
-        <div className="flex items-start justify-between">
-          <span className="font-display text-sm text-bronze">{service.n}</span>
-          <div
-            className="text-forest transition-colors duration-300"
-            style={{
-              color: hovered ? "var(--color-bronze)" : "var(--color-forest)",
-            }}
-          >
+        {/* Photo Header with subtle zoom */}
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-cream">
+          <img
+            src={imageInfo.img}
+            alt={imageInfo.alt}
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            style={{ filter: "saturate(1.04) brightness(1.02)" }}
+            loading="lazy"
+          />
+          {/* Subtle gradient vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/65 via-ink/15 to-transparent" />
+
+          {/* Floating Glass Number Badge */}
+          <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/40 bg-white/70 px-3 py-1 shadow-xs backdrop-blur-md">
+            <span className="font-display text-xs font-semibold text-bronze">
+              {service.n}
+            </span>
+            <span className="h-1 w-1 rounded-full bg-forest" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-forest">
+              Discipline
+            </span>
+          </div>
+
+          {/* Floating Glass Icon Badge */}
+          <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/40 bg-white/75 text-forest shadow-xs backdrop-blur-md transition-colors group-hover:bg-forest group-hover:text-paper">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
+              width="18"
+              height="18"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.2"
+              strokeWidth="1.4"
               strokeLinecap="round"
               strokeLinejoin="round"
             >
@@ -407,24 +456,111 @@ function ServiceCard({
           </div>
         </div>
 
-        <h3
-          className="mt-6 text-2xl font-normal text-ink tracking-tight transition-colors duration-300 group-hover:text-forest"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {service.t}
-        </h3>
-        <p className="mt-3 text-sm text-ink-soft leading-relaxed">
-          {service.d}
-        </p>
+        {/* Card Body */}
+        <div className="p-7">
+          <h3
+            className="text-2xl font-normal tracking-tight text-ink transition-colors duration-300 group-hover:text-forest"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {service.t}
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+            {service.d}
+          </p>
+
+          {/* Capability Tags */}
+          {service.caps && service.caps.length > 0 && (
+            <div className="mt-5 flex flex-wrap gap-1.5">
+              {service.caps.slice(0, 3).map((cap) => (
+                <span
+                  key={cap}
+                  className="rounded-full border border-line bg-cream/60 px-2.5 py-1 text-[11px] text-ink-soft transition-colors group-hover:border-forest/30 group-hover:bg-cream"
+                >
+                  {cap}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-forest group-hover:text-bronze transition-colors">
-        <span>Capabilities</span>
-        <span className="transition-transform duration-300 group-hover:translate-x-1">
+      {/* Footer Action */}
+      <div className="border-t border-line/60 px-7 py-4 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-forest transition-colors group-hover:text-bronze">
+        <span>Detailed Scope</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-1.5">
           →
         </span>
       </div>
-    </div>
+    </SpotlightCard>
+  )
+}
+
+/* ---------- 06. BESPOKE ADVISORY CARD TO COMPLETE THE 3x2 GRID ---------- */
+function AdvisoryCard({ go }: { go: (p: PageId) => void }) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <SpotlightCard
+      spotlightColor="rgba(248, 246, 241, 0.16)"
+      spotlightSize={420}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={() => go("franchise")}
+      className="group flex h-full flex-col justify-between border border-white/20 bg-forest-deep p-8 shadow-xl backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1.5 hover:border-bronze hover:shadow-2xl cursor-pointer text-paper"
+      style={{
+        boxShadow: hovered
+          ? "0 24px 60px -15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.18)"
+          : "0 12px 30px -10px rgba(0, 0, 0, 0.3)",
+      }}
+    >
+      <div>
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-bronze backdrop-blur-md">
+            <span>06</span>
+            <span className="h-1 w-1 rounded-full bg-bronze" />
+            <span>Advisory</span>
+          </div>
+
+          <span className="rounded-full border border-bronze/50 bg-bronze/20 px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-paper/90">
+            Bespoke
+          </span>
+        </div>
+
+        <h3
+          className="mt-8 text-2xl font-normal tracking-tight text-paper"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Bespoke Venture &amp; Portfolio Advisory
+        </h3>
+        <p className="mt-4 text-sm leading-relaxed text-paper/75">
+          Have an atypical asset, high-profile heritage venue, or multi-brand
+          portfolio requirement? Our principals structure custom joint ventures
+          and turnkey operating contracts.
+        </p>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {[
+            "Distressed Turnarounds",
+            "Institutional F&B",
+            "Private Equity Review",
+          ].map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] text-paper/80 backdrop-blur-sm"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-10 border-t border-white/15 pt-5 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-bronze transition-colors group-hover:text-paper">
+        <span>Consult With Principals</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+          →
+        </span>
+      </div>
+    </SpotlightCard>
   )
 }
 
@@ -545,17 +681,21 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       },
     })
 
-    // 4. Hero Background image continuous drift
-    const triggerHero = gsap.to("[data-parallax-hero-bg]", {
-      yPercent: 12,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "section",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    })
+    // 4. Hero background image drift — keyed to its own section.
+    const heroTweens = gsap.utils
+      .toArray<HTMLElement>("[data-parallax-hero-bg]")
+      .map((el) =>
+        gsap.to(el, {
+          yPercent: 12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el.closest("section") || el,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        }),
+      )
 
     return () => {
       triggerWho.scrollTrigger?.kill()
@@ -564,8 +704,10 @@ export function Home({ go }: { go: (p: PageId) => void }) {
       triggerV1.kill()
       triggerV2.scrollTrigger?.kill()
       triggerV2.kill()
-      triggerHero.scrollTrigger?.kill()
-      triggerHero.kill()
+      heroTweens.forEach((t) => {
+        t.scrollTrigger?.kill()
+        t.kill()
+      })
     }
   }, [reducedMotion])
 
@@ -592,7 +734,7 @@ export function Home({ go }: { go: (p: PageId) => void }) {
             <Reveal>
               <Kicker>Who We Are</Kicker>
               <h2
-                className="mt-6 text-4xl leading-tight tracking-[-0.02em] text-[#1a2e22] sm:text-5xl font-normal"
+                className="mt-6 text-4xl leading-tight tracking-[-0.02em] text-ink sm:text-5xl font-normal"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Transforming spaces, managing destinations.
@@ -658,7 +800,7 @@ export function Home({ go }: { go: (p: PageId) => void }) {
           <Reveal className="max-w-xl">
             <span className="kicker text-bronze">Future Ventures</span>
             <h2
-              className="mt-4 text-3xl sm:text-4xl text-[#1a2e22] font-normal tracking-tight"
+              className="mt-4 text-3xl sm:text-4xl text-ink font-normal tracking-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Incubating new concepts.
@@ -681,26 +823,113 @@ export function Home({ go }: { go: (p: PageId) => void }) {
         </div>
       </section>
 
-      {/* SERVICES SECTION */}
-      <section className="bg-paper py-24 lg:py-32">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <Reveal className="mb-14">
-            <Kicker>What We Do</Kicker>
-            <h2
-              className="mt-5 max-w-2xl text-4xl leading-tight tracking-[-0.02em] sm:text-5xl text-[#1a2e22]"
-              style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
-            >
-              Five disciplines, one standard of care.
-            </h2>
-          </Reveal>
+      {/* SERVICES SECTION — LUXURY EDITORIAL SHOWCASE */}
+      <section className="relative overflow-hidden bg-cream py-24 lg:py-32 border-b border-line/40">
+        {/* Ambient background glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-bronze/10 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 left-0 h-96 w-96 rounded-full bg-forest/5 blur-3xl"
+        />
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12">
+          {/* Editorial Split Header */}
+          <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <Reveal className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-forest/15 bg-forest/5 px-3.5 py-1 text-xs font-semibold tracking-wider text-forest uppercase mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-bronze animate-pulse" />
+                Comprehensive Capabilities
+              </div>
+              <h2
+                className="text-4xl leading-[1.12] tracking-[-0.025em] sm:text-5xl lg:text-[52px] text-ink"
+                style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
+              >
+                Five disciplines, <br className="hidden sm:inline" />
+                <span className="italic text-forest">one standard</span> of care.
+              </h2>
+            </Reveal>
+
+            <Reveal delay={120} className="lg:col-span-5 flex flex-col justify-end">
+              <p className="text-base sm:text-lg leading-relaxed text-ink-soft">
+                From concept incubation to full turnkey management, our multidisciplinary teams bring institutional rigor, culinary distinction, and investor alignment to every stage of hospitality.
+              </p>
+              <div className="mt-6 flex items-center gap-6">
+                <button
+                  onClick={() => go("services")}
+                  className="group inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-forest hover:text-bronze transition-colors focus:outline-none"
+                >
+                  <span>Explore All Services &amp; Methodologies</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                    →
+                  </span>
+                </button>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* 3x2 Grid: 5 Core Disciplines + 1 Bespoke Advisory Card */}
+          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES_DATA.map((service, idx) => (
               <Reveal key={service.n} delay={idx * 60}>
                 <ServiceCard service={service} index={idx} go={go} />
               </Reveal>
             ))}
+            <Reveal delay={SERVICES_DATA.length * 60}>
+              <AdvisoryCard go={go} />
+            </Reveal>
           </div>
+
+          {/* Operational Standard Banner */}
+          <Reveal delay={400} className="mt-14">
+            <div className="rounded-2xl border border-line bg-paper/80 p-6 sm:p-8 backdrop-blur-md shadow-xs">
+              <div className="grid gap-6 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line/60">
+                <div className="flex items-start gap-4 pt-4 md:pt-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-forest">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">Turnkey Delivery Framework</h4>
+                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+                      Rapid 90–120 day pre-opening schedule with dedicated site engineering and vendor management.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 pt-4 md:pt-0 md:pl-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-bronze/10 text-bronze">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">Centralized Cost &amp; Menu SOPs</h4>
+                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+                      Recipe-level COGS control, institutional supplier contracts, and real-time food waste analytics.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 pt-4 md:pt-0 md:pl-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-forest">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">Principal-Led Governance</h4>
+                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+                      Every project receives direct executive partner oversight and weekly unit-level financial audits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

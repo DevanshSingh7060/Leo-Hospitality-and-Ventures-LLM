@@ -117,6 +117,7 @@ function ProjectsParallax() {
                           src={p.img}
                           alt={p.name}
                           loading="lazy"
+                          style={{ filter: "saturate(1.04) brightness(1.05)" }}
                           className="h-full w-full object-cover"
                         />
                       </div>

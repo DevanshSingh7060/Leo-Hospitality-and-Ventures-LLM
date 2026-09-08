@@ -272,7 +272,7 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
           {/* Close button */}
           <button
             onClick={() => setLightboxIdx(null)}
-            className="absolute top-6 right-6 text-paper/80 hover:text-paper text-3xl font-light p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
+            className="glass-dark absolute top-6 right-6 flex h-11 w-11 items-center justify-center text-2xl font-light text-paper/90 hover:text-paper cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
             aria-label="Close lightbox"
           >
             &times;
@@ -286,7 +286,7 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
                 prev !== null ? (prev - 1 + shown.length) % shown.length : null,
               )
             }}
-            className="absolute left-4 sm:left-8 text-paper/70 hover:text-paper text-5xl font-light p-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
+            className="glass-dark absolute left-4 sm:left-8 flex h-12 w-12 items-center justify-center text-4xl font-light text-paper/80 hover:text-paper cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
             aria-label="Previous image"
           >
             &#8249;
@@ -299,7 +299,7 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
                 prev !== null ? (prev + 1) % shown.length : null,
               )
             }}
-            className="absolute right-4 sm:right-8 text-paper/70 hover:text-paper text-5xl font-light p-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
+            className="glass-dark absolute right-4 sm:right-8 flex h-12 w-12 items-center justify-center text-4xl font-light text-paper/80 hover:text-paper cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest rounded-full"
             aria-label="Next image"
           >
             &#8250;
@@ -320,11 +320,11 @@ export function Gallery({ go }: { go: (p: PageId) => void }) {
                 reducedMotion ? "" : "lightbox-img"
               }`}
             />
-            <div className="mt-4 text-center">
-              <span className="kicker text-bronze">
+            <div className="glass-dark mt-4 rounded-full px-5 py-2.5 text-center">
+              <span className="kicker justify-center text-bronze">
                 {shown[lightboxIdx].cat}
               </span>
-              <p className="text-xs text-paper/60 mt-1">
+              <p className="text-xs text-paper/70 mt-1">
                 Image {lightboxIdx + 1} of {shown.length} &middot; Navigate with
                 arrow keys or swipe
               </p>

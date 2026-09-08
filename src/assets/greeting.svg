@@ -7,15 +7,15 @@
   aria-label="Two people greeting each other in a café setting"
 >
   <!-- Cream ground matches --color-cream so the panel sits seamlessly on the page -->
-  <rect width="1600" height="700" fill="#f6f1e7" />
+  <rect width="1600" height="700" fill="#f8f6f1" />
 
   <!-- Soft bronze halo behind the greeting -->
-  <circle cx="800" cy="360" r="232" fill="#a9814f" opacity="0.08" />
+  <circle cx="800" cy="360" r="232" fill="#b89f7a" opacity="0.08" />
 
   <!-- ARCHITECTURE: arched windows set back behind the room -->
   <g
     fill="none"
-    stroke="#a9814f"
+    stroke="#b89f7a"
     stroke-opacity="0.3"
     stroke-width="3"
     stroke-linecap="round"
@@ -29,7 +29,7 @@
   <!-- Pendant lamps -->
   <g
     fill="none"
-    stroke="#a9814f"
+    stroke="#b89f7a"
     stroke-opacity="0.5"
     stroke-width="3"
     stroke-linecap="round"
@@ -44,7 +44,7 @@
   <!-- Floor -->
   <path
     d="M120 600 H1480"
-    stroke="#a9814f"
+    stroke="#b89f7a"
     stroke-opacity="0.35"
     stroke-width="3"
     stroke-linecap="round"
@@ -65,7 +65,7 @@
   <path
     d="M132 542 L143 598 H177 L188 542 Z"
     fill="none"
-    stroke="#a9814f"
+    stroke="#b89f7a"
     stroke-width="3.5"
     stroke-linejoin="round"
   />
@@ -73,7 +73,7 @@
   <!-- Bistro table with two cups, right -->
   <g
     fill="none"
-    stroke="#a9814f"
+    stroke="#b89f7a"
     stroke-width="3.5"
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -128,11 +128,11 @@
     cy="400"
     rx="32"
     ry="22"
-    fill="#f6f1e7"
-    stroke="#a9814f"
+    fill="#f8f6f1"
+    stroke="#b89f7a"
     stroke-width="4.5"
   />
-  <g stroke="#a9814f" stroke-width="3" stroke-linecap="round">
+  <g stroke="#b89f7a" stroke-width="3" stroke-linecap="round">
     <path d="M787 393 H813" />
     <path d="M787 408 H813" />
   </g>
