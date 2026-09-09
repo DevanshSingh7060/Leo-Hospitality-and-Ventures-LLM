@@ -180,26 +180,40 @@ export function Field({
 }
 
 const inputCls =
-  "w-full rounded-none border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 transition-colors duration-200 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20"
+  "w-full rounded-none border border-[#cfc8bc] bg-white px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-200 focus:border-forest focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest/20"
 
-export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
+export function Input({
+  className = "",
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) {
   const id = props.id || props.name || undefined
-  return <input id={id} className={inputCls} {...props} />
+  return <input id={id} className={`${inputCls} ${className}`} {...props} />
 }
-export function Textarea(
-  props: React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-) {
+
+export function Textarea({
+  className = "",
+  ...props
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const id = props.id || props.name || undefined
   return (
-    <textarea id={id} rows={4} className={`${inputCls} resize-y`} {...props} />
+    <textarea
+      id={id}
+      rows={4}
+      className={`${inputCls} resize-y ${className}`}
+      {...props}
+    />
   )
 }
-export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
+
+export function Select({
+  className = "",
+  ...props
+}: React.SelectHTMLAttributes<HTMLSelectElement>) {
   const id = props.id || props.name || undefined
   return (
     <select
       id={id}
-      className={`${inputCls} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%235b544a%22 stroke-width=%221.6%22><path d=%22M4 6l4 4 4-4%22/></svg>')] bg-[right_1rem_center] bg-no-repeat pr-10`}
+      className={`${inputCls} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 fill=%22none%22 stroke=%22%235b544a%22 stroke-width=%221.6%22><path d=%22M4 6l4 4 4-4%22/></svg>')] bg-[right_1rem_center] bg-no-repeat pr-10 ${className}`}
       {...props}
     />
   )

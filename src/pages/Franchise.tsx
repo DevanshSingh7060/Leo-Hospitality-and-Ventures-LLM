@@ -11,6 +11,7 @@ import {
   Textarea,
 } from "../lib/ui"
 import { PageHero, Section } from "../components/PageHero"
+import { SuccessModal } from "../components/SuccessModal"
 import type { PageId } from "../lib/pages"
 
 const CATEGORIES = [
@@ -45,6 +46,18 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     type: "",
     message: "",
   })
+
+  const resetForm = () => {
+    setSent(false)
+    setForm({
+      name: "",
+      company: "",
+      phone: "",
+      email: "",
+      type: "",
+      message: "",
+    })
+  }
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -135,7 +148,6 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     setTimeout(() => {
       setSubmitting(false)
       setSent(true)
-      window.scrollTo({ top: 400, behavior: "smooth" })
     }, 1500)
   }
 
@@ -204,27 +216,6 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
           </Reveal>
 
           <Reveal delay={100}>
-            {sent ? (
-              <div className="glass-light rounded-none p-10 text-ink text-center animate-fadeIn">
-                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forest/10 text-forest text-3xl font-bold">
-                  ✓
-                </div>
-                <h3
-                  className="font-display text-4xl text-forest"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Thank you.
-                </h3>
-                <p className="mt-4 text-ink-soft leading-relaxed max-w-md mx-auto">
-                  Your franchise inquiry has been registered. Our business
-                  development team will review your location parameters and
-                  follow up in 2-3 business days.
-                </p>
-                <Button className="mt-8" onClick={() => go("home")}>
-                  Back to home <Arrow />
-                </Button>
-              </div>
-            ) : (
               <form
                 onSubmit={handleSubmit}
                 noValidate
@@ -384,6 +375,47 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                   </Button>
                 </div>
               </form>
+
+            {sent && (
+              <SuccessModal
+                kicker="Enquiry Registered"
+                title={`Thank you${form.name ? `, ${form.name}` : ""}!`}
+                message={
+                  <>
+                    Your franchise enquiry has been registered. Our business
+                    development team will review your{" "}
+                    {form.type ? (
+                      <>
+                        interest in{" "}
+                        <span className="font-medium text-forest">
+                          &ldquo;{form.type}&rdquo;
+                        </span>{" "}
+                      </>
+                    ) : (
+                      "partnership details "
+                    )}
+                    and follow up within 2&ndash;3 business days.
+                  </>
+                }
+                summary={[
+                  ...(form.type
+                    ? [{ label: "Partnership", value: form.type }]
+                    : []),
+                  ...(form.phone
+                    ? [{ label: "Direct Phone", value: form.phone }]
+                    : []),
+                  {
+                    label: "Routing",
+                    value: "Business Development",
+                    accent: true,
+                  },
+                ]}
+                primaryLabel="Back to Home"
+                onPrimary={() => go("home")}
+                secondaryLabel="Send Another Enquiry"
+                onSecondary={resetForm}
+                onClose={resetForm}
+              />
             )}
           </Reveal>
         </div>

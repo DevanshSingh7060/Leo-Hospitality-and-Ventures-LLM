@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { SuccessModal } from "../components/SuccessModal"
 import {
   Button,
   Arrow,
@@ -199,6 +200,20 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  const resetForm = () => {
+    setSent(false)
+    setForm({
+      name: "",
+      company: "",
+      phone: "",
+      email: "",
+      enquiryType: "Franchise & Expansion",
+      location: "",
+      timeline: "Immediate (1–3 Months)",
+      message: "",
+    })
+  }
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -289,7 +304,6 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
     setTimeout(() => {
       setSubmitting(false)
       setSent(true)
-      window.scrollTo({ top: 350, behavior: "smooth" })
     }, 1300)
   }
 
@@ -558,97 +572,15 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
 
             {/* RIGHT COLUMN: BESPOKE INTERACTIVE ENQUIRY FORM — Frosted Glass Panel */}
             <Reveal delay={100}>
-              {sent ? (
-                <div
-                  className="relative overflow-hidden border border-white/80 bg-white/70 p-10 text-center shadow-xl backdrop-blur-2xl lg:p-14 animate-fadeIn"
-                  style={{
-                    boxShadow:
-                      "0 25px 60px -15px rgba(46,46,46,0.08), inset 0 1px 0 rgba(255,255,255,0.95)",
-                  }}
-                >
-                  {/* Four-leaf clover success watermark prints */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -top-8 -right-8 select-none text-accent-green opacity-[0.14]"
-                  >
-                    <FourLeafClover size={200} strokeWidth={1.2} fillOpacity={0.16} />
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -bottom-8 -left-8 select-none text-primary opacity-[0.10] -rotate-45"
-                  >
-                    <FourLeafClover size={160} strokeWidth={1.2} fillOpacity={0.14} />
-                  </div>
-
-                  <div className="relative z-10 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-forest text-paper shadow-lg">
-                    <Icon path={CHECK} size={32} />
-                  </div>
-
-                  <span className="font-mono text-xs uppercase tracking-[0.24em] text-bronze">
-                    Enquiry Logged
-                  </span>
-                  <h2
-                    className="mt-3 text-3xl text-forest sm:text-4xl"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    Your message is with our partners.
-                  </h2>
-
-                  <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-ink-soft">
-                    Thank you, <strong className="text-ink">{form.name}</strong>. A dedicated partner manager will evaluate your submission regarding{" "}
-                    <span className="font-medium text-forest">&ldquo;{form.enquiryType}&rdquo;</span> and reach back within 24&ndash;48 business hours.
-                  </p>
-
-                  {/* Submission Summary Ticket */}
-                  <div className="mx-auto mt-8 max-w-md border border-white/70 bg-white/60 p-5 text-left text-xs shadow-xs backdrop-blur-md">
-                    <div className="flex justify-between border-b border-line/40 pb-2.5">
-                      <span className="text-ink-soft">Channel:</span>
-                      <span className="font-semibold text-ink">{form.enquiryType}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-line/40 py-2.5">
-                      <span className="text-ink-soft">Direct Phone:</span>
-                      <span className="font-semibold text-ink">{form.phone}</span>
-                    </div>
-                    <div className="flex justify-between pt-2.5">
-                      <span className="text-ink-soft">Routing:</span>
-                      <span className="font-medium text-forest">Executive Partner Desk</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-10 flex flex-wrap justify-center gap-4">
-                    <Button onClick={() => go("home")}>
-                      Return Home <Arrow />
-                    </Button>
-                    <button
-                      onClick={() => {
-                        setSent(false)
-                        setForm({
-                          name: "",
-                          company: "",
-                          phone: "",
-                          email: "",
-                          enquiryType: "Franchise & Expansion",
-                          location: "",
-                          timeline: "Immediate (1–3 Months)",
-                          message: "",
-                        })
-                      }}
-                      className="inline-flex items-center gap-2 rounded-full border border-line/80 bg-white/50 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-ink backdrop-blur-md transition-colors hover:border-forest hover:text-forest"
-                    >
-                      Send Another Message
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  noValidate
-                  className="relative overflow-hidden border border-white/85 bg-white/75 p-8 shadow-[0_25px_60px_-15px_rgba(46,46,46,0.08)] backdrop-blur-2xl lg:p-12"
-                  style={{
-                    boxShadow:
-                      "0 25px 60px -15px rgba(46,46,46,0.08), inset 0 1px 0 rgba(255,255,255,0.98)",
-                  }}
-                >
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+                className="relative overflow-hidden border border-white/85 bg-white/75 p-8 shadow-[0_25px_60px_-15px_rgba(46,46,46,0.08)] backdrop-blur-2xl lg:p-12"
+                style={{
+                  boxShadow:
+                    "0 25px 60px -15px rgba(46,46,46,0.08), inset 0 1px 0 rgba(255,255,255,0.98)",
+                }}
+              >
                   {/* Subtle Botanical Four-Leaf Clover Watermark Prints */}
                   <div
                     aria-hidden="true"
@@ -911,6 +843,36 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
                     </Button>
                   </div>
                 </form>
+
+              {sent && (
+                <SuccessModal
+                  kicker="Enquiry Logged"
+                  title={`Thank you${form.name ? `, ${form.name}` : ""}!`}
+                  message={
+                    <>
+                      Your submission is received. A dedicated partner manager
+                      will personally evaluate your enquiry regarding{" "}
+                      <span className="font-medium text-forest">
+                        &ldquo;{form.enquiryType}&rdquo;
+                      </span>{" "}
+                      and reach back within 24&ndash;48 business hours.
+                    </>
+                  }
+                  summary={[
+                    { label: "Channel", value: form.enquiryType },
+                    { label: "Direct Phone", value: form.phone },
+                    {
+                      label: "Routing",
+                      value: "Executive Partner Desk",
+                      accent: true,
+                    },
+                  ]}
+                  primaryLabel="Return Home"
+                  onPrimary={() => go("home")}
+                  secondaryLabel="Send Another Message"
+                  onSecondary={resetForm}
+                  onClose={resetForm}
+                />
               )}
             </Reveal>
           </div>

@@ -446,7 +446,7 @@ export function Nav({
         }}
       >
         <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-14">
-          <div className="flex h-[72px] items-center justify-between">
+          <div className="relative flex h-[72px] items-center justify-between">
             {/* Logo */}
             <button
               onClick={() => go("home")}
@@ -464,7 +464,7 @@ export function Nav({
             </button>
 
             {/* Desktop links */}
-            <nav className="hidden items-center gap-6 lg:flex xl:gap-9">
+            <nav className="hidden items-center gap-6 lg:flex lg:absolute lg:left-1/2 lg:-translate-x-1/2 xl:gap-9">
               {BAR_LINKS.map((id) => {
                 const item = NAV_ITEMS.find((n) => n.id === id)
                 if (!item) return null
@@ -507,8 +507,38 @@ export function Nav({
               })}
             </nav>
 
-            {/* Right cluster: Burger Menu Button */}
-            <div className="flex shrink-0 items-center gap-2 md:gap-4">
+            {/* Vendor Registration — distinct CTA pill (desktop only) */}
+            <button
+              onClick={() => go("vendor")}
+              aria-current={page === "vendor" ? "page" : undefined}
+              className="hidden shrink-0 items-center gap-2 rounded-full border px-4 py-2 uppercase tracking-[0.16em] transition-all duration-300 lg:inline-flex"
+              style={{
+                fontSize: "11.5px",
+                fontWeight: 500,
+                color: page === "vendor" ? CREAM : headerText,
+                borderColor: BRONZE,
+                background: page === "vendor" ? BRONZE : "transparent",
+                textShadow: overDark
+                  ? "0 1px 2px rgba(0,0,0,0.3)"
+                  : "0 1px 1px rgba(255,255,255,0.6)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = BRONZE
+                e.currentTarget.style.color = CREAM
+              }}
+              onMouseLeave={(e) => {
+                if (page !== "vendor") {
+                  e.currentTarget.style.background = "transparent"
+                  e.currentTarget.style.color = headerText
+                }
+              }}
+            >
+              <IconHandshake size={14} />
+              Vendor Registration
+            </button>
+
+            {/* Right cluster: Burger Menu Button (mobile/tablet only) */}
+            <div className="flex shrink-0 items-center gap-2 md:gap-4 lg:hidden">
               <button
                 onClick={() => setOpen((o) => !o)}
                 className="relative z-[9999] flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"

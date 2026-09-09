@@ -14,15 +14,54 @@ import { Careers } from "./pages/Careers"
 import { Vendor } from "./pages/Vendor"
 import { Contact } from "./pages/Contact"
 
+const VALID_PAGES: PageId[] = [
+  "home",
+  "about",
+  "ventures",
+  "services",
+  "experience",
+  "gallery",
+  "franchise",
+  "careers",
+  "vendor",
+  "contact",
+]
+
+const getPageFromHash = (): PageId => {
+  if (typeof window === "undefined") return "home"
+  const hash = window.location.hash.replace(/^#\/?/, "")
+  return VALID_PAGES.includes(hash as PageId) ? (hash as PageId) : "home"
+}
+
 export default function App() {
-  const [page, setPage] = useState<PageId>("home")
+  const [page, setPage] = useState<PageId>(getPageFromHash)
   // Intro splash is on hold — kept wired but disabled. Flip to `true` to re-enable.
   const [showIntro, setShowIntro] = useState(false) // just to on banner make it true
 
   const go = (p: PageId) => {
     setPage(p)
+    if (typeof window !== "undefined") {
+      const newHash = p === "home" ? "" : `#${p}`
+      if (window.location.hash !== newHash) {
+        window.history.pushState(null, "", window.location.pathname + (newHash || ""))
+      }
+    }
     window.scrollTo({ top: 0, behavior: "auto" })
   }
+
+  // Handle browser Back / Forward buttons and manual hash changes in URL
+  useEffect(() => {
+    const handlePopState = () => {
+      setPage(getPageFromHash())
+    }
+
+    window.addEventListener("popstate", handlePopState)
+    window.addEventListener("hashchange", handlePopState)
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+      window.removeEventListener("hashchange", handlePopState)
+    }
+  }, [])
 
   useEffect(() => {
     document.title = "Leo Hospitality & Ventures LLP — Creating Experiences"
@@ -46,7 +85,7 @@ export default function App() {
       case "services": return <Services go={go} />
       case "experience": return <Experience go={go} />
       case "gallery": return <Gallery go={go} />
-      // case "franchise": return <Franchise go={go} />
+      case "franchise": return <Franchise go={go} />
       case "careers": return <Careers go={go} />
       case "vendor": return <Vendor go={go} />
       case "contact": return <Contact go={go} />
