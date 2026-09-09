@@ -132,7 +132,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
               </div>
               <h1
                 className="text-4xl leading-[1.08] tracking-[-0.02em] sm:text-6xl lg:text-[68px] text-ink"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 A management partner,{" "}
                 <br className="hidden sm:inline" />
@@ -235,7 +235,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 </div>
                 <h2
                   className="mt-5 text-3xl sm:text-4xl lg:text-[44px] leading-tight tracking-[-0.02em] text-ink"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   Great hospitality is engineered with rigor,{" "}
                   <span className="italic text-bronze">then delivered with warmth.</span>
@@ -287,7 +287,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
               </div>
               <h2
                 className="mt-4 text-3xl sm:text-4xl lg:text-5xl text-ink font-normal tracking-tight"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 The principles that protect our care.
               </h2>
@@ -326,7 +326,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
 
                     <h3
                       className="mt-6 text-xl font-normal tracking-tight text-ink transition-colors group-hover:text-forest"
-                      style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {v.t}
                     </h3>
@@ -357,7 +357,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
               </div>
               <h2
                 className="text-3xl sm:text-4xl lg:text-5xl text-ink font-normal tracking-tight"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 Ten years in hospitality. <br className="hidden sm:inline" />
                 <span className="italic text-bronze">Built shift by shift.</span>
@@ -398,7 +398,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
                     <div className="flex items-center gap-3">
                       <span
                         className="text-3xl sm:text-4xl font-normal text-forest tracking-tight"
-                        style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                        style={{ fontFamily: "var(--font-display)" }}
                       >
                         {t.y}
                       </span>
@@ -415,7 +415,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
 
                   <h3
                     className="mt-4 text-xl sm:text-2xl font-normal text-ink tracking-tight"
-                    style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {t.t}
                   </h3>
@@ -441,7 +441,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
               <Reveal key={s.label} delay={i * 80} className="pt-6 sm:pt-0 sm:px-6 first:pl-0 text-center sm:text-left">
                 <div
                   className="text-4xl sm:text-5xl lg:text-6xl font-light text-paper tracking-tight"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {s.val}
                 </div>
@@ -466,7 +466,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
             </div>
             <blockquote
               className="mt-6 text-2xl sm:text-3xl lg:text-[34px] leading-[1.35] tracking-[-0.015em] text-ink font-normal"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               We don&rsquo;t chase logos or transient opening hype. We build resilient operational engines that outlast the opening buzz — the quiet consistency that turns a first visit into an enduring habit.
             </blockquote>
@@ -494,7 +494,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 </span>
                 <h2
                   className="mt-3 text-3xl sm:text-4xl lg:text-5xl text-ink font-normal tracking-tight"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   Ready to elevate your venue&rsquo;s standards?
                 </h2>

@@ -284,7 +284,7 @@ function Drawer({
             style={{ scrollbarWidth: "none" }}
           >
             <p
-              className="mb-6 text-[10px] uppercase tracking-[0.2em]"
+              className="mb-6 text-[12px] font-medium uppercase tracking-[0.2em]"
               style={{ color: BRONZE }}
             >
               Explore
