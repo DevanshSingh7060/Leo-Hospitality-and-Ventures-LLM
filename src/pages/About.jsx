@@ -174,7 +174,7 @@ export function About({ go }) {
 
           {/* Panoramic Visual Banner with floating glass caption */}
           <Reveal delay={200} className="mt-14 lg:mt-20">
-            <div className="relative aspect-[16/7] w-full overflow-hidden rounded-2xl border border-line bg-cream shadow-xl">
+            <div className="relative aspect-[4/3] sm:aspect-[16/8] lg:aspect-[16/7] w-full overflow-hidden rounded-2xl border border-line bg-cream shadow-xl">
               <img
                 src={IMG.lamps}
                 alt="Leo Hospitality warm ambient lamps"
@@ -185,15 +185,15 @@ export function About({ go }) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
               {/* Floating Glass Badge */}
-              <div className="absolute bottom-6 left-6 right-6 sm:left-10 sm:right-auto flex max-w-lg items-center gap-4 rounded-xl border border-white/25 bg-white/20 p-4 shadow-xl backdrop-blur-xl text-paper">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-bronze text-paper font-display font-semibold text-base">
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-10 sm:right-auto flex max-w-lg items-center gap-3 sm:gap-4 rounded-xl border border-white/25 bg-white/20 p-2.5 sm:p-4 shadow-xl backdrop-blur-xl text-paper">
+                <div className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg bg-bronze text-paper font-display font-semibold text-xs sm:text-base">
                   01
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-bronze font-mono">
+                  <div className="text-[10px] sm:text-xs uppercase tracking-wider text-bronze font-mono">
                     Operational Mandate
                   </div>
-                  <div className="text-sm font-medium text-white/95 mt-0.5">
+                  <div className="text-xs sm:text-sm font-medium text-white/95 mt-0.5 leading-snug">
                     Bridging front-of-house theater with back-of-house fiduciary
                     discipline.
                   </div>

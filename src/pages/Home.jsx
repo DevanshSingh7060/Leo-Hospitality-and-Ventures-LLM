@@ -121,104 +121,191 @@ function Hero({ go }) {
 }
 
 /* ---------- STICKY PARALLAX VENTURE PANEL ---------- */
+/* ---------- STICKY BIDIRECTIONAL VENTURE PANEL ---------- */
 function VentureSlide({ venture, go, index }) {
   const reducedMotion = usePrefersReducedMotion()
-  const isEven = index % 2 === 0
+  const isBodhi = venture.id === "bodhi-tree" || index === 0
 
-  const panelClass = isEven ? "venture-panel-bodhi" : "venture-panel-ryvive"
-  const propClass = isEven ? "floating-prop-bodhi" : "floating-prop-ryvive"
+  const trackRef = useRef(null)
+  const textRef = useRef(null)
+  const imageRef = useRef(null)
+
+  useEffect(() => {
+    if (!trackRef.current || !textRef.current || !imageRef.current) return
+
+    // Bidirectional "curtain" directions (in percent of each panel's width):
+    //   Bodhi Tree  -> text enters from the LEFT (-100), image from the RIGHT (+100)
+    //   Ryvive Roots-> text enters from the RIGHT (+100), image from the LEFT (-100)
+    // Each panel exits back toward the side it came from.
+    const textFromX = isBodhi ? -100 : 100
+    const imageFromX = isBodhi ? 100 : -100
+    const OPACITY_FLOOR = 0.15
+
+    // Only run the scroll-driven sticky curtain on desktop. On phones/tablets
+    // the layout is a normal stacked section, so a tall pinned track + sliding
+    // panels would hijack native touch scrolling. gsap.matchMedia() sets up the
+    // animation for the desktop breakpoint only and automatically reverts all
+    // inline styles when leaving it (e.g. on resize), so mobile scrolls freely.
+    const mm = gsap.matchMedia()
+
+    mm.add(
+      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: trackRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        // Phase 1 — slide IN from opposite sides as the panel enters (0 -> 0.35).
+        tl.fromTo(
+          textRef.current,
+          { xPercent: textFromX, opacity: OPACITY_FLOOR },
+          { xPercent: 0, opacity: 1, ease: "power2.out", duration: 0.35 },
+          0
+        )
+        tl.fromTo(
+          imageRef.current,
+          { xPercent: imageFromX, opacity: OPACITY_FLOOR },
+          { xPercent: 0, opacity: 1, ease: "power2.out", duration: 0.35 },
+          0
+        )
+
+        // Phase 2 — hold both panels settled while the panel is pinned (0.35 -> 0.65).
+        tl.to({}, { duration: 0.3 }, 0.35)
+
+        // Phase 3 — slide OUT back toward their entry sides as the panel leaves (0.65 -> 1).
+        tl.to(
+          textRef.current,
+          { xPercent: textFromX, opacity: OPACITY_FLOOR, ease: "power2.in", duration: 0.35 },
+          0.65
+        )
+        tl.to(
+          imageRef.current,
+          { xPercent: imageFromX, opacity: OPACITY_FLOOR, ease: "power2.in", duration: 0.35 },
+          0.65
+        )
+      }
+    )
+
+    return () => mm.revert()
+  }, [isBodhi])
 
   return (
     <div
-      className={`grid grid-cols-1 lg:grid-cols-2 min-h-screen relative border-b border-white/10 bg-forest-deep snap-start snap-always ${panelClass}`}
+      ref={trackRef}
+      style={{ zIndex: 10 + index }}
+      className="relative w-full bg-forest-deep snap-start lg:h-[190vh]"
     >
-      {/* 1. STICKY IMAGE COLUMN (CSS ONLY) */}
-      <div
-        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden pointer-events-none ${
-          isEven ? "lg:order-1" : "lg:order-2"
-        }`}
-      >
-        {/* Bright, unshaded photograph */}
-        <img
-          src={venture.images[0]}
-          alt={venture.name}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "saturate(1.04) brightness(1.05)" }}
-          loading="lazy"
-        />
+      <div className="w-full flex flex-col lg:sticky lg:top-0 lg:h-[100dvh] lg:flex-row lg:overflow-hidden bg-[#2a3818]">
+        {/* IMAGE PANEL (slides from right for Bodhi, from left for Ryvive Roots) */}
+        <div
+          ref={imageRef}
+          style={{ willChange: "transform, opacity" }}
+          className={`relative overflow-hidden ${
+            isBodhi ? "lg:order-2" : "lg:order-1"
+          } order-1 w-full h-[40dvh] sm:h-[44dvh] lg:h-full lg:w-1/2 shrink-0 bg-ink`}
+        >
+          <img
+            src={venture.images[0]}
+            alt={venture.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: "saturate(1.05) brightness(1.02)" }}
+            loading="lazy"
+          />
 
-        {/* 2. SCROLL-LINKED DRIFT: Single floating prop element per section (GSAP scrubbed) */}
-        {!reducedMotion && venture.floatingAsset[0] && (
-          <div
-            className={`${propClass} absolute select-none pointer-events-none z-20 text-paper/80`}
-            style={venture.floatingAsset[0].style}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="w-full h-full fill-none stroke-current"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* Scrim overlay on mobile */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 lg:hidden pointer-events-none" />
+
+          {/* Floating accent motif */}
+          {!reducedMotion && venture.floatingAsset?.[0] && (
+            <div
+              className="absolute select-none pointer-events-none z-20 text-[#eee6db]/70"
+              style={venture.floatingAsset[0].style}
             >
-              <path d={venture.floatingAsset[0].svgPath} />
-            </svg>
-          </div>
-        )}
-      </div>
-
-      {/* Sibling Content Column - Scrolls Normally */}
-      <div
-        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-forest-deep min-h-[60vh] lg:min-h-screen ${
-          isEven ? "lg:order-2" : "lg:order-1"
-        }`}
-      >
-        <Reveal>
-          <span className="kicker text-bronze">{venture.tag}</span>
-          <h3
-            className="mt-4 text-4xl sm:text-5xl text-paper tracking-tight font-normal"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {venture.name}
-          </h3>
-          <p
-            className="mt-2 text-lg italic text-bronze"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {venture.tagline}
-          </p>
-        </Reveal>
-        <Reveal delay={150}>
-          <p className="mt-6 text-paper/80 leading-relaxed text-sm lg:text-base">
-            {venture.copy}
-          </p>
-
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {venture.points.map((pt) => (
-              <li
-                key={pt}
-                className="flex items-start gap-2.5 text-sm text-paper/80"
+              <svg
+                viewBox="0 0 24 24"
+                className="w-full h-full fill-none stroke-current"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-bronze" />
-                {pt}
-              </li>
-            ))}
-          </ul>
+                <path d={venture.floatingAsset[0].svgPath} />
+              </svg>
+            </div>
+          )}
+        </div>
 
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button
-              variant="light"
-              className="!border-paper/60 !bg-paper !text-forest hover:!bg-cream"
-              onClick={() => go("ventures")}
+        {/* TEXT PANEL with OLIVE GREEN BACKGROUND (slides from left for Bodhi, from right for Ryvive Roots) */}
+        <div
+          ref={textRef}
+          style={{ willChange: "transform, opacity" }}
+          className={`flex flex-col justify-center px-6 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-20 xl:px-24 bg-gradient-to-br from-[#455c29] via-[#3e5225] to-[#30411d] border-t lg:border-t-0 ${
+            isBodhi ? "lg:order-1 lg:border-r border-[#8a9a6b]/25" : "lg:order-2 lg:border-l border-[#8a9a6b]/25"
+          } order-2 w-full flex-1 lg:h-full lg:w-1/2 lg:overflow-visible shadow-2xl`}
+        >
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="h-px w-6 bg-[#b89f7a]" />
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] font-semibold text-[#c5d0b3]">
+                {venture.tag}
+              </span>
+            </div>
+
+            <h3
+              className="mt-3 lg:mt-4 text-3xl sm:text-4xl lg:text-5xl text-[#f8f6f1] tracking-tight font-normal leading-[1.15]"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              Discover Venture <Arrow />
-            </Button>
-            {venture.cta && (
-              <Button variant="light" onClick={() => go(venture.cta)}>
-                Partner With Us
+              {venture.name}
+            </h3>
+
+            <p
+              className="mt-2 text-sm sm:text-base lg:text-lg italic text-[#d7c9b1] leading-snug"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {venture.tagline}
+            </p>
+
+            <p className="mt-4 lg:mt-6 text-sm lg:text-base text-[#eee6db]/90 leading-relaxed max-w-xl">
+              {venture.copy}
+            </p>
+
+            <ul className="mt-5 lg:mt-7 grid gap-2.5 sm:grid-cols-2 max-w-xl">
+              {venture.points.map((pt) => (
+                <li
+                  key={pt}
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-[#eee6db]/90"
+                >
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#b89f7a]" />
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 lg:mt-10 flex flex-wrap gap-3 sm:gap-4 items-center">
+              <Button
+                variant="light"
+                className="!border-[#f8f6f1] !bg-[#f8f6f1] !text-[#2e2e2e] hover:!bg-[#eee6db] shadow-md transition-all text-xs sm:text-sm px-5 py-2.5 sm:px-6 sm:py-3"
+                onClick={() => go("ventures")}
+              >
+                Discover Venture <Arrow />
               </Button>
-            )}
+              {venture.cta && (
+                <Button
+                  variant="light"
+                  className="!border-[#eee6db]/50 !bg-white/5 !text-[#f8f6f1] hover:!bg-white/15 transition-all text-xs sm:text-sm px-5 py-2.5 sm:px-6 sm:py-3 backdrop-blur-xs"
+                  onClick={() => go(venture.cta)}
+                >
+                  Partner With Us
+                </Button>
+              )}
+            </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </div>
   )
@@ -639,31 +726,7 @@ export function Home({ go }) {
       },
     })
 
-    // 2. Ventures Slide 1 (Bodhi Tree)
-    const triggerV1 = gsap.to(".floating-prop-bodhi", {
-      yPercent: -25,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".venture-panel-bodhi",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    })
-
-    // 3. Ventures Slide 2 (Ryvive Roots)
-    const triggerV2 = gsap.to(".floating-prop-ryvive", {
-      yPercent: -25,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".venture-panel-ryvive",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    })
-
-    // 4. Hero background image drift — keyed to its own section.
+    // 2. Hero background image drift — keyed to its own section.
     const heroTweens = gsap.utils.toArray("[data-parallax-hero-bg]").map((el) =>
       gsap.to(el, {
         yPercent: 12,
@@ -680,10 +743,6 @@ export function Home({ go }) {
     return () => {
       triggerWho.scrollTrigger?.kill()
       triggerWho.kill()
-      triggerV1.scrollTrigger?.kill()
-      triggerV1.kill()
-      triggerV2.scrollTrigger?.kill()
-      triggerV2.kill()
       heroTweens.forEach((t) => {
         t.scrollTrigger?.kill()
         t.kill()
