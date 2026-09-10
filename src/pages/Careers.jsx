@@ -9,61 +9,44 @@ import {
   Input,
   Select,
   Textarea,
+  FileField,
 } from "../lib/ui"
 import { PageHero, Section } from "../components/PageHero"
-import { SuccessModal } from "../components/SuccessModal"
-import type { PageId } from "../lib/pages"
+import { CTA } from "./Home"
 
-const CATEGORIES = [
+const REASONS = [
   {
-    t: "Franchise a Venture",
-    d: "Bring Ryvive Roots or a future concept to your city with a turnkey playbook and our operational backing.",
+    t: "Real ownership",
+    d: "Small team, big remit. Your judgement matters from day one.",
   },
   {
-    t: "Management Partnership",
-    d: "You own the space and the brand — we run the operation on a management or revenue-share model.",
+    t: "Learn every format",
+    d: "Cafés, restaurants, cloud kitchens and events — all under one roof.",
   },
   {
-    t: "Society & Clubhouse Cafeterias",
-    d: "Managed café and cafeteria services for residential societies and clubhouses.",
-  },
-  {
-    t: "Joint Ventures & Investment",
-    d: "Co-invest and co-build new hospitality concepts from the ground up.",
+    t: "Warmth as a standard",
+    d: "We hire kind, exacting people and back them to do great work.",
   },
 ]
 
-export function Franchise({ go }: { go: (p: PageId) => void }) {
+export function Careers({ go }) {
   const [submitting, setSubmitting] = useState(false)
   const [sent, setSent] = useState(false)
   const [honeypot, setHoneypot] = useState("")
 
   const [form, setForm] = useState({
     name: "",
-    company: "",
     phone: "",
     email: "",
-    type: "",
+    interest: "",
     message: "",
   })
 
-  const resetForm = () => {
-    setSent(false)
-    setForm({
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-      type: "",
-      message: "",
-    })
-  }
+  const [errors, setErrors] = useState({})
+  const [cvFile, setCvFile] = useState(null)
+  const [cvError, setCvError] = useState(null)
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
     if (errors[name]) {
@@ -75,7 +58,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     }
   }
 
-  const validateField = (name: string, value: string) => {
+  const validateField = (name, value) => {
     let err = ""
     if (!value.trim()) {
       err = "This field is required."
@@ -96,16 +79,14 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     })
   }
 
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
+  const handleBlur = (e) => {
     const { name, value, required } = e.target
     if (required || name === "email" || name === "phone") {
       validateField(name, value)
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     if (honeypot !== "") {
@@ -113,14 +94,8 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
       return
     }
 
-    const newErrors: Record<string, string> = {}
-    const requiredFields: (keyof typeof form)[] = [
-      "name",
-      "phone",
-      "email",
-      "type",
-      "message",
-    ]
+    const newErrors = {}
+    const requiredFields = ["name", "phone", "email", "interest"]
 
     requiredFields.forEach((field) => {
       if (!form[field].trim()) {
@@ -138,6 +113,12 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
       newErrors.phone = "Please enter a valid phone number (min 10 digits)."
     }
 
+    if (!cvFile) {
+      newErrors.cv = "Please upload your CV / resume."
+    } else if (cvError) {
+      newErrors.cv = cvError
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
@@ -148,78 +129,83 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
     setTimeout(() => {
       setSubmitting(false)
       setSent(true)
+      window.scrollTo({ top: 400, behavior: "smooth" })
     }, 1500)
   }
 
   return (
     <>
       <PageHero
-        kicker="Franchise / Business Opportunities"
+        kicker="Careers"
         title={
           <>
-            Let&rsquo;s build{" "}
-            <span className="italic text-forest">something together.</span>
+            Hospitality is a <span className="italic text-forest">craft.</span>
           </>
         }
-        lead="Whether you have a space, a brand or capital, there's a partnership model that fits. Here's where we usually start."
-        image={IMG.bodhiTree}
+        lead="We're always glad to meet chefs, managers and floor teams who take pride in the details. If that's you, say hello."
+        image={IMG.chefPrep}
       />
 
       <Section className="py-16 lg:py-24">
-        <div className="grid gap-6 md:grid-cols-2">
-          {CATEGORIES.map((c, i) => (
+        <div className="grid gap-6 md:grid-cols-3">
+          {REASONS.map((r, i) => (
             <Reveal
-              key={c.t}
+              key={r.t}
               delay={i * 70}
-              className="group rounded-none border border-line bg-paper p-8 transition-colors hover:border-forest/50"
+              className="rounded-none border border-line bg-paper p-8"
             >
               <span className="font-display text-3xl text-bronze">
                 0{i + 1}
               </span>
-              <h3
-                className="mt-4 text-2xl tracking-[-0.01em] text-ink"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {c.t}
-              </h3>
-              <p className="mt-3 leading-relaxed text-ink-soft">{c.d}</p>
+              <h3 className="mt-4 text-xl font-semibold text-ink">{r.t}</h3>
+              <p className="mt-2 leading-relaxed text-ink-soft">{r.d}</p>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      {/* ENQUIRY FORM */}
-      <section
-        data-tone="dark"
-        className="bg-forest-deep py-20 text-paper lg:py-28"
-      >
+      <section className="bg-paper py-16 lg:py-24 border-t border-line/40">
         <div className="mx-auto grid max-w-[1440px] gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:gap-20 lg:px-12">
           <Reveal>
-            <Kicker tone="light">Business Enquiry</Kicker>
+            <Kicker>Submit Your CV</Kicker>
             <h2
               className="mt-5 text-4xl leading-tight tracking-[-0.02em] sm:text-5xl"
               style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
             >
-              Tell us what you have in mind.
+              Send us your story.
             </h2>
-            <p className="mt-6 max-w-md leading-relaxed text-paper/70">
-              Share a few details and our partnerships team will get back to you
-              with next steps. Prefer email? Reach us at{" "}
-              <a
-                href="mailto:partner@leohospitality.in"
-                className="text-bronze underline-offset-4 hover:underline transition-all"
-              >
-                partner@leohospitality.in
-              </a>
-              .
+            <p className="mt-6 max-w-md leading-relaxed text-ink-soft">
+              No open role listed? Send your CV anyway — we keep a warm list and
+              reach out when the right seat opens.
             </p>
           </Reveal>
 
           <Reveal delay={100}>
+            {sent ? (
+              <div className="rounded-none border border-line bg-cream/60 p-10 text-center animate-fadeIn">
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forest/10 text-forest text-3xl font-bold">
+                  ✓
+                </div>
+                <h3
+                  className="font-display text-4xl text-forest"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Received.
+                </h3>
+                <p className="mt-4 text-ink-soft leading-relaxed max-w-md mx-auto">
+                  Thank you. Your curriculum vitae and details have been
+                  recorded. We will keep your profile in our candidate pool and
+                  contact you if an open position matches your background.
+                </p>
+                <Button className="mt-8" onClick={() => go("home")}>
+                  Back to home <Arrow />
+                </Button>
+              </div>
+            ) : (
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="grid gap-5 rounded-none bg-paper p-8 text-ink lg:p-10"
+                className="grid gap-5 rounded-none border border-line bg-cream/60 p-8 lg:p-10"
               >
                 {/* Honeypot */}
                 <div className="sr-only pointer-events-none" aria-hidden="true">
@@ -237,29 +223,20 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                   className="grid gap-5 sm:grid-cols-2"
                   disabled={submitting}
                 >
-                  <Field label="Name" required>
+                  <Field label="Full Name" required>
                     <Input
                       name="name"
                       required
                       value={form.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="Your full name"
+                      placeholder="Your name"
                     />
                     {errors.name && (
                       <p className="field-error mt-1 text-xs text-red-600 font-medium">
                         {errors.name}
                       </p>
                     )}
-                  </Field>
-
-                  <Field label="Company / Organization">
-                    <Input
-                      name="company"
-                      value={form.company}
-                      onChange={handleChange}
-                      placeholder="e.g. Firm name (Optional)"
-                    />
                   </Field>
 
                   <Field label="Phone" required>
@@ -270,7 +247,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       value={form.phone}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="Contact number"
+                      placeholder="+91"
                     />
                     {errors.phone && (
                       <p className="field-error mt-1 text-xs text-red-600 font-medium">
@@ -287,7 +264,7 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       value={form.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="you@company.com"
+                      placeholder="you@email.com"
                     />
                     {errors.email && (
                       <p className="field-error mt-1 text-xs text-red-600 font-medium">
@@ -295,48 +272,70 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                       </p>
                     )}
                   </Field>
+
+                  <Field label="Area of Interest" required>
+                    <Select
+                      name="interest"
+                      required
+                      value={form.interest}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
+                      <option value="" disabled>
+                        Select area
+                      </option>
+                      <option value="Kitchen / Culinary">
+                        Kitchen / Culinary
+                      </option>
+                      <option value="Floor / Service">Floor / Service</option>
+                      <option value="Café / Barista">Café / Barista</option>
+                      <option value="Operations & Management">
+                        Operations & Management
+                      </option>
+                      <option value="Cloud Kitchen">Cloud Kitchen</option>
+                    </Select>
+                    {errors.interest && (
+                      <p className="field-error mt-1 text-xs text-red-600 font-medium">
+                        {errors.interest}
+                      </p>
+                    )}
+                  </Field>
                 </fieldset>
 
-                <Field label="Enquiry Type" required>
-                  <Select
-                    name="type"
+                <div className="mt-2">
+                  <FileField
+                    name="cv"
+                    label="Upload CV"
                     required
-                    value={form.type}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    <option value="" disabled>
-                      Select a partnership type
-                    </option>
-                    {CATEGORIES.map((c) => (
-                      <option key={c.t} value={c.t}>
-                        {c.t}
-                      </option>
-                    ))}
-                    <option value="Other">Other</option>
-                  </Select>
-                  {errors.type && (
-                    <p className="field-error mt-1 text-xs text-red-600 font-medium">
-                      {errors.type}
-                    </p>
-                  )}
-                </Field>
-
-                <Field label="Message" required>
-                  <Textarea
-                    name="message"
-                    required
-                    value={form.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="Tell us about your space, brand or idea…"
+                    hint="PDF preferred, up to 5 MB."
+                    onChangeFile={(file, err) => {
+                      setCvFile(file)
+                      setCvError(err || null)
+                      setErrors((prev) => {
+                        const next = { ...prev }
+                        if (err) next.cv = err
+                        else delete next.cv
+                        return next
+                      })
+                    }}
                   />
-                  {errors.message && (
+                  {errors.cv && (
                     <p className="field-error mt-1 text-xs text-red-600 font-medium">
-                      {errors.message}
+                      {errors.cv}
                     </p>
                   )}
-                </Field>
+                </div>
+
+                <div>
+                  <Field label="A note (optional)">
+                    <Textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder="Tell us a little about your timeline or hospitality background…"
+                    />
+                  </Field>
+                </div>
 
                 <div>
                   <Button
@@ -365,62 +364,23 @@ export function Franchise({ go }: { go: (p: PageId) => void }) {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           />
                         </svg>
-                        Submitting enquiry...
+                        Uploading...
                       </span>
                     ) : (
                       <>
-                        Submit Enquiry <Arrow />
+                        Submit Application <Arrow />
                       </>
                     )}
                   </Button>
                 </div>
               </form>
-
-            {sent && (
-              <SuccessModal
-                kicker="Enquiry Registered"
-                title={`Thank you${form.name ? `, ${form.name}` : ""}!`}
-                message={
-                  <>
-                    Your franchise enquiry has been registered. Our business
-                    development team will review your{" "}
-                    {form.type ? (
-                      <>
-                        interest in{" "}
-                        <span className="font-medium text-forest">
-                          &ldquo;{form.type}&rdquo;
-                        </span>{" "}
-                      </>
-                    ) : (
-                      "partnership details "
-                    )}
-                    and follow up within 2&ndash;3 business days.
-                  </>
-                }
-                summary={[
-                  ...(form.type
-                    ? [{ label: "Partnership", value: form.type }]
-                    : []),
-                  ...(form.phone
-                    ? [{ label: "Direct Phone", value: form.phone }]
-                    : []),
-                  {
-                    label: "Routing",
-                    value: "Business Development",
-                    accent: true,
-                  },
-                ]}
-                primaryLabel="Back to Home"
-                onPrimary={() => go("home")}
-                secondaryLabel="Send Another Enquiry"
-                onSecondary={resetForm}
-                onClose={resetForm}
-              />
             )}
           </Reveal>
         </div>
       </section>
+
+      <CTA go={go} />
     </>
   )
 }
-// export default Franchise
+export default Careers

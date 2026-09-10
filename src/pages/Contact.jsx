@@ -1,27 +1,11 @@
 import { useState } from "react"
 import { SuccessModal } from "../components/SuccessModal"
-import {
-  Button,
-  Arrow,
-  Kicker,
-  Reveal,
-  IMG,
-  Field,
-  Input,
-  Textarea,
-} from "../lib/ui"
+import { Button, Arrow, Kicker, Reveal, IMG, Field } from "../lib/ui"
 import { PageHero, Section } from "../components/PageHero"
 import { CTA } from "./Home"
-import type { PageId } from "../lib/pages"
 
 /* ---------- Inline icons ---------- */
-function Icon({
-  path,
-  size = 18,
-}: {
-  path: string
-  size?: number
-}) {
+function Icon({ path, size = 18 }) {
   return (
     <svg
       width={size}
@@ -45,11 +29,6 @@ function FourLeafClover({
   className = "",
   strokeWidth = 1.4,
   fillOpacity = 0.14,
-}: {
-  size?: number
-  className?: string
-  strokeWidth?: number
-  fillOpacity?: number
 }) {
   return (
     <svg
@@ -72,7 +51,12 @@ function FourLeafClover({
             fillOpacity={fillOpacity}
           />
           {/* Delicate leaflet vein */}
-          <path d="M 50 50 L 50 18" strokeWidth="0.9" fill="none" opacity="0.65" />
+          <path
+            d="M 50 50 L 50 18"
+            strokeWidth="0.9"
+            fill="none"
+            opacity="0.65"
+          />
         </g>
       </defs>
       {/* 4 clover leaflets radiating at 0, 90, 180, 270 */}
@@ -99,7 +83,6 @@ const PHONE =
 const MAIL =
   "M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z M22 7l-10 6L2 7"
 const CLOCK = "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M12 6v6l4 2"
-const CHECK = "M20 6L9 17l-5-5"
 const SHIELD = "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
 const MAP = "M9 18l-6-3V3l6 3 6-3 6 3v15l-6-3-6 3z M9 6v12 M15 3v12"
 
@@ -122,12 +105,36 @@ const SOCIAL_ICONS = [
 ]
 
 const ENQUIRY_TYPES = [
-  { id: "Franchise & Expansion", label: "Franchise & Expansion", desc: "Partner on high-yield food & beverage formats" },
-  { id: "Venue Operations", label: "Venue Operations", desc: "Turnkey management for prime hospitality spaces" },
-  { id: "Cloud Kitchens", label: "Cloud Kitchens", desc: "Commissary & delivery brand expansion" },
-  { id: "Vendor & Supply", label: "Vendor & Supply", desc: "Food, produce and equipment procurement" },
-  { id: "Careers", label: "Careers", desc: "Culinary, bar and leadership opportunities" },
-  { id: "General Enquiry", label: "General Enquiry", desc: "Media, corporate and exploratory discussions" },
+  {
+    id: "Franchise & Expansion",
+    label: "Franchise & Expansion",
+    desc: "Partner on high-yield food & beverage formats",
+  },
+  {
+    id: "Venue Operations",
+    label: "Venue Operations",
+    desc: "Turnkey management for prime hospitality spaces",
+  },
+  {
+    id: "Cloud Kitchens",
+    label: "Cloud Kitchens",
+    desc: "Commissary & delivery brand expansion",
+  },
+  {
+    id: "Vendor & Supply",
+    label: "Vendor & Supply",
+    desc: "Food, produce and equipment procurement",
+  },
+  {
+    id: "Careers",
+    label: "Careers",
+    desc: "Culinary, bar and leadership opportunities",
+  },
+  {
+    id: "General Enquiry",
+    label: "General Enquiry",
+    desc: "Media, corporate and exploratory discussions",
+  },
 ]
 
 const TIMELINE_OPTIONS = [
@@ -137,13 +144,7 @@ const TIMELINE_OPTIONS = [
   "Exploratory",
 ]
 
-const DIRECT_LINES: {
-  t: string
-  d: string
-  page: PageId
-  action: string
-  badge: string
-}[] = [
+const DIRECT_LINES = [
   {
     t: "Partnerships & Franchise",
     d: "You possess commercial real estate, an established brand, or investment capital and want to build with our operational backbone.",
@@ -182,7 +183,7 @@ const NEXT_STEPS = [
   },
 ]
 
-export function Contact({ go }: { go: (p: PageId) => void }) {
+export function Contact({ go }) {
   const [submitting, setSubmitting] = useState(false)
   const [sent, setSent] = useState(false)
   const [honeypot, setHoneypot] = useState("")
@@ -198,7 +199,7 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
     message: "",
   })
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState({})
 
   const resetForm = () => {
     setSent(false)
@@ -214,11 +215,7 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
     })
   }
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
     if (errors[name]) {
@@ -230,7 +227,7 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
     }
   }
 
-  const validateField = (name: string, value: string) => {
+  const validateField = (name, value) => {
     let err = ""
     if (!value.trim()) {
       err = "This field is required."
@@ -251,18 +248,14 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
     })
   }
 
-  const handleBlur = (
-    e: React.FocusEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
+  const handleBlur = (e) => {
     const { name, value, required } = e.target
     if (required || name === "email" || name === "phone") {
       validateField(name, value)
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     if (honeypot !== "") {
@@ -270,13 +263,8 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
       return
     }
 
-    const newErrors: Record<string, string> = {}
-    const requiredFields: (keyof typeof form)[] = [
-      "name",
-      "phone",
-      "email",
-      "message",
-    ]
+    const newErrors = {}
+    const requiredFields = ["name", "phone", "email", "message"]
 
     requiredFields.forEach((field) => {
       if (!form[field].trim()) {
@@ -353,12 +341,14 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
               </span>
               <span className="font-mono text-xs uppercase tracking-[0.18em] text-forest">
-                Executive Desk Active &nbsp;&middot;&nbsp; Mumbai, India (GMT+5:30)
+                Executive Desk Active &nbsp;&middot;&nbsp; Mumbai, India
+                (GMT+5:30)
               </span>
             </div>
             <div className="flex items-center gap-6 text-xs text-ink-soft">
               <span className="flex items-center gap-1.5">
-                <Icon path={SHIELD} size={14} /> Strict NDA &amp; Confidentiality
+                <Icon path={SHIELD} size={14} /> Strict NDA &amp;
+                Confidentiality
               </span>
               <span className="hidden font-mono text-bronze sm:inline-block">
                 Average reply time: &lt; 24h
@@ -476,16 +466,24 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
                       </h3>
                       <dl className="mt-2 space-y-1.5 text-sm">
                         <div className="flex justify-between gap-4">
-                          <dt className="text-ink-soft">Monday &ndash; Friday</dt>
-                          <dd className="font-medium text-ink">10:00 &ndash; 19:00 IST</dd>
+                          <dt className="text-ink-soft">
+                            Monday &ndash; Friday
+                          </dt>
+                          <dd className="font-medium text-ink">
+                            10:00 &ndash; 19:00 IST
+                          </dd>
                         </div>
                         <div className="flex justify-between gap-4">
                           <dt className="text-ink-soft">Saturday</dt>
-                          <dd className="font-medium text-ink">11:00 &ndash; 17:00 IST</dd>
+                          <dd className="font-medium text-ink">
+                            11:00 &ndash; 17:00 IST
+                          </dd>
                         </div>
                         <div className="flex justify-between gap-4">
                           <dt className="text-ink-soft">Sunday</dt>
-                          <dd className="italic text-ink-soft/70">By Appointment Only</dd>
+                          <dd className="italic text-ink-soft/70">
+                            By Appointment Only
+                          </dd>
                         </div>
                       </dl>
                     </div>
@@ -539,7 +537,9 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
                     Bandra Kurla Complex, Mumbai
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-paper/75">
-                    Situated at the financial core of Mumbai. Private parking and dedicated conference facilities available for partner presentations.
+                    Situated at the financial core of Mumbai. Private parking
+                    and dedicated conference facilities available for partner
+                    presentations.
                   </p>
 
                   <div className="mt-6 flex flex-wrap gap-3">
@@ -581,268 +581,301 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
                     "0 25px 60px -15px rgba(46,46,46,0.08), inset 0 1px 0 rgba(255,255,255,0.98)",
                 }}
               >
-                  {/* Subtle Botanical Four-Leaf Clover Watermark Prints */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -top-12 -right-12 select-none text-accent-green opacity-[0.15] rotate-12 transition-transform duration-700"
-                  >
-                    <FourLeafClover size={240} strokeWidth={1.2} fillOpacity={0.16} />
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -bottom-14 -left-14 select-none text-primary opacity-[0.11] -rotate-45"
-                  >
-                    <FourLeafClover size={220} strokeWidth={1.2} fillOpacity={0.14} />
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-1/2 -right-8 -translate-y-1/2 select-none text-accent-brown opacity-[0.09] rotate-[28deg]"
-                  >
-                    <FourLeafClover size={130} strokeWidth={1.3} fillOpacity={0.12} />
-                  </div>
+                {/* Subtle Botanical Four-Leaf Clover Watermark Prints */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-12 -right-12 select-none text-accent-green opacity-[0.15] rotate-12 transition-transform duration-700"
+                >
+                  <FourLeafClover
+                    size={240}
+                    strokeWidth={1.2}
+                    fillOpacity={0.16}
+                  />
+                </div>
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-14 -left-14 select-none text-primary opacity-[0.11] -rotate-45"
+                >
+                  <FourLeafClover
+                    size={220}
+                    strokeWidth={1.2}
+                    fillOpacity={0.14}
+                  />
+                </div>
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-1/2 -right-8 -translate-y-1/2 select-none text-accent-brown opacity-[0.09] rotate-[28deg]"
+                >
+                  <FourLeafClover
+                    size={130}
+                    strokeWidth={1.3}
+                    fillOpacity={0.12}
+                  />
+                </div>
 
-                  {/* Honeypot for spam mitigation */}
-                  <div className="sr-only pointer-events-none" aria-hidden="true">
-                    <input
-                      type="text"
-                      name="website_url"
-                      value={honeypot}
-                      onChange={(e) => setHoneypot(e.target.value)}
-                      tabIndex={-1}
-                      autoComplete="off"
-                    />
-                  </div>
+                {/* Honeypot for spam mitigation */}
+                <div className="sr-only pointer-events-none" aria-hidden="true">
+                  <input
+                    type="text"
+                    name="website_url"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
 
-                  {/* Form Header with Botanical Clover Seal */}
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-light-green/45 text-primary shadow-2xs">
-                          <FourLeafClover size={14} strokeWidth={1.8} fillOpacity={0.5} />
-                        </span>
-                        <span className="font-mono text-xs uppercase tracking-[0.24em] text-bronze font-semibold">
-                          Partner Inquiries
-                        </span>
-                      </div>
-                      <div className="hidden sm:flex items-center gap-1.5 rounded-full border border-line/70 bg-white/50 px-3 py-1 text-[11px] font-mono text-accent-green">
-                        <FourLeafClover size={12} strokeWidth={1.8} fillOpacity={0.5} />
-                        <span>Four-Leaf Standard of Care</span>
-                      </div>
+                {/* Form Header with Botanical Clover Seal */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-light-green/45 text-primary shadow-2xs">
+                        <FourLeafClover
+                          size={14}
+                          strokeWidth={1.8}
+                          fillOpacity={0.5}
+                        />
+                      </span>
+                      <span className="font-mono text-xs uppercase tracking-[0.24em] text-bronze font-semibold">
+                        Partner Inquiries
+                      </span>
                     </div>
-
-                    <h2
-                      className="mt-3 text-2xl text-ink sm:text-3xl"
-                      style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
-                    >
-                      Initiate a Partnership Conversation
-                    </h2>
-                    <p className="mt-2 text-sm text-ink-soft">
-                      Select your primary category below to ensure immediate routing to the relevant domain director.
-                    </p>
+                    <div className="hidden sm:flex items-center gap-1.5 rounded-full border border-line/70 bg-white/50 px-3 py-1 text-[11px] font-mono text-accent-green">
+                      <FourLeafClover
+                        size={12}
+                        strokeWidth={1.8}
+                        fillOpacity={0.5}
+                      />
+                      <span>Four-Leaf Standard of Care</span>
+                    </div>
                   </div>
 
-                  {/* INTERACTIVE ENQUIRY TYPE CHIPS — Frosted Glass Pills */}
-                  <div className="mt-8 border-t border-line/40 pt-6">
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-ink">
-                      1. Select Enquiry Category <span className="text-bronze">*</span>
-                    </label>
-                    <div className="mt-3.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3">
-                      {ENQUIRY_TYPES.map((cat) => {
-                        const isSelected = form.enquiryType === cat.id
-                        return (
-                          <button
-                            key={cat.id}
-                            type="button"
-                            onClick={() =>
-                              setForm((prev) => ({ ...prev, enquiryType: cat.id }))
-                            }
-                            className={`flex flex-col items-start border p-3.5 text-left backdrop-blur-md transition-all duration-300 ${
-                              isSelected
-                                ? "border-forest bg-forest/95 text-paper shadow-md scale-[1.01]"
-                                : "border-white/80 bg-white/45 text-ink hover:border-forest/40 hover:bg-white/80 shadow-xs"
+                  <h2
+                    className="mt-3 text-2xl text-ink sm:text-3xl"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 400,
+                    }}
+                  >
+                    Initiate a Partnership Conversation
+                  </h2>
+                  <p className="mt-2 text-sm text-ink-soft">
+                    Select your primary category below to ensure immediate
+                    routing to the relevant domain director.
+                  </p>
+                </div>
+
+                {/* INTERACTIVE ENQUIRY TYPE CHIPS — Frosted Glass Pills */}
+                <div className="mt-8 border-t border-line/40 pt-6">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-ink">
+                    1. Select Enquiry Category{" "}
+                    <span className="text-bronze">*</span>
+                  </label>
+                  <div className="mt-3.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3">
+                    {ENQUIRY_TYPES.map((cat) => {
+                      const isSelected = form.enquiryType === cat.id
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() =>
+                            setForm((prev) => ({
+                              ...prev,
+                              enquiryType: cat.id,
+                            }))
+                          }
+                          className={`flex flex-col items-start border p-3.5 text-left backdrop-blur-md transition-all duration-300 ${
+                            isSelected
+                              ? "border-forest bg-forest/95 text-paper shadow-md scale-[1.01]"
+                              : "border-white/80 bg-white/45 text-ink hover:border-forest/40 hover:bg-white/80 shadow-xs"
+                          }`}
+                        >
+                          <span className="text-sm font-semibold tracking-tight">
+                            {cat.label}
+                          </span>
+                          <span
+                            className={`mt-1 text-[11px] leading-tight ${
+                              isSelected ? "text-paper/85" : "text-ink-soft"
                             }`}
                           >
-                            <span className="text-sm font-semibold tracking-tight">
-                              {cat.label}
-                            </span>
-                            <span
-                              className={`mt-1 text-[11px] leading-tight ${
-                                isSelected ? "text-paper/85" : "text-ink-soft"
-                              }`}
-                            >
-                              {cat.desc}
-                            </span>
-                          </button>
-                        )
-                      })}
-                    </div>
+                            {cat.desc}
+                          </span>
+                        </button>
+                      )
+                    })}
                   </div>
+                </div>
 
-                  {/* CORE DETAILS GRID — Frosted Input Elements */}
-                  <div className="mt-8 border-t border-line/40 pt-6">
-                    <label className="mb-4 block text-xs font-semibold uppercase tracking-wider text-ink">
-                      2. Contact Credentials &amp; Scope
-                    </label>
+                {/* CORE DETAILS GRID — Frosted Input Elements */}
+                <div className="mt-8 border-t border-line/40 pt-6">
+                  <label className="mb-4 block text-xs font-semibold uppercase tracking-wider text-ink">
+                    2. Contact Credentials &amp; Scope
+                  </label>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Full Name" required>
-                        <input
-                          name="name"
-                          required
-                          value={form.name}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          placeholder="e.g. Rahul Mehta"
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        />
-                        {errors.name && (
-                          <p className="field-error mt-1 text-xs font-medium text-red-600">
-                            {errors.name}
-                          </p>
-                        )}
-                      </Field>
-
-                      <Field label="Phone / Mobile" required>
-                        <input
-                          name="phone"
-                          type="tel"
-                          required
-                          value={form.phone}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          placeholder="+91 98200 00000"
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        />
-                        {errors.phone && (
-                          <p className="field-error mt-1 text-xs font-medium text-red-600">
-                            {errors.phone}
-                          </p>
-                        )}
-                      </Field>
-
-                      <Field label="Business Email" required>
-                        <input
-                          name="email"
-                          type="email"
-                          required
-                          value={form.email}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          placeholder="name@company.com"
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        />
-                        {errors.email && (
-                          <p className="field-error mt-1 text-xs font-medium text-red-600">
-                            {errors.email}
-                          </p>
-                        )}
-                      </Field>
-
-                      <Field label="Company / Brand / Real Estate Firm">
-                        <input
-                          name="company"
-                          value={form.company}
-                          onChange={handleChange}
-                          placeholder="Entity or Brand name (Optional)"
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        />
-                      </Field>
-
-                      <Field label="Target City / Location">
-                        <input
-                          name="location"
-                          value={form.location}
-                          onChange={handleChange}
-                          placeholder="e.g. Mumbai, Pune, Bengaluru"
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        />
-                      </Field>
-
-                      <Field label="Anticipated Project Timeline">
-                        <select
-                          name="timeline"
-                          value={form.timeline}
-                          onChange={handleChange}
-                          className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink outline-none backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:ring-2 focus:ring-forest/20 shadow-xs"
-                        >
-                          {TIMELINE_OPTIONS.map((t) => (
-                            <option key={t} value={t}>
-                              {t}
-                            </option>
-                          ))}
-                        </select>
-                      </Field>
-                    </div>
-                  </div>
-
-                  {/* MESSAGE TEXTAREA */}
-                  <div className="mt-6">
-                    <Field label="Project Vision or Proposal Details" required>
-                      <textarea
-                        name="message"
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Full Name" required>
+                      <input
+                        name="name"
                         required
-                        value={form.message}
+                        value={form.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        rows={4}
-                        placeholder="Please outline your space dimensions, concept background, target market, or specific collaboration objectives..."
-                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs resize-y"
+                        placeholder="e.g. Rahul Mehta"
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
                       />
-                      {errors.message && (
+                      {errors.name && (
                         <p className="field-error mt-1 text-xs font-medium text-red-600">
-                          {errors.message}
+                          {errors.name}
                         </p>
                       )}
                     </Field>
-                  </div>
 
-                  {/* TRUST SIGNALS & SUBMISSION */}
-                  <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-t border-line/40 pt-6">
-                    <div className="flex items-center gap-3 text-xs text-ink-soft">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line/80 bg-white/70 text-primary shadow-xs backdrop-blur-sm">
-                        <FourLeafClover size={16} strokeWidth={1.8} fillOpacity={0.4} />
-                      </span>
-                      <span>
-                        Protected by four-leaf confidentiality standards. Mutual NDA executed prior to commercial disclosures.
-                      </span>
-                    </div>
-
-                    <Button
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full sm:w-auto shrink-0 shadow-md"
-                    >
-                      {submitting ? (
-                        <span className="flex items-center gap-2">
-                          <svg
-                            className="h-4 w-4 animate-spin text-paper"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            />
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            />
-                          </svg>
-                          Routing to Executive Desk...
-                        </span>
-                      ) : (
-                        <>
-                          Send Business Enquiry <Arrow />
-                        </>
+                    <Field label="Phone / Mobile" required>
+                      <input
+                        name="phone"
+                        type="tel"
+                        required
+                        value={form.phone}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder="+91 98200 00000"
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
+                      />
+                      {errors.phone && (
+                        <p className="field-error mt-1 text-xs font-medium text-red-600">
+                          {errors.phone}
+                        </p>
                       )}
-                    </Button>
+                    </Field>
+
+                    <Field label="Business Email" required>
+                      <input
+                        name="email"
+                        type="email"
+                        required
+                        value={form.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder="name@company.com"
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
+                      />
+                      {errors.email && (
+                        <p className="field-error mt-1 text-xs font-medium text-red-600">
+                          {errors.email}
+                        </p>
+                      )}
+                    </Field>
+
+                    <Field label="Company / Brand / Real Estate Firm">
+                      <input
+                        name="company"
+                        value={form.company}
+                        onChange={handleChange}
+                        placeholder="Entity or Brand name (Optional)"
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
+                      />
+                    </Field>
+
+                    <Field label="Target City / Location">
+                      <input
+                        name="location"
+                        value={form.location}
+                        onChange={handleChange}
+                        placeholder="e.g. Mumbai, Pune, Bengaluru"
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs"
+                      />
+                    </Field>
+
+                    <Field label="Anticipated Project Timeline">
+                      <select
+                        name="timeline"
+                        value={form.timeline}
+                        onChange={handleChange}
+                        className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink outline-none backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:ring-2 focus:ring-forest/20 shadow-xs"
+                      >
+                        {TIMELINE_OPTIONS.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
                   </div>
-                </form>
+                </div>
+
+                {/* MESSAGE TEXTAREA */}
+                <div className="mt-6">
+                  <Field label="Project Vision or Proposal Details" required>
+                    <textarea
+                      name="message"
+                      required
+                      value={form.message}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      rows={4}
+                      placeholder="Please outline your space dimensions, concept background, target market, or specific collaboration objectives..."
+                      className="w-full border border-line/70 bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 backdrop-blur-md transition-all duration-200 focus:border-forest focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-forest/20 shadow-xs resize-y"
+                    />
+                    {errors.message && (
+                      <p className="field-error mt-1 text-xs font-medium text-red-600">
+                        {errors.message}
+                      </p>
+                    )}
+                  </Field>
+                </div>
+
+                {/* TRUST SIGNALS & SUBMISSION */}
+                <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-t border-line/40 pt-6">
+                  <div className="flex items-center gap-3 text-xs text-ink-soft">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line/80 bg-white/70 text-primary shadow-xs backdrop-blur-sm">
+                      <FourLeafClover
+                        size={16}
+                        strokeWidth={1.8}
+                        fillOpacity={0.4}
+                      />
+                    </span>
+                    <span>
+                      Protected by four-leaf confidentiality standards. Mutual
+                      NDA executed prior to commercial disclosures.
+                    </span>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full sm:w-auto shrink-0 shadow-md"
+                  >
+                    {submitting ? (
+                      <span className="flex items-center gap-2">
+                        <svg
+                          className="h-4 w-4 animate-spin text-paper"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                        Routing to Executive Desk...
+                      </span>
+                    ) : (
+                      <>
+                        Send Business Enquiry <Arrow />
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </form>
 
               {sent && (
                 <SuccessModal
@@ -901,7 +934,9 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
               <span className="italic text-bronze">Connect directly.</span>
             </h2>
             <p className="mt-4 leading-relaxed text-paper/70">
-              Each dedicated intake path has tailored criteria and expedited review cycles for property holders, suppliers, and culinary talent.
+              Each dedicated intake path has tailored criteria and expedited
+              review cycles for property holders, suppliers, and culinary
+              talent.
             </p>
           </Reveal>
 
@@ -961,7 +996,8 @@ export function Contact({ go }: { go: (p: PageId) => void }) {
             No message disappears into a void.
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-ink-soft sm:text-base">
-            We hold a disciplined communication protocol to honor every partner&rsquo;s time and commercial vision.
+            We hold a disciplined communication protocol to honor every
+            partner&rsquo;s time and commercial vision.
           </p>
         </Reveal>
 

@@ -13,30 +13,34 @@ const PHONE_MEDIA = [
 const TOP_LINKS = ["Ventures", "Experience", "Franchise"]
 
 /* Monochrome store glyphs — kept cream to suit the dark, elegant aesthetic. */
-function AppleGlyph({ size = 20 }: { size?: number }) {
+function AppleGlyph({ size = 20 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
       <path d="M16.365 1.43c0 1.14-.42 2.2-1.12 2.99-.84.95-2.2 1.68-3.37 1.59-.14-1.12.42-2.3 1.09-3.03.76-.84 2.09-1.47 3.4-1.55zM20.5 17.2c-.6 1.38-.9 1.99-1.67 3.2-1.08 1.71-2.6 3.84-4.48 3.85-1.67.02-2.1-1.08-4.37-1.07-2.27.01-2.74 1.09-4.41 1.08-1.88-.02-3.32-1.75-4.4-3.46-3.02-4.71-3.34-10.24-1.48-13.18C1.13 6.3 2.5 5.6 3.96 5.6c1.7 0 2.77 1.09 4.18 1.09 1.36 0 2.19-1.09 4.16-1.09 1.31 0 2.7.71 3.69 1.94-3.24 1.77-2.71 6.4.51 8.66z" />
     </svg>
   )
 }
-function PlayGlyph({ size = 20 }: { size?: number }) {
+function PlayGlyph({ size = 20 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
       <path d="M4 3.5c0-.6.63-.98 1.15-.69l14.5 8.19c.53.3.53 1.09 0 1.39l-14.5 8.2c-.52.29-1.15-.09-1.15-.7V3.5z" />
     </svg>
   )
 }
 
-function StoreBadge({
-  glyph,
-  top,
-  bottom,
-}: {
-  glyph: React.ReactNode
-  top: string
-  bottom: string
-}) {
+function StoreBadge({ glyph, top, bottom }) {
   return (
     <div className="flex items-center gap-3 rounded-xl border border-paper/20 bg-white/[0.06] px-4 py-2.5 text-paper backdrop-blur-md transition-colors duration-300 hover:border-paper/40 hover:bg-white/[0.12]">
       <span className="text-paper">{glyph}</span>
@@ -50,7 +54,7 @@ function StoreBadge({
   )
 }
 
-export function IntroSplash({ onEnter }: { onEnter: () => void }) {
+export function IntroSplash({ onEnter }) {
   const [leaving, setLeaving] = useState(false)
   const [entered, setEntered] = useState(false)
   const [slide, setSlide] = useState(0)
@@ -88,7 +92,7 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
 
   /* Enter / Escape / Space also dismiss */
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e) => {
       if (e.key === "Enter" || e.key === "Escape" || e.key === " ") {
         e.preventDefault()
         dismiss()
@@ -99,7 +103,7 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leaving])
 
-  const rise = (delay: number): React.CSSProperties => ({
+  const rise = (delay) => ({
     opacity: entered ? 1 : 0,
     transform: entered ? "none" : "translateY(20px)",
     transition: reducedMotion
@@ -161,7 +165,12 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
       >
         <span
           className="text-paper"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.25rem", letterSpacing: "-0.01em" }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "1.25rem",
+            letterSpacing: "-0.01em",
+          }}
         >
           Leo <span className="text-bronze">Hospitality</span>
         </span>
@@ -213,8 +222,7 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
                     filter: "saturate(1.12) brightness(1.05)",
                     transform:
                       reducedMotion || i !== slide ? "none" : "scale(1.06)",
-                    transition:
-                      "opacity 1000ms ease, transform 5000ms ease",
+                    transition: "opacity 1000ms ease, transform 5000ms ease",
                   }}
                 />
               ))}
@@ -236,8 +244,16 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
         className="absolute bottom-6 right-6 z-20 flex flex-col gap-3 sm:flex-row lg:bottom-8 lg:right-12"
         style={rise(340)}
       >
-        <StoreBadge glyph={<AppleGlyph />} top="Download on the" bottom="App Store" />
-        <StoreBadge glyph={<PlayGlyph />} top="Get it on" bottom="Google Play" />
+        <StoreBadge
+          glyph={<AppleGlyph />}
+          top="Download on the"
+          bottom="App Store"
+        />
+        <StoreBadge
+          glyph={<PlayGlyph />}
+          top="Get it on"
+          bottom="Google Play"
+        />
       </div>
 
       {/* Enter hint, bottom-left */}
@@ -245,7 +261,11 @@ export function IntroSplash({ onEnter }: { onEnter: () => void }) {
         className="absolute bottom-8 left-6 z-20 flex items-center gap-3 text-paper/60 lg:left-12"
         style={rise(340)}
       >
-        <span className={`h-2 w-2 rounded-full bg-bronze ${reducedMotion ? "" : "animate-pulse"}`} />
+        <span
+          className={`h-2 w-2 rounded-full bg-bronze ${
+            reducedMotion ? "" : "animate-pulse"
+          }`}
+        />
         <span className="text-[0.7rem] uppercase tracking-[0.22em]">
           Tap anywhere to enter
         </span>

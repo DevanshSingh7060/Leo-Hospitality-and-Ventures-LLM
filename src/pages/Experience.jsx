@@ -3,7 +3,6 @@ import { Reveal, IMG } from "../lib/ui"
 import { PageHero, Section } from "../components/PageHero"
 import { CTA } from "./Home"
 import { PROJECTS_DATA } from "../lib/data"
-import type { PageId } from "../lib/pages"
 import {
   StoryParallaxBackground,
   StoryParallaxWrap,
@@ -11,7 +10,7 @@ import {
   ParallaxDivider,
 } from "../components/StoryParallaxShowcase"
 
-const slug = (s: string) => s.replace(/\s+/g, "-").toLowerCase()
+const slug = (s) => s.replace(/\s+/g, "-").toLowerCase()
 
 /* ─── Vertical curtain-parallax project showcase ───
    Ported from the Ryvive Roots Story page: a fixed lower-layer
@@ -34,7 +33,11 @@ function ProjectsParallax() {
             <Fragment key={p.name}>
               {solid ? (
                 /* SOLID — project image is the full-screen fixed background */
-                <ParallaxStorySection variant="solid" image={p.img} id={slug(p.name)}>
+                <ParallaxStorySection
+                  variant="solid"
+                  image={p.img}
+                  id={slug(p.name)}
+                >
                   <div className="min-h-screen w-full flex items-end px-6 pb-16 sm:px-8 lg:px-16 lg:pb-24">
                     <div
                       className="max-w-3xl rounded-sm p-7 lg:p-9"
@@ -135,7 +138,7 @@ function ProjectsParallax() {
 }
 
 /* ─── Page ─── */
-export function Experience({ go }: { go: (p: PageId) => void }) {
+export function Experience({ go }) {
   return (
     <>
       <PageHero

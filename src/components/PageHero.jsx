@@ -8,17 +8,8 @@ export function PageHero({
   image,
   imageAlt = "",
   graphic = false,
-}: {
-  kicker: string
-  title: React.ReactNode
-  lead: string
-  image: string
-  /** Leave empty for purely decorative photography. */
-  imageAlt?: string
-  /** Vector illustration: shown uncropped and without the photo brightness lift. */
-  graphic?: boolean
 }) {
-  const imgRef = useRef<HTMLImageElement>(null)
+  const imgRef = useRef(null)
   useParallax(imgRef, { amount: 6 })
   return (
     <section className="relative overflow-hidden pt-28 lg:pt-36">
@@ -61,16 +52,12 @@ export function PageHero({
   )
 }
 
-export function Section({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
+export function Section({ children, className = "" }) {
   return (
     <section className={`mx-auto max-w-[1440px] px-6 lg:px-12 ${className}`}>
       {children}
     </section>
   )
 }
+
+export default PageHero

@@ -1,4 +1,4 @@
-import { defineConfig, type HtmlTagDescriptor, type Plugin } from "vite"
+import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import tailwindcss from "@tailwindcss/vite"
 import path from "node:path"
@@ -44,49 +44,18 @@ export default defineConfig(({ mode }) => {
   }
 })
 
-type FigmaSiteConfiguration = {
-  title?: string
-  description?: string
-  language?: string
-  robots?: {
-    index?: boolean
-  }
-  icons?: {
-    icon?: string
-  }
-  openGraph?: {
-    image?: string
-  }
-  analytics?: {
-    googleAnalyticsId?: string
-  }
-  customScripts?: {
-    headStart?: string
-    headEnd?: string
-    bodyStart?: string
-    bodyEnd?: string
-  }
-  accessibility?: {
-    addBypassLinks?: boolean
-  }
-}
-
 /** Applies /.figma/make/site.json to the generated document shell. */
-function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
-  function sanitizeHtmlValue(value: string | undefined): string {
+function figmaSiteConfiguration(config) {
+  function sanitizeHtmlValue(value) {
     return value?.replace(/[^a-zA-Z0-9_-]/g, "") || ""
   }
-  function escapeHtmlText(value: string): string {
+  function escapeHtmlText(value) {
     return value
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
   }
-  function replaceHtmlCommentSlot(
-    html: string,
-    slotName: string,
-    content: string,
-  ): string {
+  function replaceHtmlCommentSlot(html, slotName, content) {
     return html.replace(`<!-- ${slotName} -->`, content)
   }
 
@@ -140,7 +109,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
         result = replaceHtmlCommentSlot(result, "figma:body-start", bodyStart)
         result = replaceHtmlCommentSlot(result, "figma:body-end", bodyEnd)
 
-        const tags: HtmlTagDescriptor[] = []
+        const tags = []
         if (description) {
           tags.push({
             tag: "meta",
@@ -263,39 +232,28 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
 
 /**
  * Replay the most recent build error to clients that connect after
- * it was first broadcast. Vite buffers an error payload only while
- * no clients are connected and clears the buffer on the first
- * reconnect (see `bufferedMessage` in `createWebSocketServer`), so
- * if the preview iframe reloads after Vite already delivered an
- * error to a live socket, the new socket misses the payload and
- * the overlay stays hidden even though the build is still broken.
- * We intercept `ws.send` to remember the latest error and replay
- * it on every new connection; the cache clears on a successful
- * `update` or `full-reload` so a stale overlay can't survive a
- * fixed build.
+ * it was first broadcast.
  */
-function figmaErrorOverlayReplay(): Plugin {
+function figmaErrorOverlayReplay() {
   return {
     name: "figma-error-overlay-replay",
     apply: "serve",
     configureServer(server) {
-      let lastError: object | null = null
+      let lastError = null
 
-      const origSend = server.ws.send.bind(server.ws) as (
-        ...args: any[]
-      ) => void
-      server.ws.send = (((...args: any[]) => {
+      const origSend = server.ws.send.bind(server.ws)
+      server.ws.send = (...args) => {
         const payload = args[0]
         if (payload && typeof payload === "object" && !Array.isArray(payload)) {
-          const type = (payload as { type?: string }).type
+          const type = payload.type
           if (type === "error") {
-            lastError = (payload as object)
+            lastError = payload
           } else if (type === "update" || type === "full-reload") {
             lastError = null
           }
         }
         return origSend(...args)
-      }) as typeof server.ws.send)
+      }
 
       server.ws.on("connection", (socket) => {
         if (lastError !== null) {
@@ -308,19 +266,11 @@ function figmaErrorOverlayReplay(): Plugin {
 
 /**
  * Reload when a module that previously defined a React Refresh boundary stops
- * defining one. This happens when an agent moves a component into a new file
- * and replaces the old module with a re-export:
- *
- *   export { default } from './app/App'
- *
- * Vite otherwise accepts the update using the previous module's HMR boundary,
- * but the re-export-only transform no longer registers a replacement for the
- * mounted component family. React reports a successful refresh while leaving
- * the old tree mounted until the page is reloaded.
+ * defining one.
  */
-function figmaReactRefreshBoundaryFallback(): Plugin {
-  const hadRefreshBoundary = new Map<string, boolean>()
-  let sendFullReload: (() => void) | null = null
+function figmaReactRefreshBoundaryFallback() {
+  const hadRefreshBoundary = new Map()
+  let sendFullReload = null
 
   return {
     name: "figma-react-refresh-boundary-fallback",
@@ -349,18 +299,9 @@ function figmaReactRefreshBoundaryFallback(): Plugin {
 
 /**
  * Serves a blank render-target page at /.figma/make/kit.html that
- * the Figma preview script drives directly. The page exposes a
- * registry of every file matching `storiesGlob` on
- * window.__FIGMA__.stories so the design surface can dynamically
- * import + mount each entry into its own grid view.
- *
- * Dev-only: `apply: 'serve'` gates the plugin to `vite dev`. Prod
- * builds (`vite build`) skip it entirely so the route doesn't leak
- * into shipped bundles.
+ * the Figma preview script drives directly.
  */
-function figmaMakeKitPlugin(options: {
-  storiesGlob: string | string[]
-}): Plugin {
+function figmaMakeKitPlugin(options) {
   const storiesGlob = Array.isArray(options.storiesGlob)
     ? options.storiesGlob
     : [options.storiesGlob]
@@ -404,7 +345,7 @@ function figmaMakeKitPlugin(options: {
           res.setHeader("Content-Type", "text/html")
           res.end(await server.transformIndexHtml(url, HTML_BOOTSTRAP))
         } catch (err) {
-          next(err as Error)
+          next(err)
         }
       })
     },

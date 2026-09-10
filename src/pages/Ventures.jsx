@@ -2,35 +2,60 @@ import { useState } from "react"
 import { Button, Arrow, Kicker, Reveal, IMG } from "../lib/ui"
 import { PageHero } from "../components/PageHero"
 import { CTA } from "./Home"
-import { VENTURES_DATA, type Venture } from "../lib/data"
-import type { PageId } from "../lib/pages"
+import { VENTURES_DATA } from "../lib/data"
 
 /* -------------------------------------------------------------------------- */
 /*                                DATA & ASSETS                               */
 /* -------------------------------------------------------------------------- */
 
-const VENTURE_METRICS: Record<
-  string,
-  { label: string; val: string; sub: string }[]
-> = {
+const VENTURE_METRICS = {
   "bodhi-tree": [
-    { val: "4.8 ★", label: "Guest Satisfaction", sub: "Based on 1,400+ verified ratings" },
-    { val: "350+", label: "Daily Covers", sub: "Consistent breakfast to dinner flow" },
-    { val: "100%", label: "Speciality Coffee", sub: "Single-origin estate arabica beans" },
-    { val: "All-Day", label: "Dining Ambience", sub: "Built for community & creative work" },
+    {
+      val: "4.8 ★",
+      label: "Guest Satisfaction",
+      sub: "Based on 1,400+ verified ratings",
+    },
+    {
+      val: "350+",
+      label: "Daily Covers",
+      sub: "Consistent breakfast to dinner flow",
+    },
+    {
+      val: "100%",
+      label: "Speciality Coffee",
+      sub: "Single-origin estate arabica beans",
+    },
+    {
+      val: "All-Day",
+      label: "Dining Ambience",
+      sub: "Built for community & creative work",
+    },
   ],
   "ryvive-roots": [
-    { val: "< 28 min", label: "Avg. Delivery Time", sub: "Optimized packaging & logistics" },
-    { val: "99.2%", label: "Recipe Consistency", sub: "Standardized ingredient-level prep" },
-    { val: "60 Days", label: "Turnkey Setup", sub: "Site selection to kitchen launch" },
-    { val: "Multi-Brand", label: "Kitchen Output", sub: "Engineered for high-volume scale" },
+    {
+      val: "< 28 min",
+      label: "Avg. Delivery Time",
+      sub: "Optimized packaging & logistics",
+    },
+    {
+      val: "99.2%",
+      label: "Recipe Consistency",
+      sub: "Standardized ingredient-level prep",
+    },
+    {
+      val: "60 Days",
+      label: "Turnkey Setup",
+      sub: "Site selection to kitchen launch",
+    },
+    {
+      val: "Multi-Brand",
+      label: "Kitchen Output",
+      sub: "Engineered for high-volume scale",
+    },
   ],
 }
 
-const VENTURE_HIGHLIGHTS: Record<
-  string,
-  { title: string; desc: string; icon: string }[]
-> = {
+const VENTURE_HIGHLIGHTS = {
   "bodhi-tree": [
     {
       title: "Artisanal Coffee Programme",
@@ -78,7 +103,11 @@ const FUTURE_CONCEPTS = [
     location: "Mumbai (BKC / Lower Parel)",
     image: IMG.lamps,
     desc: "An intimate conservatory setting celebrating botanical spirits, rare herbal teas, and twilight dining for urban tastemakers.",
-    features: ["Curated Zero-Proof & Spirit Menus", "Acoustic-Treated Lounge Architecture", "Bespoke Evening Hospitality"],
+    features: [
+      "Curated Zero-Proof & Spirit Menus",
+      "Acoustic-Treated Lounge Architecture",
+      "Bespoke Evening Hospitality",
+    ],
   },
   {
     num: "02",
@@ -90,7 +119,11 @@ const FUTURE_CONCEPTS = [
     location: "South Mumbai / Bandra",
     image: IMG.souffle,
     desc: "A neighborhood bakery honoring traditional European lamination techniques, stone-ground flours, and micro-lot single origin coffees.",
-    features: ["Daily Small-Batch Baking", "Open Kitchen Display", "High-Volume Grab & Go"],
+    features: [
+      "Daily Small-Batch Baking",
+      "Open Kitchen Display",
+      "High-Volume Grab & Go",
+    ],
   },
   {
     num: "03",
@@ -102,7 +135,11 @@ const FUTURE_CONCEPTS = [
     location: "Goa / Western Coast",
     image: IMG.woodTable,
     desc: "Charcoal and wood-fired culinary heritage reviving forgotten recipes across the Konkan, Malabar, and Coromandel coastlines.",
-    features: ["Locally Sourced Coastal Catch", "Handcrafted Clay Oven Cooking", "Bespoke Heritage Beverage Pairing"],
+    features: [
+      "Locally Sourced Coastal Catch",
+      "Handcrafted Clay Oven Cooking",
+      "Bespoke Heritage Beverage Pairing",
+    ],
   },
 ]
 
@@ -110,16 +147,8 @@ const FUTURE_CONCEPTS = [
 /*                            VENTURE SHOWCASE                                */
 /* -------------------------------------------------------------------------- */
 
-function VentureShowcase({
-  venture,
-  reverse,
-  go,
-}: {
-  venture: Venture
-  reverse?: boolean
-  go: (p: PageId) => void
-}) {
-  const [activeTab, setActiveTab] = useState<"pillars" | "metrics">("pillars")
+function VentureShowcase({ venture, reverse, go }) {
+  const [activeTab, setActiveTab] = useState("pillars")
   const metrics = VENTURE_METRICS[venture.id] || []
   const highlights = VENTURE_HIGHLIGHTS[venture.id] || []
 
@@ -129,7 +158,9 @@ function VentureShowcase({
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute h-96 w-96 rounded-full blur-3xl opacity-40 ${
-          reverse ? "-left-20 top-20 bg-bronze/10" : "-right-20 bottom-20 bg-forest/10"
+          reverse
+            ? "-left-20 top-20 bg-bronze/10"
+            : "-right-20 bottom-20 bg-forest/10"
         }`}
       />
 
@@ -160,7 +191,9 @@ function VentureShowcase({
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
                     </span>
                     <span className="font-mono text-[11px] uppercase tracking-wider text-forest font-semibold">
-                      {venture.id === "bodhi-tree" ? "Flagship Dine-In Venue" : "Delivery-First Operations"}
+                      {venture.id === "bodhi-tree"
+                        ? "Flagship Dine-In Venue"
+                        : "Delivery-First Operations"}
                     </span>
                   </div>
 
@@ -188,7 +221,9 @@ function VentureShowcase({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
                   <div className="absolute bottom-2 left-2 right-2 text-[10px] font-mono uppercase tracking-wider text-paper font-semibold">
-                    {venture.id === "bodhi-tree" ? "Handcrafted Espresso" : "Tamper-Evident Packaging"}
+                    {venture.id === "bodhi-tree"
+                      ? "Handcrafted Espresso"
+                      : "Tamper-Evident Packaging"}
                   </div>
                 </div>
 
@@ -197,7 +232,11 @@ function VentureShowcase({
                   aria-hidden="true"
                   className="pointer-events-none absolute -top-8 -left-8 h-24 w-24 text-forest/15 hidden sm:block"
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-full w-full"
+                  >
                     <path d="M12 2C11.5 2 6 6 6 12C6 15.3 8.7 18 12 18C15.3 18 18 15.3 18 12C18 6 12.5 2 12 2Z" />
                   </svg>
                 </div>
@@ -237,7 +276,9 @@ function VentureShowcase({
                   type="button"
                   onClick={() => setActiveTab("pillars")}
                   className={`relative pb-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                    activeTab === "pillars" ? "text-forest" : "text-ink-soft/70 hover:text-ink"
+                    activeTab === "pillars"
+                      ? "text-forest"
+                      : "text-ink-soft/70 hover:text-ink"
                   }`}
                 >
                   Operational Pillars
@@ -250,7 +291,9 @@ function VentureShowcase({
                   type="button"
                   onClick={() => setActiveTab("metrics")}
                   className={`relative pb-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                    activeTab === "metrics" ? "text-forest" : "text-ink-soft/70 hover:text-ink"
+                    activeTab === "metrics"
+                      ? "text-forest"
+                      : "text-ink-soft/70 hover:text-ink"
                   }`}
                 >
                   Key Impact Metrics
@@ -276,12 +319,20 @@ function VentureShowcase({
                           stroke="currentColor"
                           strokeWidth={1.7}
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d={h.icon} />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d={h.icon}
+                          />
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-ink">{h.title}</h4>
-                        <p className="mt-0.5 text-xs text-ink-soft leading-relaxed">{h.desc}</p>
+                        <h4 className="text-sm font-semibold text-ink">
+                          {h.title}
+                        </h4>
+                        <p className="mt-0.5 text-xs text-ink-soft leading-relaxed">
+                          {h.desc}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -302,8 +353,12 @@ function VentureShowcase({
                       >
                         {m.val}
                       </div>
-                      <div className="mt-1 text-xs font-semibold text-ink">{m.label}</div>
-                      <div className="mt-0.5 text-[11px] text-ink-soft">{m.sub}</div>
+                      <div className="mt-1 text-xs font-semibold text-ink">
+                        {m.label}
+                      </div>
+                      <div className="mt-0.5 text-[11px] text-ink-soft">
+                        {m.sub}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -312,7 +367,7 @@ function VentureShowcase({
               {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 {venture.cta && (
-                  <Button onClick={() => go(venture.cta as PageId)}>
+                  <Button onClick={() => go(venture.cta)}>
                     Franchise &amp; Partner Model <Arrow />
                   </Button>
                 )}
@@ -332,8 +387,8 @@ function VentureShowcase({
 /*                               MAIN COMPONENT                               */
 /* -------------------------------------------------------------------------- */
 
-export function Ventures({ go }: { go: (p: PageId) => void }) {
-  const [selectedCategory, setSelectedCategory] = useState<"all" | "dining" | "delivery">("all")
+export function Ventures({ go }) {
+  const [selectedCategory, setSelectedCategory] = useState("all")
 
   const filteredVentures = VENTURES_DATA.filter((v) => {
     if (selectedCategory === "dining") return v.id === "bodhi-tree"
@@ -347,7 +402,8 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
         kicker="Brand Portfolio & Scale"
         title={
           <>
-            Concepts we formulate, <span className="italic text-forest">operate and scale.</span>
+            Concepts we formulate,{" "}
+            <span className="italic text-forest">operate and scale.</span>
           </>
         }
         lead="A deliberate hospitality portfolio spanning an ambience-led dine-in café and a franchise-engineered cloud kitchen ecosystem — built on institutional discipline, culinary integrity, and scalable economics."
@@ -359,34 +415,58 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             <div className="flex items-center gap-3.5 border-r border-line/70 pr-4">
-              <span className="font-display text-3xl font-normal text-forest">02</span>
+              <span className="font-display text-3xl font-normal text-forest">
+                02
+              </span>
               <div>
-                <p className="text-xs font-semibold text-ink uppercase tracking-wider">Active Flagships</p>
-                <p className="text-[11px] text-ink-soft">Dine-In &amp; Cloud Formats</p>
+                <p className="text-xs font-semibold text-ink uppercase tracking-wider">
+                  Active Flagships
+                </p>
+                <p className="text-[11px] text-ink-soft">
+                  Dine-In &amp; Cloud Formats
+                </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5 border-r border-line/70 pr-4">
-              <span className="font-display text-3xl font-normal text-bronze">03</span>
+              <span className="font-display text-3xl font-normal text-bronze">
+                03
+              </span>
               <div>
-                <p className="text-xs font-semibold text-ink uppercase tracking-wider">Concepts in Lab</p>
-                <p className="text-[11px] text-ink-soft">Active Incubation Pipeline</p>
+                <p className="text-xs font-semibold text-ink uppercase tracking-wider">
+                  Concepts in Lab
+                </p>
+                <p className="text-[11px] text-ink-soft">
+                  Active Incubation Pipeline
+                </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5 border-r border-line/70 pr-4">
-              <span className="font-display text-3xl font-normal text-forest">100%</span>
+              <span className="font-display text-3xl font-normal text-forest">
+                100%
+              </span>
               <div>
-                <p className="text-xs font-semibold text-ink uppercase tracking-wider">SOP Compliance</p>
-                <p className="text-[11px] text-ink-soft">Standardized Prep &amp; COGS</p>
+                <p className="text-xs font-semibold text-ink uppercase tracking-wider">
+                  SOP Compliance
+                </p>
+                <p className="text-[11px] text-ink-soft">
+                  Standardized Prep &amp; COGS
+                </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5">
-              <span className="font-display text-3xl font-normal text-bronze">4.8★</span>
+              <span className="font-display text-3xl font-normal text-bronze">
+                4.8★
+              </span>
               <div>
-                <p className="text-xs font-semibold text-ink uppercase tracking-wider">Guest Trust</p>
-                <p className="text-[11px] text-ink-soft">Consistent Experience Delivery</p>
+                <p className="text-xs font-semibold text-ink uppercase tracking-wider">
+                  Guest Trust
+                </p>
+                <p className="text-[11px] text-ink-soft">
+                  Consistent Experience Delivery
+                </p>
               </div>
             </div>
           </div>
@@ -418,7 +498,7 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setSelectedCategory(tab.id as any)}
+                onClick={() => setSelectedCategory(tab.id)}
                 className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300 ${
                   selectedCategory === tab.id
                     ? "bg-forest text-paper shadow-xs"
@@ -455,10 +535,15 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
                   className="mt-3 text-3xl sm:text-4xl lg:text-5xl text-ink font-normal tracking-[-0.02em]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  The Incubator: <span className="italic text-forest">Concepts in Development.</span>
+                  The Incubator:{" "}
+                  <span className="italic text-forest">
+                    Concepts in Development.
+                  </span>
                 </h2>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
-                  We actively design, test, and pilot innovative dining concepts from our culinary laboratory before site deployment. Early partner inquiries and location pitches are welcome.
+                  We actively design, test, and pilot innovative dining concepts
+                  from our culinary laboratory before site deployment. Early
+                  partner inquiries and location pitches are welcome.
                 </p>
               </div>
 
@@ -489,7 +574,9 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
 
                     {/* Number Badge */}
                     <div className="absolute left-4 top-4 flex items-center justify-center rounded-full border border-white/60 bg-white/80 px-3 py-1 shadow-xs backdrop-blur-md">
-                      <span className="font-mono text-xs font-semibold text-forest">{c.num}</span>
+                      <span className="font-mono text-xs font-semibold text-forest">
+                        {c.num}
+                      </span>
                     </div>
 
                     {/* Stage Pill */}
@@ -539,7 +626,9 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
 
                     <div className="mt-5 border-t border-line/60 pt-3 text-[11px] text-ink-soft flex items-center justify-between">
                       <span>Target Hub:</span>
-                      <span className="font-semibold text-ink">{c.location}</span>
+                      <span className="font-semibold text-ink">
+                        {c.location}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -574,7 +663,9 @@ export function Ventures({ go }: { go: (p: PageId) => void }) {
               Have a prime property or a culinary concept?
             </h2>
             <p className="mt-4 max-w-xl mx-auto text-sm leading-relaxed text-paper/75">
-              We partner with real estate developers, investors, and chefs under transparent joint venture or management-contract models. Let&apos;s evaluate feasibility together.
+              We partner with real estate developers, investors, and chefs under
+              transparent joint venture or management-contract models.
+              Let&apos;s evaluate feasibility together.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

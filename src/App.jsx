@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import type { PageId } from "./lib/pages"
 import { Nav } from "./components/Nav"
 import { Footer } from "./components/Footer"
 import { IntroSplash } from "./components/IntroSplash"
@@ -14,7 +13,7 @@ import { Careers } from "./pages/Careers"
 import { Vendor } from "./pages/Vendor"
 import { Contact } from "./pages/Contact"
 
-const VALID_PAGES: PageId[] = [
+const VALID_PAGES = [
   "home",
   "about",
   "ventures",
@@ -27,23 +26,40 @@ const VALID_PAGES: PageId[] = [
   "contact",
 ]
 
-const getPageFromHash = (): PageId => {
+const getPageFromHash = () => {
   if (typeof window === "undefined") return "home"
   const hash = window.location.hash.replace(/^#\/?/, "")
-  return VALID_PAGES.includes(hash as PageId) ? (hash as PageId) : "home"
+  return VALID_PAGES.includes(hash) ? hash : "home"
+}
+
+const PAGE_TITLES = {
+  home: "Leo Hospitality & Ventures LLP — Creating Experiences",
+  about: "About Us — Leo Hospitality & Ventures LLP",
+  ventures: "Our Ventures — Leo Hospitality & Ventures LLP",
+  services: "Services & Capabilities — Leo Hospitality & Ventures LLP",
+  experience: "Past Projects & Experience — Leo Hospitality & Ventures LLP",
+  gallery: "Gallery — Leo Hospitality & Ventures LLP",
+  franchise: "Franchise & Business Opportunities — Leo Hospitality & Ventures LLP",
+  careers: "Careers — Leo Hospitality & Ventures LLP",
+  vendor: "Vendor Registration & KYC Portal — Leo Hospitality & Ventures LLP",
+  contact: "Contact Executive Desk — Leo Hospitality & Ventures LLP",
 }
 
 export default function App() {
-  const [page, setPage] = useState<PageId>(getPageFromHash)
+  const [page, setPage] = useState(getPageFromHash)
   // Intro splash is on hold — kept wired but disabled. Flip to `true` to re-enable.
   const [showIntro, setShowIntro] = useState(false) // just to on banner make it true
 
-  const go = (p: PageId) => {
+  const go = (p) => {
     setPage(p)
     if (typeof window !== "undefined") {
       const newHash = p === "home" ? "" : `#${p}`
       if (window.location.hash !== newHash) {
-        window.history.pushState(null, "", window.location.pathname + (newHash || ""))
+        window.history.pushState(
+          null,
+          "",
+          window.location.pathname + (newHash || ""),
+        )
       }
     }
     window.scrollTo({ top: 0, behavior: "auto" })
@@ -64,8 +80,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.title = "Leo Hospitality & Ventures LLP — Creating Experiences"
-  }, [])
+    document.title =
+      PAGE_TITLES[page] ||
+      "Leo Hospitality & Ventures LLP — Creating Experiences"
+  }, [page])
 
   // Enable full-section scroll-snap only on the Home page.
   useEffect(() => {
@@ -79,16 +97,26 @@ export default function App() {
 
   const renderPage = () => {
     switch (page) {
-      case "home": return <Home go={go} />
-      case "about": return <About go={go} />
-      case "ventures": return <Ventures go={go} />
-      case "services": return <Services go={go} />
-      case "experience": return <Experience go={go} />
-      case "gallery": return <Gallery go={go} />
-      case "franchise": return <Franchise go={go} />
-      case "careers": return <Careers go={go} />
-      case "vendor": return <Vendor go={go} />
-      case "contact": return <Contact go={go} />
+      case "home":
+        return <Home go={go} />
+      case "about":
+        return <About go={go} />
+      case "ventures":
+        return <Ventures go={go} />
+      case "services":
+        return <Services go={go} />
+      case "experience":
+        return <Experience go={go} />
+      case "gallery":
+        return <Gallery go={go} />
+      case "franchise":
+        return <Franchise go={go} />
+      case "careers":
+        return <Careers go={go} />
+      case "vendor":
+        return <Vendor go={go} />
+      case "contact":
+        return <Contact go={go} />
     }
   }
 

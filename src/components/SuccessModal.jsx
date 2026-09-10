@@ -1,15 +1,8 @@
 import { useEffect } from "react"
-import type { ReactNode } from "react"
 import { createPortal } from "react-dom"
 import { Button, Arrow } from "../lib/ui"
 
 const CHECK = "M20 6L9 17l-5-5"
-
-export interface SuccessSummaryItem {
-  label: string
-  value: ReactNode
-  accent?: boolean
-}
 
 /* ---------- Botanical Four-Leaf Clover print (matches Contact form) ---------- */
 function FourLeafClover({
@@ -17,11 +10,6 @@ function FourLeafClover({
   strokeWidth = 1.4,
   fillOpacity = 0.14,
   className = "",
-}: {
-  size?: number
-  strokeWidth?: number
-  fillOpacity?: number
-  className?: string
 }) {
   return (
     <svg
@@ -42,7 +30,12 @@ function FourLeafClover({
             d="M 50 50 C 41 37 30 20 41 10 C 47 4 50 14 50 19 C 50 14 53 4 59 10 C 70 20 59 37 50 50 Z"
             fillOpacity={fillOpacity}
           />
-          <path d="M 50 50 L 50 18" strokeWidth="0.9" fill="none" opacity="0.65" />
+          <path
+            d="M 50 50 L 50 18"
+            strokeWidth="0.9"
+            fill="none"
+            opacity="0.65"
+          />
         </g>
       </defs>
       <use href="#success-clover-petal" transform="rotate(0 50 50)" />
@@ -76,24 +69,13 @@ export function SuccessModal({
   secondaryLabel,
   onSecondary,
   onClose,
-}: {
-  kicker: string
-  title: ReactNode
-  message: ReactNode
-  summary?: SuccessSummaryItem[]
-  children?: ReactNode
-  primaryLabel?: string
-  onPrimary: () => void
-  secondaryLabel?: string
-  onSecondary?: () => void
-  onClose: () => void
 }) {
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e) => {
       if (e.key === "Escape") onClose()
     }
     const prevOverflow = document.body.style.overflow

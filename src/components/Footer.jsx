@@ -1,9 +1,8 @@
 import { useState } from "react"
 import { Arrow } from "../lib/ui"
 import { NAV_ITEMS } from "./Nav"
-import type { PageId } from "../lib/pages"
 
-export function Footer({ go }: { go: (p: PageId) => void }) {
+export function Footer({ go }) {
   const [email, setEmail] = useState("")
   const [sent, setSent] = useState(false)
 
@@ -110,8 +109,8 @@ export function Footer({ go }: { go: (p: PageId) => void }) {
             )}
             <div className="mt-8 space-y-1.5 text-sm text-paper/65">
               <p>Mumbai, Maharashtra, India</p>
-              <a href="tel:+912200000000" className="block hover:text-paper">
-                +91 22 0000 0000
+              <a href="tel:+912269001200" className="block hover:text-paper">
+                +91 22 6900 1200
               </a>
               <a
                 href="mailto:connect@leohospitality.in"

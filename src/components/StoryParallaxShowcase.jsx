@@ -1,17 +1,9 @@
 import { useEffect, useRef, useState } from "react"
-import type { CSSProperties, ReactNode } from "react"
 import "./StoryParallaxShowcase.css"
 
-/* Ported from the Ryvive Roots Story page (CurtainParallaxShowcase).
-   Behaviour is identical; only typed for TypeScript. */
+/* Ported from the Ryvive Roots Story page (CurtainParallaxShowcase). */
 
-export function StoryParallaxBackground({
-  image,
-  hidden,
-}: {
-  image: string
-  hidden?: boolean
-}) {
+export function StoryParallaxBackground({ image, hidden }) {
   return (
     <div
       className={`story-lower-bg${hidden ? " is-hidden" : ""}`}
@@ -21,16 +13,8 @@ export function StoryParallaxBackground({
   )
 }
 
-export function StoryParallaxWrap({
-  children,
-  onInViewChange,
-  className,
-}: {
-  children: ReactNode
-  onInViewChange?: (inView: boolean) => void
-  className?: string
-}) {
-  const ref = useRef<HTMLDivElement>(null)
+export function StoryParallaxWrap({ children, onInViewChange, className }) {
+  const ref = useRef(null)
   useEffect(() => {
     if (!onInViewChange) return
     const el = ref.current
@@ -43,7 +27,10 @@ export function StoryParallaxWrap({
     return () => obs.disconnect()
   }, [onInViewChange])
   return (
-    <div ref={ref} className={`story-parallax-wrap${className ? ` ${className}` : ""}`}>
+    <div
+      ref={ref}
+      className={`story-parallax-wrap${className ? ` ${className}` : ""}`}
+    >
       {children}
     </div>
   )
@@ -55,14 +42,8 @@ export function ParallaxStorySection({
   id,
   children,
   className,
-}: {
-  variant: "solid" | "transparent"
-  image?: string
-  id?: string
-  children: ReactNode
-  className?: string
 }) {
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef(null)
   const [revealed, setRevealed] = useState(false)
 
   /* Reveal once when in view; once revealed, stay revealed. */
@@ -86,7 +67,7 @@ export function ParallaxStorySection({
 
   const sectionStyle =
     variant === "solid" && image
-      ? ({ ["--section-bg"]: `url("${image}")` } as CSSProperties)
+      ? { ["--section-bg"]: `url("${image}")` }
       : undefined
 
   const cls = [

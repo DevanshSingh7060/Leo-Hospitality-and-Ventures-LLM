@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ButtonHTMLAttributes,
-  type ReactNode,
-  type RefObject,
-} from "react"
+import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import heroInterior from "../assets/heroInterior.jpg"
@@ -62,14 +55,8 @@ export function Reveal({
   delay = 0,
   as: Tag = "div",
   style,
-}: {
-  children: ReactNode
-  className?: string
-  delay?: number
-  as?: any
-  style?: React.CSSProperties
 }) {
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef(null)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const el = ref.current
@@ -88,7 +75,7 @@ export function Reveal({
   }, [])
   return (
     <Tag
-      ref={ref as any}
+      ref={ref}
       style={{ transitionDelay: `${delay}ms`, ...style }}
       className={`reveal ${seen ? "in" : ""} ${className}`}
     >
@@ -98,18 +85,15 @@ export function Reveal({
 }
 
 /* ---------- Buttons ---------- */
-type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "ghost" | "light"
-}
 export function Button({
   variant = "primary",
   className = "",
   children,
   ...rest
-}: BtnProps) {
+}) {
   const base =
     "group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-forest focus-visible:ring-offset-cream active:scale-[0.97] motion-reduce:active:scale-100 disabled:opacity-50 disabled:active:scale-100"
-  const styles: Record<string, string> = {
+  const styles = {
     primary:
       "btn-wipe-primary text-paper shadow-[0_1px_0_rgba(255,255,255,0.15)_inset]",
     secondary: "btn-wipe-secondary text-ink",
@@ -132,13 +116,7 @@ export function Arrow() {
 }
 
 /* ---------- Section label ---------- */
-export function Kicker({
-  children,
-  tone = "forest",
-}: {
-  children: ReactNode
-  tone?: "forest" | "bronze" | "light"
-}) {
+export function Kicker({ children, tone = "forest" }) {
   const c =
     tone === "light"
       ? "text-paper/70"
@@ -154,17 +132,7 @@ export function Kicker({
 }
 
 /* ---------- Form fields ---------- */
-export function Field({
-  label,
-  required,
-  children,
-  hint,
-}: {
-  label: string
-  required?: boolean
-  hint?: string
-  children: ReactNode
-}) {
+export function Field({ label, required, children, hint }) {
   return (
     <label className="group block">
       <span className="mb-2 flex items-baseline gap-1 text-[0.82rem] font-medium tracking-wide text-ink-soft transition-colors duration-200 group-focus-within:text-forest">
@@ -182,18 +150,12 @@ export function Field({
 const inputCls =
   "w-full rounded-none border border-[#cfc8bc] bg-white px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-200 focus:border-forest focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest/20"
 
-export function Input({
-  className = "",
-  ...props
-}: React.InputHTMLAttributes<HTMLInputElement>) {
+export function Input({ className = "", ...props }) {
   const id = props.id || props.name || undefined
   return <input id={id} className={`${inputCls} ${className}`} {...props} />
 }
 
-export function Textarea({
-  className = "",
-  ...props
-}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function Textarea({ className = "", ...props }) {
   const id = props.id || props.name || undefined
   return (
     <textarea
@@ -205,10 +167,7 @@ export function Textarea({
   )
 }
 
-export function Select({
-  className = "",
-  ...props
-}: React.SelectHTMLAttributes<HTMLSelectElement>) {
+export function Select({ className = "", ...props }) {
   const id = props.id || props.name || undefined
   return (
     <select
@@ -219,24 +178,12 @@ export function Select({
   )
 }
 
-export function FileField({
-  label,
-  required,
-  hint,
-  name,
-  onChangeFile,
-}: {
-  label: string
-  required?: boolean
-  hint?: string
-  name: string
-  onChangeFile?: (file: File | null, error: string | null) => void
-}) {
-  const [file, setFile] = useState<File | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+export function FileField({ label, required, hint, name, onChangeFile }) {
+  const [file, setFile] = useState(null)
+  const [error, setError] = useState(null)
+  const fileInputRef = useRef(null)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     const selected = e.target.files?.[0] || null
     if (!selected) {
       setFile(null)
@@ -280,7 +227,7 @@ export function FileField({
     if (onChangeFile) onChangeFile(selected, null)
   }
 
-  const handleRemoveFile = (e: React.MouseEvent) => {
+  const handleRemoveFile = (e) => {
     e.preventDefault()
     e.stopPropagation()
     setFile(null)
@@ -329,7 +276,9 @@ export function FileField({
         </div>
       </Field>
       {error && (
-        <p className="field-error mt-1 text-xs text-red-600 font-medium">{error}</p>
+        <p className="field-error mt-1 text-xs text-red-600 font-medium">
+          {error}
+        </p>
       )}
     </div>
   )
@@ -341,7 +290,7 @@ export function usePrefersReducedMotion() {
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
     setReduced(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches)
+    const onChange = (e) => setReduced(e.matches)
     mq.addEventListener("change", onChange)
     return () => mq.removeEventListener("change", onChange)
   }, [])
@@ -349,10 +298,7 @@ export function usePrefersReducedMotion() {
 }
 
 /* ---------- Subtle scroll parallax (GSAP, reduced-motion aware) ---------- */
-export function useParallax(
-  ref: RefObject<HTMLElement | null>,
-  { amount = 8 }: { amount?: number } = {},
-) {
+export function useParallax(ref, { amount = 8 } = {}) {
   const reduced = usePrefersReducedMotion()
   useEffect(() => {
     const el = ref.current
@@ -385,23 +331,13 @@ export function SpotlightCard({
   onMouseEnter,
   onMouseLeave,
   ...rest
-}: {
-  children: ReactNode
-  className?: string
-  spotlightColor?: string
-  spotlightSize?: number
-  onClick?: () => void
-  style?: React.CSSProperties
-  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void
-  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void
-  [key: string]: any
 }) {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
+  const cardRef = useRef(null)
+  const [coords, setCoords] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e) => {
     if (reducedMotion || !cardRef.current) return
     const rect = cardRef.current.getBoundingClientRect()
     setCoords({
@@ -410,12 +346,12 @@ export function SpotlightCard({
     })
   }
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = (e) => {
     setIsHovered(true)
     if (onMouseEnter) onMouseEnter(e)
   }
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = (e) => {
     setIsHovered(false)
     if (onMouseLeave) onMouseLeave(e)
   }
@@ -446,4 +382,3 @@ export function SpotlightCard({
     </div>
   )
 }
-

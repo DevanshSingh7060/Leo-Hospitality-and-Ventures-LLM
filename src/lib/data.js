@@ -1,24 +1,6 @@
 import { IMG } from "./ui"
-import type { PageId } from "./pages"
 
-export interface Venture {
-  id: string
-  tag: string
-  name: string
-  tagline: string
-  copy: string
-  points: string[]
-  images: [string, string]
-  floatingAsset: {
-    type: "svg" | "image"
-    src?: string
-    svgPath?: string
-    style: React.CSSProperties
-  }[]
-  cta?: PageId
-}
-
-export const VENTURES_DATA: Venture[] = [
+export const VENTURES_DATA = [
   {
     id: "bodhi-tree",
     tag: "Café · Restaurant",
@@ -110,16 +92,7 @@ export const VENTURES_DATA: Venture[] = [
   },
 ]
 
-export interface Project {
-  number: string
-  name: string
-  loc: string
-  type: string
-  img: string
-  description: string
-}
-
-export const PROJECTS_DATA: Project[] = [
+export const PROJECTS_DATA = [
   {
     number: "01",
     name: "Lord of the Drinks",
@@ -167,15 +140,7 @@ export const PROJECTS_DATA: Project[] = [
   },
 ]
 
-export interface Service {
-  n: string
-  t: string
-  d: string
-  caps: string[]
-  svgIcon: string // SVG path or path components
-}
-
-export const SERVICES_DATA: Service[] = [
+export const SERVICES_DATA = [
   {
     n: "01",
     t: "Restaurant & Café Management",
@@ -251,21 +216,21 @@ export const SERVICES_DATA: Service[] = [
 ]
 
 export const GALLERY_PHOTOS_DATA = [
-  { src: IMG.diningRoom, cat: "Restaurants & Cafés" as const, span: true },
-  { src: IMG.latteArt, cat: "Food & Beverages" as const },
-  { src: IMG.chefKnife, cat: "Behind the Scenes" as const },
-  { src: IMG.eventDessert, cat: "Events" as const, span: true },
-  { src: IMG.souffle, cat: "Food & Beverages" as const },
-  { src: IMG.chefBoard, cat: "Team & Operations" as const },
-  { src: IMG.bodhiTree, cat: "Restaurants & Cafés" as const },
-  { src: IMG.containers, cat: "Projects" as const },
-  { src: IMG.cupcakes, cat: "Events" as const },
-  { src: IMG.chefBowl, cat: "Team & Operations" as const },
-  { src: IMG.pieLatte, cat: "Food & Beverages" as const, span: true },
-  { src: IMG.chefSink, cat: "Behind the Scenes" as const },
-  { src: IMG.woodTable, cat: "Restaurants & Cafés" as const },
-  { src: IMG.deliveryBag, cat: "Projects" as const },
-  { src: IMG.dessertPlatter, cat: "Food & Beverages" as const },
+  { src: IMG.diningRoom, cat: "Restaurants & Cafés", span: true },
+  { src: IMG.latteArt, cat: "Food & Beverages" },
+  { src: IMG.chefKnife, cat: "Behind the Scenes" },
+  { src: IMG.eventDessert, cat: "Events", span: true },
+  { src: IMG.souffle, cat: "Food & Beverages" },
+  { src: IMG.chefBoard, cat: "Team & Operations" },
+  { src: IMG.bodhiTree, cat: "Restaurants & Cafés" },
+  { src: IMG.containers, cat: "Projects" },
+  { src: IMG.cupcakes, cat: "Events" },
+  { src: IMG.chefBowl, cat: "Team & Operations" },
+  { src: IMG.pieLatte, cat: "Food & Beverages", span: true },
+  { src: IMG.chefSink, cat: "Behind the Scenes" },
+  { src: IMG.woodTable, cat: "Restaurants & Cafés" },
+  { src: IMG.deliveryBag, cat: "Projects" },
+  { src: IMG.dessertPlatter, cat: "Food & Beverages" },
 ]
 
 export const STATS_DATA = [

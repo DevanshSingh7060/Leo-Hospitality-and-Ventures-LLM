@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { Kicker, Reveal, Button, Arrow, IMG, SpotlightCard } from "../lib/ui"
-import type { PageId } from "../lib/pages"
+import { Reveal, Button, Arrow, IMG, SpotlightCard } from "../lib/ui"
 
 /* ---------- MILESTONES DATA ---------- */
 const TIMELINE = [
@@ -102,10 +101,14 @@ const STATS = [
   { val: "10+", label: "Years in Mumbai F&B", sub: "Operational track record" },
   { val: "5", label: "Core Disciplines", sub: "End-to-end execution" },
   { val: "90–120", label: "Days Pre-Opening", sub: "Rapid turnkey deployment" },
-  { val: "100%", label: "Open-Book P&L", sub: "Complete fiduciary transparency" },
+  {
+    val: "100%",
+    label: "Open-Book P&L",
+    sub: "Complete fiduciary transparency",
+  },
 ]
 
-export function About({ go }: { go: (p: PageId) => void }) {
+export function About({ go }) {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
@@ -134,15 +137,22 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 className="text-4xl leading-[1.08] tracking-[-0.02em] sm:text-6xl lg:text-[68px] text-ink"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                A management partner,{" "}
-                <br className="hidden sm:inline" />
-                <span className="italic font-normal text-bronze">not a landlord.</span>
+                A management partner, <br className="hidden sm:inline" />
+                <span className="italic font-normal text-bronze">
+                  not a landlord.
+                </span>
               </h1>
             </Reveal>
 
-            <Reveal delay={120} className="lg:col-span-5 flex flex-col justify-end">
+            <Reveal
+              delay={120}
+              className="lg:col-span-5 flex flex-col justify-end"
+            >
               <p className="text-base sm:text-lg leading-relaxed text-ink-soft">
-                Leo Hospitality &amp; Ventures LLP exists to make hospitality concepts feel effortless to their guests and dependable to their owners. We bridge culinary distinction with institutional financial governance.
+                Leo Hospitality &amp; Ventures LLP exists to make hospitality
+                concepts feel effortless to their guests and dependable to their
+                owners. We bridge culinary distinction with institutional
+                financial governance.
               </p>
               {/* Quick credential chips */}
               <div className="mt-6 flex flex-wrap gap-2">
@@ -184,7 +194,8 @@ export function About({ go }: { go: (p: PageId) => void }) {
                     Operational Mandate
                   </div>
                   <div className="text-sm font-medium text-white/95 mt-0.5">
-                    Bridging front-of-house theater with back-of-house fiduciary discipline.
+                    Bridging front-of-house theater with back-of-house fiduciary
+                    discipline.
                   </div>
                 </div>
               </div>
@@ -238,37 +249,62 @@ export function About({ go }: { go: (p: PageId) => void }) {
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   Great hospitality is engineered with rigor,{" "}
-                  <span className="italic text-bronze">then delivered with warmth.</span>
+                  <span className="italic text-bronze">
+                    then delivered with warmth.
+                  </span>
                 </h2>
               </Reveal>
 
-              <Reveal delay={120} className="mt-6 space-y-5 text-base sm:text-lg leading-relaxed text-ink-soft">
+              <Reveal
+                delay={120}
+                className="mt-6 space-y-5 text-base sm:text-lg leading-relaxed text-ink-soft"
+              >
                 <p>
-                  We believe the best guest experiences are the quiet triumph of disciplined backstage systems — precision recipe costing, bespoke guest journeys, rigorous culinary training, and micro-audits that a diner never explicitly notices, but always instinctively feels.
+                  We believe the best guest experiences are the quiet triumph of
+                  disciplined backstage systems — precision recipe costing,
+                  bespoke guest journeys, rigorous culinary training, and
+                  micro-audits that a diner never explicitly notices, but always
+                  instinctively feels.
                 </p>
                 <p>
-                  As an active management company, we shoulder the full weight of operations so owners, investors, and real-estate partners can focus on capital allocation and strategic growth. From boutique lifestyle cafés to multi-brand commercial kitchen networks, our ethos remains immovable: obsessive attention to detail, honest numbers, and warmth that scales.
+                  As an active management company, we shoulder the full weight
+                  of operations so owners, investors, and real-estate partners
+                  can focus on capital allocation and strategic growth. From
+                  boutique lifestyle cafés to multi-brand commercial kitchen
+                  networks, our ethos remains immovable: obsessive attention to
+                  detail, honest numbers, and warmth that scales.
                 </p>
               </Reveal>
 
               {/* Three Executive Commitments */}
-              <Reveal delay={200} className="mt-10 grid gap-4 sm:grid-cols-3 pt-8 border-t border-line">
+              <Reveal
+                delay={200}
+                className="mt-10 grid gap-4 sm:grid-cols-3 pt-8 border-t border-line"
+              >
                 <div className="rounded-xl border border-line bg-paper/60 p-4">
-                  <div className="font-display text-lg font-semibold text-forest">01. Open P&amp;L</div>
+                  <div className="font-display text-lg font-semibold text-forest">
+                    01. Open P&amp;L
+                  </div>
                   <p className="mt-1 text-xs text-ink-soft leading-relaxed">
-                    Audited unit-level accounting, zero hidden procurement markups.
+                    Audited unit-level accounting, zero hidden procurement
+                    markups.
                   </p>
                 </div>
                 <div className="rounded-xl border border-line bg-paper/60 p-4">
-                  <div className="font-display text-lg font-semibold text-bronze">02. Culinary R&amp;D</div>
+                  <div className="font-display text-lg font-semibold text-bronze">
+                    02. Culinary R&amp;D
+                  </div>
                   <p className="mt-1 text-xs text-ink-soft leading-relaxed">
                     SOPs engineered for consistent taste across 10,000 covers.
                   </p>
                 </div>
                 <div className="rounded-xl border border-line bg-paper/60 p-4">
-                  <div className="font-display text-lg font-semibold text-forest">03. People First</div>
+                  <div className="font-display text-lg font-semibold text-forest">
+                    03. People First
+                  </div>
                   <p className="mt-1 text-xs text-ink-soft leading-relaxed">
-                    Staff retention and dignified frontline hospitality training.
+                    Staff retention and dignified frontline hospitality
+                    training.
                   </p>
                 </div>
               </Reveal>
@@ -292,7 +328,8 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 The principles that protect our care.
               </h2>
               <p className="mt-4 text-ink-soft text-base leading-relaxed">
-                Four non-negotiable standards that govern how our managers hire, how our kitchens prep, and how our dining rooms welcome guests.
+                Four non-negotiable standards that govern how our managers hire,
+                how our kitchens prep, and how our dining rooms welcome guests.
               </p>
             </Reveal>
           </div>
@@ -360,13 +397,20 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Ten years in hospitality. <br className="hidden sm:inline" />
-                <span className="italic text-bronze">Built shift by shift.</span>
+                <span className="italic text-bronze">
+                  Built shift by shift.
+                </span>
               </h2>
             </Reveal>
 
-            <Reveal delay={120} className="lg:col-span-4 flex flex-col justify-end">
+            <Reveal
+              delay={120}
+              className="lg:col-span-4 flex flex-col justify-end"
+            >
               <p className="text-sm sm:text-base leading-relaxed text-ink-soft">
-                From managing late-night bistro rushes in South Mumbai to engineering proprietary multi-city cloud brands and advisory joint ventures.
+                From managing late-night bistro rushes in South Mumbai to
+                engineering proprietary multi-city cloud brands and advisory
+                joint ventures.
               </p>
             </Reveal>
           </div>
@@ -430,7 +474,10 @@ export function About({ go }: { go: (p: PageId) => void }) {
       </section>
 
       {/* 5. BY THE NUMBERS / IMPACT STRIP */}
-      <section data-tone="dark" className="bg-forest-deep py-16 lg:py-24 text-paper relative overflow-hidden">
+      <section
+        data-tone="dark"
+        className="bg-forest-deep py-16 lg:py-24 text-paper relative overflow-hidden"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -top-24 right-0 h-80 w-80 rounded-full bg-bronze/15 blur-3xl"
@@ -438,7 +485,11 @@ export function About({ go }: { go: (p: PageId) => void }) {
         <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
             {STATS.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80} className="pt-6 sm:pt-0 sm:px-6 first:pl-0 text-center sm:text-left">
+              <Reveal
+                key={s.label}
+                delay={i * 80}
+                className="pt-6 sm:pt-0 sm:px-6 first:pl-0 text-center sm:text-left"
+              >
                 <div
                   className="text-4xl sm:text-5xl lg:text-6xl font-light text-paper tracking-tight"
                   style={{ fontFamily: "var(--font-display)" }}
@@ -448,9 +499,7 @@ export function About({ go }: { go: (p: PageId) => void }) {
                 <div className="mt-2 text-sm font-semibold text-bronze tracking-wide uppercase">
                   {s.label}
                 </div>
-                <div className="mt-1 text-xs text-paper/70">
-                  {s.sub}
-                </div>
+                <div className="mt-1 text-xs text-paper/70">{s.sub}</div>
               </Reveal>
             ))}
           </div>
@@ -462,13 +511,17 @@ export function About({ go }: { go: (p: PageId) => void }) {
         <div className="mx-auto max-w-[1200px] px-6 text-center">
           <Reveal>
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-bronze/30 bg-bronze/10 text-bronze">
-              <span className="font-display text-4xl leading-none">&ldquo;</span>
+              <span className="font-display text-4xl leading-none">
+                &ldquo;
+              </span>
             </div>
             <blockquote
               className="mt-6 text-2xl sm:text-3xl lg:text-[34px] leading-[1.35] tracking-[-0.015em] text-ink font-normal"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              We don&rsquo;t chase logos or transient opening hype. We build resilient operational engines that outlast the opening buzz — the quiet consistency that turns a first visit into an enduring habit.
+              We don&rsquo;t chase logos or transient opening hype. We build
+              resilient operational engines that outlast the opening buzz — the
+              quiet consistency that turns a first visit into an enduring habit.
             </blockquote>
             <div className="mt-8 flex flex-col items-center justify-center">
               <div className="h-8 w-px bg-bronze/40 mb-4" />
@@ -499,12 +552,17 @@ export function About({ go }: { go: (p: PageId) => void }) {
                   Ready to elevate your venue&rsquo;s standards?
                 </h2>
                 <p className="mt-4 text-base sm:text-lg text-ink-soft max-w-2xl leading-relaxed">
-                  Whether you are planning a new flagship café, seeking turnkey management for an existing dining room, or exploring a brand joint venture — our principals are ready to advise.
+                  Whether you are planning a new flagship café, seeking turnkey
+                  management for an existing dining room, or exploring a brand
+                  joint venture — our principals are ready to advise.
                 </p>
               </div>
 
               <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5 justify-end">
-                <Button onClick={() => go("contact")} className="w-full sm:w-auto text-center justify-center">
+                <Button
+                  onClick={() => go("contact")}
+                  className="w-full sm:w-auto text-center justify-center"
+                >
                   Consult With Our Team <Arrow />
                 </Button>
                 <Button

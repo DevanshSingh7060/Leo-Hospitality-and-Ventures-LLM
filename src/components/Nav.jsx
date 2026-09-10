@@ -3,9 +3,8 @@ import { createPortal } from "react-dom"
 import { IMG } from "../lib/ui"
 import logoDark from "../assets/LEO Logo-dark.svg"
 import logoLight from "../assets/LEO Logo-light.svg"
-import type { PageId } from "../lib/pages"
 
-export const NAV_ITEMS: { id: PageId; label: string }[] = [
+export const NAV_ITEMS = [
   { id: "home", label: "Home" },
   { id: "about", label: "About Us" },
   { id: "ventures", label: "Ventures" },
@@ -19,7 +18,7 @@ export const NAV_ITEMS: { id: PageId; label: string }[] = [
 ]
 
 /* Links shown in the slim desktop bar. The full set lives in the drawer. */
-const BAR_LINKS: PageId[] = [
+const BAR_LINKS = [
   "about",
   "ventures",
   "services",
@@ -30,16 +29,13 @@ const BAR_LINKS: PageId[] = [
 
 /* Palette mirrors the official brand palette in index.css */
 const CREAM = "#f8f6f1"
-const INK = "#2e2e2e"
 const BRONZE = "#b89f7a"
-const PRIMARY = "#526b31"
 const DARK_GREEN = "#3e5225"
-
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)"
 
 /* ---------- Social icons (inline so we carry no icon dependency) ---------- */
-function IconInstagram({ size = 18 }: { size?: number }) {
+function IconInstagram({ size = 18 }) {
   return (
     <svg
       width={size}
@@ -59,7 +55,7 @@ function IconInstagram({ size = 18 }: { size?: number }) {
   )
 }
 
-function IconLinkedin({ size = 18 }: { size?: number }) {
+function IconLinkedin({ size = 18 }) {
   return (
     <svg
       width={size}
@@ -79,7 +75,7 @@ function IconLinkedin({ size = 18 }: { size?: number }) {
   )
 }
 
-function IconFacebook({ size = 18 }: { size?: number }) {
+function IconFacebook({ size = 18 }) {
   return (
     <svg
       width={size}
@@ -97,7 +93,7 @@ function IconFacebook({ size = 18 }: { size?: number }) {
   )
 }
 
-function IconHandshake({ size = 14 }: { size?: number }) {
+function IconHandshake({ size = 14 }) {
   return (
     <svg
       width={size}
@@ -122,32 +118,21 @@ const SOCIALS = [
 ]
 
 /* ---------- Right-side drawer (portaled out of the blurred header) ---------- */
-function Drawer({
-  open,
-  isDesktop,
-  page,
-  go,
-  close,
-}: {
-  open: boolean
-  isDesktop: boolean
-  page: PageId
-  go: (p: PageId) => void
-  close: () => void
-}) {
+function Drawer({ open, isDesktop, page, go, close }) {
   if (typeof document === "undefined") return null
 
   const panelBase =
     "relative h-full shadow-2xl transition-transform duration-[650ms] motion-reduce:transition-none"
-  const panelStyle: React.CSSProperties = {
+  const panelStyle = {
     transitionTimingFunction: EASE,
     transform: open ? "translateX(0)" : "translateX(100%)",
   }
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-[9998] flex justify-end overflow-hidden ${open ? "pointer-events-auto" : "pointer-events-none"
-        }`}
+      className={`fixed inset-0 z-[9998] flex justify-end overflow-hidden ${
+        open ? "pointer-events-auto" : "pointer-events-none"
+      }`}
       aria-hidden={!open}
       inert={!open ? true : undefined}
     >
@@ -168,7 +153,11 @@ function Drawer({
         /* ---- Desktop: cream editorial panel ---- */
         <div
           className={`${panelBase} w-[420px] overflow-y-auto`}
-          style={{ ...panelStyle, background: "#f5f1e8", scrollbarWidth: "none" }}
+          style={{
+            ...panelStyle,
+            background: "#f5f1e8",
+            scrollbarWidth: "none",
+          }}
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
@@ -183,14 +172,21 @@ function Drawer({
               />
               <p
                 className="mt-3 max-w-[290px]"
-                style={{ fontSize: "12.5px", lineHeight: 1.7, color: "rgba(30,25,21,0.65)" }}
+                style={{
+                  fontSize: "12.5px",
+                  lineHeight: 1.7,
+                  color: "rgba(30,25,21,0.65)",
+                }}
               >
                 Creating experiences. Building hospitality brands.
               </p>
             </div>
 
             {/* Divider */}
-            <div className="my-5 h-px w-full shrink-0" style={{ background: "rgba(30,25,21,0.08)" }} />
+            <div
+              className="my-5 h-px w-full shrink-0"
+              style={{ background: "rgba(30,25,21,0.08)" }}
+            />
 
             {/* Links */}
             <nav className="flex flex-col gap-[6px]">
@@ -217,13 +213,19 @@ function Drawer({
             </nav>
 
             {/* Divider */}
-            <div className="my-5 h-px w-full shrink-0" style={{ background: "rgba(30,25,21,0.08)" }} />
+            <div
+              className="my-5 h-px w-full shrink-0"
+              style={{ background: "rgba(30,25,21,0.08)" }}
+            />
 
             {/* Imagery */}
             <div className="flex shrink-0 flex-col items-center gap-2">
               <div className="flex w-full justify-center gap-2">
                 {[IMG.bodhiTree, IMG.latteArt].map((src) => (
-                  <div key={src} className="overflow-hidden rounded-[8px] flex-1">
+                  <div
+                    key={src}
+                    className="overflow-hidden rounded-[8px] flex-1"
+                  >
                     <img
                       src={src}
                       alt=""
@@ -259,7 +261,11 @@ function Drawer({
             <div className="mt-5 shrink-0 border-t border-black/5 pt-5">
               <div
                 className="text-center"
-                style={{ fontSize: "12.5px", lineHeight: 1.9, color: "rgba(30,25,21,0.65)" }}
+                style={{
+                  fontSize: "12.5px",
+                  lineHeight: 1.9,
+                  color: "rgba(30,25,21,0.65)",
+                }}
               >
                 Leo Hospitality &amp; Ventures LLP
                 <br />
@@ -346,14 +352,7 @@ function Drawer({
 }
 
 /* ---------- Header ---------- */
-export function Nav({
-  page,
-  go,
-}: {
-  page: PageId
-  go: (p: PageId) => void
-  overHero?: boolean
-}) {
+export function Nav({ page, go, overHero }) {
   const [scrolled, setScrolled] = useState(false)
   const [overDark, setOverDark] = useState(false)
   const [open, setOpen] = useState(false)
@@ -364,9 +363,7 @@ export function Nav({
     const onScroll = () => {
       setScrolled(window.scrollY > 40)
       const probe = 36 // header mid-line, in viewport coordinates
-      const zones = Array.from(
-        document.querySelectorAll<HTMLElement>('[data-tone="dark"]'),
-      )
+      const zones = Array.from(document.querySelectorAll('[data-tone="dark"]'))
       setOverDark(
         zones.some((el) => {
           const r = el.getBoundingClientRect()
@@ -405,7 +402,7 @@ export function Nav({
     if (!open) return
     document.body.style.overflow = "hidden"
     document.documentElement.style.overflow = "hidden"
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e) => {
       if (e.key === "Escape") setOpen(false)
     }
     window.addEventListener("keydown", onKey)
@@ -417,8 +414,12 @@ export function Nav({
   }, [open])
 
   const headerText = overDark ? CREAM : "#3e5225"
-  const headerMuted = overDark ? "rgba(248,246,241,0.88)" : "rgba(46,46,46,0.85)"
-  const headerBorder = overDark ? "rgba(248,246,241,0.15)" : "rgba(215,201,177,0.4)"
+  const headerMuted = overDark
+    ? "rgba(248,246,241,0.88)"
+    : "rgba(46,46,46,0.85)"
+  const headerBorder = overDark
+    ? "rgba(248,246,241,0.15)"
+    : "rgba(215,201,177,0.4)"
   const burgerColor = open ? (isDesktop ? BRONZE : CREAM) : headerText
 
   return (
@@ -562,7 +563,9 @@ export function Nav({
                     className="absolute left-0 top-0 block h-[1.5px] w-full rounded-full transition-all duration-[350ms] motion-reduce:transition-none"
                     style={{
                       background: burgerColor,
-                      transform: open ? "translateY(7px) rotate(45deg)" : "none",
+                      transform: open
+                        ? "translateY(7px) rotate(45deg)"
+                        : "none",
                     }}
                   />
                   <span
@@ -573,7 +576,9 @@ export function Nav({
                     className="absolute left-0 top-[14px] block h-[1.5px] w-full rounded-full transition-all duration-[350ms] motion-reduce:transition-none"
                     style={{
                       background: burgerColor,
-                      transform: open ? "translateY(-7px) rotate(-45deg)" : "none",
+                      transform: open
+                        ? "translateY(-7px) rotate(-45deg)"
+                        : "none",
                     }}
                   />
                 </span>

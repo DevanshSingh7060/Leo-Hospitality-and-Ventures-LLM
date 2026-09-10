@@ -13,10 +13,7 @@ import {
   PROJECTS_DATA,
   SERVICES_DATA,
   STATS_DATA,
-  type Venture,
-  type Service,
 } from "../lib/data"
-import type { PageId } from "../lib/pages"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -28,7 +25,7 @@ const ENTRANCE_EASING = "cubic-bezier(0.22, 1, 0.36, 1)" // Premium easeOutExpo
 const ENTRANCE_DURATION = "900ms"
 
 /* ---------- HERO ---------- */
-function Hero({ go }: { go: (p: PageId) => void }) {
+function Hero({ go }) {
   const [loaded, setLoaded] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
 
@@ -37,7 +34,7 @@ function Hero({ go }: { go: (p: PageId) => void }) {
     return () => clearTimeout(t)
   }, [])
 
-  const heroItemStyle = (delay: number) => ({
+  const heroItemStyle = (delay) => ({
     opacity: loaded ? 1 : 0,
     transform: loaded ? "none" : "translateY(16px)",
     transition: reducedMotion
@@ -114,7 +111,9 @@ function Hero({ go }: { go: (p: PageId) => void }) {
 
       {/* Scroll cue */}
       <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-paper/60 lg:flex z-10">
-        <span className="text-[0.62rem] uppercase tracking-[0.28em]">Scroll</span>
+        <span className="text-[0.62rem] uppercase tracking-[0.28em]">
+          Scroll
+        </span>
         <span className="h-10 w-px animate-pulse bg-paper/40" />
       </div>
     </section>
@@ -122,15 +121,7 @@ function Hero({ go }: { go: (p: PageId) => void }) {
 }
 
 /* ---------- STICKY PARALLAX VENTURE PANEL ---------- */
-function VentureSlide({
-  venture,
-  go,
-  index,
-}: {
-  venture: Venture
-  go: (p: PageId) => void
-  index: number
-}) {
+function VentureSlide({ venture, go, index }) {
   const reducedMotion = usePrefersReducedMotion()
   const isEven = index % 2 === 0
 
@@ -143,8 +134,9 @@ function VentureSlide({
     >
       {/* 1. STICKY IMAGE COLUMN (CSS ONLY) */}
       <div
-        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden pointer-events-none ${isEven ? "lg:order-1" : "lg:order-2"
-          }`}
+        className={`relative lg:sticky lg:top-0 h-[60vh] lg:h-screen overflow-hidden pointer-events-none ${
+          isEven ? "lg:order-1" : "lg:order-2"
+        }`}
       >
         {/* Bright, unshaded photograph */}
         <img
@@ -176,8 +168,9 @@ function VentureSlide({
 
       {/* Sibling Content Column - Scrolls Normally */}
       <div
-        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-forest-deep min-h-[60vh] lg:min-h-screen ${isEven ? "lg:order-2" : "lg:order-1"
-          }`}
+        className={`flex flex-col justify-center px-8 py-24 lg:px-20 lg:py-32 bg-forest-deep min-h-[60vh] lg:min-h-screen ${
+          isEven ? "lg:order-2" : "lg:order-1"
+        }`}
       >
         <Reveal>
           <span className="kicker text-bronze">{venture.tag}</span>
@@ -220,10 +213,7 @@ function VentureSlide({
               Discover Venture <Arrow />
             </Button>
             {venture.cta && (
-              <Button
-                variant="light"
-                onClick={() => go(venture.cta as PageId)}
-              >
+              <Button variant="light" onClick={() => go(venture.cta)}>
                 Partner With Us
               </Button>
             )}
@@ -235,11 +225,11 @@ function VentureSlide({
 }
 
 /* ---------- TABBED EXPERIENCE ---------- */
-function TabbedExperience({ go }: { go: (p: PageId) => void }) {
+function TabbedExperience({ go }) {
   const [activeTab, setActiveTab] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const tabRefs = useRef([])
 
   useEffect(() => {
     if (isHovered || reducedMotion) return
@@ -249,7 +239,7 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
     return () => clearInterval(timer)
   }, [isHovered, reducedMotion])
 
-  const handleKeyDown = (e: React.KeyboardEvent, idx: number) => {
+  const handleKeyDown = (e, idx) => {
     let nextIdx = idx
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       nextIdx = (idx + 1) % PROJECTS_DATA.length
@@ -294,7 +284,9 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
               {PROJECTS_DATA.map((proj, idx) => (
                 <button
                   key={proj.name}
-                  ref={(el) => { tabRefs.current[idx] = el }}
+                  ref={(el) => {
+                    tabRefs.current[idx] = el
+                  }}
                   role="tab"
                   aria-selected={activeTab === idx}
                   aria-controls={`panel-${idx}`}
@@ -302,10 +294,11 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                   tabIndex={activeTab === idx ? 0 : -1}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
                   onClick={() => setActiveTab(idx)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 uppercase ${activeTab === idx
-                    ? "bg-forest text-paper shadow-sm"
-                    : "text-ink-soft hover:bg-paper/80 hover:text-forest"
-                    }`}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 uppercase ${
+                    activeTab === idx
+                      ? "bg-forest text-paper shadow-sm"
+                      : "text-ink-soft hover:bg-paper/80 hover:text-forest"
+                  }`}
                 >
                   0{idx + 1} &middot; {proj.name}
                 </button>
@@ -322,8 +315,9 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                     role="tabpanel"
                     id={`panel-${idx}`}
                     aria-labelledby={`tab-${idx}`}
-                    className={`transition-opacity duration-300 ${reducedMotion ? "" : "animate-fadeIn"
-                      }`}
+                    className={`transition-opacity duration-300 ${
+                      reducedMotion ? "" : "animate-fadeIn"
+                    }`}
                   >
                     <span className="kicker text-bronze">{proj.type}</span>
                     <h3
@@ -364,8 +358,9 @@ function TabbedExperience({ go }: { go: (p: PageId) => void }) {
                 src={proj.img}
                 alt={proj.name}
                 style={{ filter: "saturate(1.04) brightness(1.05)" }}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${activeTab === idx ? "opacity-100 z-10" : "opacity-0 z-0"
-                  } ${reducedMotion ? "transition-none duration-0" : ""}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+                  activeTab === idx ? "opacity-100 z-10" : "opacity-0 z-0"
+                } ${reducedMotion ? "transition-none duration-0" : ""}`}
                 loading="lazy"
               />
             ))}
@@ -382,19 +377,14 @@ const SERVICE_IMAGES = [
   { img: IMG.dessertPlatter, alt: "Plated culinary menu presentation" },
   { img: IMG.woodTable, alt: "Interior setup ready for opening night" },
   { img: IMG.containers, alt: "Cloud kitchen delivery dispatch operations" },
-  { img: IMG.chefBoard, alt: "Culinary standards and kitchen preparation board" },
+  {
+    img: IMG.chefBoard,
+    alt: "Culinary standards and kitchen preparation board",
+  },
 ]
 
 /* ---------- LUXURY EDITORIAL SERVICE CARD ---------- */
-function ServiceCard({
-  service,
-  index,
-  go,
-}: {
-  service: Service
-  index: number
-  go: (p: PageId) => void
-}) {
+function ServiceCard({ service, index, go }) {
   const [hovered, setHovered] = useState(false)
   const imageInfo = SERVICE_IMAGES[index] || {
     img: IMG.diningRoom,
@@ -496,7 +486,7 @@ function ServiceCard({
 }
 
 /* ---------- 06. BESPOKE ADVISORY CARD TO COMPLETE THE 3x2 GRID ---------- */
-function AdvisoryCard({ go }: { go: (p: PageId) => void }) {
+function AdvisoryCard({ go }) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -565,16 +555,8 @@ function AdvisoryCard({ go }: { go: (p: PageId) => void }) {
 }
 
 /* ---------- STATS ITEM ---------- */
-function StatItem({
-  value,
-  label,
-  suffix,
-}: {
-  value: number
-  label: string
-  suffix: string
-}) {
-  const ref = useRef<HTMLDivElement>(null)
+function StatItem({ value, label, suffix }) {
+  const ref = useRef(null)
   const [count, setCount] = useState(0)
   const [triggered, setTriggered] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
@@ -595,7 +577,7 @@ function StatItem({
           const duration = 1200 // 1.2s
           const startTime = performance.now()
 
-          const animate = (now: number) => {
+          const animate = (now) => {
             const elapsed = now - startTime
             const progress = Math.min(elapsed / duration, 1)
 
@@ -638,7 +620,7 @@ function StatItem({
   )
 }
 
-export function Home({ go }: { go: (p: PageId) => void }) {
+export function Home({ go }) {
   const reducedMotion = usePrefersReducedMotion()
 
   // Core GSAP ScrollTrigger scroll-scrubbed drift animation (one per section)
@@ -682,20 +664,18 @@ export function Home({ go }: { go: (p: PageId) => void }) {
     })
 
     // 4. Hero background image drift — keyed to its own section.
-    const heroTweens = gsap.utils
-      .toArray<HTMLElement>("[data-parallax-hero-bg]")
-      .map((el) =>
-        gsap.to(el, {
-          yPercent: 12,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el.closest("section") || el,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        }),
-      )
+    const heroTweens = gsap.utils.toArray("[data-parallax-hero-bg]").map((el) =>
+      gsap.to(el, {
+        yPercent: 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el.closest("section") || el,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      }),
+    )
 
     return () => {
       triggerWho.scrollTrigger?.kill()
@@ -848,13 +828,20 @@ export function Home({ go }: { go: (p: PageId) => void }) {
                 style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
               >
                 Five disciplines, <br className="hidden sm:inline" />
-                <span className="italic text-forest">one standard</span> of care.
+                <span className="italic text-forest">one standard</span> of
+                care.
               </h2>
             </Reveal>
 
-            <Reveal delay={120} className="lg:col-span-5 flex flex-col justify-end">
+            <Reveal
+              delay={120}
+              className="lg:col-span-5 flex flex-col justify-end"
+            >
               <p className="text-base sm:text-lg leading-relaxed text-ink-soft">
-                From concept incubation to full turnkey management, our multidisciplinary teams bring institutional rigor, culinary distinction, and investor alignment to every stage of hospitality.
+                From concept incubation to full turnkey management, our
+                multidisciplinary teams bring institutional rigor, culinary
+                distinction, and investor alignment to every stage of
+                hospitality.
               </p>
               <div className="mt-6 flex items-center gap-6">
                 <button
@@ -888,42 +875,81 @@ export function Home({ go }: { go: (p: PageId) => void }) {
               <div className="grid gap-6 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line/60">
                 <div className="flex items-start gap-4 pt-4 md:pt-0">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-forest">
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-ink">Turnkey Delivery Framework</h4>
+                    <h4 className="text-sm font-semibold text-ink">
+                      Turnkey Delivery Framework
+                    </h4>
                     <p className="mt-1 text-xs leading-relaxed text-ink-soft">
-                      Rapid 90–120 day pre-opening schedule with dedicated site engineering and vendor management.
+                      Rapid 90–120 day pre-opening schedule with dedicated site
+                      engineering and vendor management.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4 pt-4 md:pt-0 md:pl-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-bronze/10 text-bronze">
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-ink">Centralized Cost &amp; Menu SOPs</h4>
+                    <h4 className="text-sm font-semibold text-ink">
+                      Centralized Cost &amp; Menu SOPs
+                    </h4>
                     <p className="mt-1 text-xs leading-relaxed text-ink-soft">
-                      Recipe-level COGS control, institutional supplier contracts, and real-time food waste analytics.
+                      Recipe-level COGS control, institutional supplier
+                      contracts, and real-time food waste analytics.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4 pt-4 md:pt-0 md:pl-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-forest">
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-ink">Principal-Led Governance</h4>
+                    <h4 className="text-sm font-semibold text-ink">
+                      Principal-Led Governance
+                    </h4>
                     <p className="mt-1 text-xs leading-relaxed text-ink-soft">
-                      Every project receives direct executive partner oversight and weekly unit-level financial audits.
+                      Every project receives direct executive partner oversight
+                      and weekly unit-level financial audits.
                     </p>
                   </div>
                 </div>
@@ -958,7 +984,7 @@ export function Home({ go }: { go: (p: PageId) => void }) {
   )
 }
 
-export function CTA({ go }: { go: (p: PageId) => void }) {
+export function CTA({ go }) {
   return (
     <section
       data-tone="dark"

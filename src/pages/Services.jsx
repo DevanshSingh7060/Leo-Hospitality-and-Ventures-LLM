@@ -3,7 +3,6 @@ import { Kicker, Reveal, IMG } from "../lib/ui"
 import { PageHero, Section } from "../components/PageHero"
 import { CTA } from "./Home"
 import { SERVICES_DATA } from "../lib/data"
-import type { PageId } from "../lib/pages"
 
 // Page-appropriate imagery, index-matched to SERVICES_DATA
 const SERVICE_IMAGES = [
@@ -14,8 +13,8 @@ const SERVICE_IMAGES = [
   IMG.bodhiTree,
 ]
 
-export function Services({ go }: { go: (p: PageId) => void }) {
-  const [open, setOpen] = useState<number>(0)
+export function Services({ go }) {
+  const [open, setOpen] = useState(0)
 
   return (
     <>
@@ -72,7 +71,9 @@ export function Services({ go }: { go: (p: PageId) => void }) {
                     {/* Index numeral */}
                     <span
                       className={`text-3xl leading-none transition-colors duration-300 ${
-                        isOpen ? "text-bronze" : "text-line group-hover:text-bronze/70"
+                        isOpen
+                          ? "text-bronze"
+                          : "text-line group-hover:text-bronze/70"
                       }`}
                       style={{ fontFamily: "var(--font-display)" }}
                     >
@@ -161,7 +162,9 @@ export function Services({ go }: { go: (p: PageId) => void }) {
                             src={SERVICE_IMAGES[i]}
                             alt={s.t}
                             loading="lazy"
-                            style={{ filter: "saturate(1.04) brightness(1.05)" }}
+                            style={{
+                              filter: "saturate(1.04) brightness(1.05)",
+                            }}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.03] motion-reduce:hover:scale-100"
                           />
                         </div>
