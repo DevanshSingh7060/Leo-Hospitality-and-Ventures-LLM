@@ -39,7 +39,8 @@ const PAGE_TITLES = {
   services: "Services & Capabilities — Leo Hospitality & Ventures LLP",
   experience: "Past Projects & Experience — Leo Hospitality & Ventures LLP",
   gallery: "Gallery — Leo Hospitality & Ventures LLP",
-  franchise: "Franchise & Business Opportunities — Leo Hospitality & Ventures LLP",
+  franchise:
+    "Franchise & Business Opportunities — Leo Hospitality & Ventures LLP",
   careers: "Careers — Leo Hospitality & Ventures LLP",
   vendor: "Vendor Registration & KYC Portal — Leo Hospitality & Ventures LLP",
   contact: "Contact Executive Desk — Leo Hospitality & Ventures LLP",

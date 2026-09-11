@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react"
+
 import {
   Button,
   Arrow,
@@ -8,35 +9,46 @@ import {
   SpotlightCard,
   usePrefersReducedMotion,
 } from "../lib/ui"
+
 import {
   VENTURES_DATA,
   PROJECTS_DATA,
   SERVICES_DATA,
   STATS_DATA,
 } from "../lib/data"
+
 import { gsap } from "gsap"
+
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 // Register ScrollTrigger globally
+
 gsap.registerPlugin(ScrollTrigger)
 
 // Standardized entrance animation tokens
+
 const ENTRANCE_EASING = "cubic-bezier(0.22, 1, 0.36, 1)" // Premium easeOutExpo
+
 const ENTRANCE_DURATION = "900ms"
 
 /* ---------- HERO ---------- */
+
 function Hero({ go }) {
   const [loaded, setLoaded] = useState(false)
+
   const reducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 50)
+
     return () => clearTimeout(t)
   }, [])
 
   const heroItemStyle = (delay) => ({
     opacity: loaded ? 1 : 0,
+
     transform: loaded ? "none" : "translateY(16px)",
+
     transition: reducedMotion
       ? "none"
       : `opacity ${ENTRANCE_DURATION} ${ENTRANCE_EASING} ${delay}ms, transform ${ENTRANCE_DURATION} ${ENTRANCE_EASING} ${delay}ms`,
@@ -75,8 +87,11 @@ function Hero({ go }) {
             className="mt-6 text-[2.85rem] leading-[1.08] tracking-[-0.015em] text-paper sm:text-6xl lg:text-[4.35rem]"
             style={{
               ...heroItemStyle(150),
+
               fontFamily: "var(--font-display)",
+
               fontWeight: 400,
+
               textShadow: "0 2px 34px rgba(0,0,0,0.55)",
             }}
           >
@@ -90,6 +105,7 @@ function Hero({ go }) {
             className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-paper/85"
             style={{
               ...heroItemStyle(280),
+
               textShadow: "0 1px 16px rgba(0,0,0,0.5)",
             }}
           >
@@ -121,75 +137,121 @@ function Hero({ go }) {
 }
 
 /* ---------- STICKY PARALLAX VENTURE PANEL ---------- */
+
 /* ---------- STICKY BIDIRECTIONAL VENTURE PANEL ---------- */
+
 function VentureSlide({ venture, go, index }) {
   const reducedMotion = usePrefersReducedMotion()
+
   const isBodhi = venture.id === "bodhi-tree" || index === 0
 
   const trackRef = useRef(null)
+
   const textRef = useRef(null)
+
   const imageRef = useRef(null)
 
   useEffect(() => {
     if (!trackRef.current || !textRef.current || !imageRef.current) return
 
     // Bidirectional "curtain" directions (in percent of each panel's width):
+
     //   Bodhi Tree  -> text enters from the LEFT (-100), image from the RIGHT (+100)
+
     //   Ryvive Roots-> text enters from the RIGHT (+100), image from the LEFT (-100)
+
     // Each panel exits back toward the side it came from.
+
     const textFromX = isBodhi ? -100 : 100
+
     const imageFromX = isBodhi ? 100 : -100
+
     const OPACITY_FLOOR = 0.15
 
     // Only run the scroll-driven sticky curtain on desktop. On phones/tablets
+
     // the layout is a normal stacked section, so a tall pinned track + sliding
+
     // panels would hijack native touch scrolling. gsap.matchMedia() sets up the
+
     // animation for the desktop breakpoint only and automatically reverts all
+
     // inline styles when leaving it (e.g. on resize), so mobile scrolls freely.
+
     const mm = gsap.matchMedia()
 
     mm.add(
       "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+
       () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: trackRef.current,
+
             start: "top bottom",
+
             end: "bottom top",
+
             scrub: 0.6,
+
             invalidateOnRefresh: true,
           },
         })
 
         // Phase 1 — slide IN from opposite sides as the panel enters (0 -> 0.35).
+
         tl.fromTo(
           textRef.current,
+
           { xPercent: textFromX, opacity: OPACITY_FLOOR },
+
           { xPercent: 0, opacity: 1, ease: "power2.out", duration: 0.35 },
-          0
+
+          0,
         )
+
         tl.fromTo(
           imageRef.current,
+
           { xPercent: imageFromX, opacity: OPACITY_FLOOR },
+
           { xPercent: 0, opacity: 1, ease: "power2.out", duration: 0.35 },
-          0
+
+          0,
         )
 
         // Phase 2 — hold both panels settled while the panel is pinned (0.35 -> 0.65).
+
         tl.to({}, { duration: 0.3 }, 0.35)
 
         // Phase 3 — slide OUT back toward their entry sides as the panel leaves (0.65 -> 1).
+
         tl.to(
           textRef.current,
-          { xPercent: textFromX, opacity: OPACITY_FLOOR, ease: "power2.in", duration: 0.35 },
-          0.65
+
+          {
+            xPercent: textFromX,
+            opacity: OPACITY_FLOOR,
+            ease: "power2.in",
+            duration: 0.35,
+          },
+
+          0.65,
         )
+
         tl.to(
           imageRef.current,
-          { xPercent: imageFromX, opacity: OPACITY_FLOOR, ease: "power2.in", duration: 0.35 },
-          0.65
+
+          {
+            xPercent: imageFromX,
+            opacity: OPACITY_FLOOR,
+            ease: "power2.in",
+            duration: 0.35,
+          },
+
+          0.65,
         )
-      }
+      },
     )
 
     return () => mm.revert()
@@ -245,7 +307,9 @@ function VentureSlide({ venture, go, index }) {
           ref={textRef}
           style={{ willChange: "transform, opacity" }}
           className={`flex flex-col justify-center px-6 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-20 xl:px-24 bg-gradient-to-br from-[#455c29] via-[#3e5225] to-[#30411d] border-t lg:border-t-0 ${
-            isBodhi ? "lg:order-1 lg:border-r border-[#8a9a6b]/25" : "lg:order-2 lg:border-l border-[#8a9a6b]/25"
+            isBodhi
+              ? "lg:order-1 lg:border-r border-[#8a9a6b]/25"
+              : "lg:order-2 lg:border-l border-[#8a9a6b]/25"
           } order-2 w-full flex-1 lg:h-full lg:w-1/2 lg:overflow-visible shadow-2xl`}
         >
           <div>
@@ -312,22 +376,29 @@ function VentureSlide({ venture, go, index }) {
 }
 
 /* ---------- TABBED EXPERIENCE ---------- */
+
 function TabbedExperience({ go }) {
   const [activeTab, setActiveTab] = useState(0)
+
   const [isHovered, setIsHovered] = useState(false)
+
   const reducedMotion = usePrefersReducedMotion()
+
   const tabRefs = useRef([])
 
   useEffect(() => {
     if (isHovered || reducedMotion) return
+
     const timer = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % PROJECTS_DATA.length)
     }, 2000)
+
     return () => clearInterval(timer)
   }, [isHovered, reducedMotion])
 
   const handleKeyDown = (e, idx) => {
     let nextIdx = idx
+
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       nextIdx = (idx + 1) % PROJECTS_DATA.length
     } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
@@ -335,8 +406,11 @@ function TabbedExperience({ go }) {
     } else {
       return
     }
+
     e.preventDefault()
+
     setActiveTab(nextIdx)
+
     tabRefs.current[nextIdx]?.focus()
   }
 
@@ -396,6 +470,7 @@ function TabbedExperience({ go }) {
             <div className="min-h-[180px] flex flex-col justify-between">
               {PROJECTS_DATA.map((proj, idx) => {
                 if (activeTab !== idx) return null
+
                 return (
                   <div
                     key={proj.name}
@@ -459,22 +534,31 @@ function TabbedExperience({ go }) {
 }
 
 /* Image pairing for each service */
+
 const SERVICE_IMAGES = [
   { img: IMG.diningRoom, alt: "Restaurant and café dining space" },
+
   { img: IMG.dessertPlatter, alt: "Plated culinary menu presentation" },
+
   { img: IMG.woodTable, alt: "Interior setup ready for opening night" },
+
   { img: IMG.containers, alt: "Cloud kitchen delivery dispatch operations" },
+
   {
     img: IMG.chefBoard,
+
     alt: "Culinary standards and kitchen preparation board",
   },
 ]
 
 /* ---------- LUXURY EDITORIAL SERVICE CARD ---------- */
+
 function ServiceCard({ service, index, go }) {
   const [hovered, setHovered] = useState(false)
+
   const imageInfo = SERVICE_IMAGES[index] || {
     img: IMG.diningRoom,
+
     alt: service.t,
   }
 
@@ -573,6 +657,7 @@ function ServiceCard({ service, index, go }) {
 }
 
 /* ---------- 06. BESPOKE ADVISORY CARD TO COMPLETE THE 3x2 GRID ---------- */
+
 function AdvisoryCard({ go }) {
   const [hovered, setHovered] = useState(false)
 
@@ -618,7 +703,9 @@ function AdvisoryCard({ go }) {
         <div className="mt-6 flex flex-wrap gap-2">
           {[
             "Distressed Turnarounds",
+
             "Institutional F&B",
+
             "Private Equity Review",
           ].map((tag) => (
             <span
@@ -642,33 +729,45 @@ function AdvisoryCard({ go }) {
 }
 
 /* ---------- STATS ITEM ---------- */
+
 function StatItem({ value, label, suffix }) {
   const ref = useRef(null)
+
   const [count, setCount] = useState(0)
+
   const [triggered, setTriggered] = useState(false)
+
   const reducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     const el = ref.current
+
     if (!el) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !triggered) {
           setTriggered(true)
+
           if (reducedMotion) {
             setCount(value)
+
             return
           }
+
           let start = 0
+
           const duration = 1200 // 1.2s
+
           const startTime = performance.now()
 
           const animate = (now) => {
             const elapsed = now - startTime
+
             const progress = Math.min(elapsed / duration, 1)
 
             const easeOut = 1 - Math.pow(1 - progress, 3)
+
             setCount(Math.floor(easeOut * value))
 
             if (progress < 1) {
@@ -681,10 +780,12 @@ function StatItem({ value, label, suffix }) {
           animate(performance.now())
         }
       },
+
       { threshold: 0.1 },
     )
 
     observer.observe(el)
+
     return () => observer.disconnect()
   }, [value, triggered, reducedMotion])
 
@@ -711,30 +812,43 @@ export function Home({ go }) {
   const reducedMotion = usePrefersReducedMotion()
 
   // Core GSAP ScrollTrigger scroll-scrubbed drift animation (one per section)
+
   useEffect(() => {
     if (reducedMotion) return
 
     // 1. Who We Are Parallax Image
+
     const triggerWho = gsap.to(".who-we-are-img", {
       yPercent: -15,
+
       ease: "none",
+
       scrollTrigger: {
         trigger: ".who-we-are-section",
+
         start: "top bottom",
+
         end: "bottom top",
+
         scrub: true,
       },
     })
 
     // 2. Hero background image drift — keyed to its own section.
+
     const heroTweens = gsap.utils.toArray("[data-parallax-hero-bg]").map((el) =>
       gsap.to(el, {
         yPercent: 12,
+
         ease: "none",
+
         scrollTrigger: {
           trigger: el.closest("section") || el,
+
           start: "top top",
+
           end: "bottom top",
+
           scrub: true,
         },
       }),
@@ -742,9 +856,12 @@ export function Home({ go }) {
 
     return () => {
       triggerWho.scrollTrigger?.kill()
+
       triggerWho.kill()
+
       heroTweens.forEach((t) => {
         t.scrollTrigger?.kill()
+
         t.kill()
       })
     }

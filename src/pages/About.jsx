@@ -1,52 +1,83 @@
 import { useState } from "react"
+
 import { Reveal, Button, Arrow, IMG, SpotlightCard } from "../lib/ui"
 
 /* ---------- MILESTONES DATA ---------- */
+
 const TIMELINE = [
   {
     y: "2015",
+
     phase: "The Genesis",
+
     t: "High-Footfall Operations",
+
     d: "Cut our teeth operating fast-paced cafés, bistros, and lounge venues in Mumbai's most competitive dining corridors, mastering front-of-house warmth and kitchen pressure.",
+
     badge: "Operational Foundation",
   },
+
   {
     y: "2018",
+
     phase: "Scalable Systems",
+
     t: "Multi-Outlet Governance",
+
     d: "Expanded operational scope across multiple properties. Engineered centralized supplier contracts, recipe-level COGS formulas, and unit P&L discipline.",
+
     badge: "P&L Frameworks",
   },
+
   {
     y: "2021",
+
     phase: "Delivery Excellence",
+
     t: "Cloud Kitchen Infrastructure",
+
     d: "Pioneered specialized delivery-first culinary hubs with optimized prep timelines, temperature-controlled dispatch, and real-time food waste analytics.",
+
     badge: "Delivery Architecture",
   },
+
   {
     y: "2023",
+
     phase: "Proprietary Brands",
+
     t: "Concept Incubation & Launch",
+
     d: "Conceptualized, engineered, and launched flagship proprietary ventures including Café Bodhi Tree and lifestyle concept Ryvive Roots.",
+
     badge: "Brand Incubation",
   },
+
   {
     y: "2025",
+
     phase: "Institutional Scale",
+
     t: "The Management Partnership",
+
     d: "Formalized as Leo Hospitality & Ventures LLP — structuring institutional management contracts, joint ventures, and turnkey operational advisory.",
+
     badge: "Venture Advisory",
   },
 ]
 
 /* ---------- CORE VALUES ---------- */
+
 const VALUES = [
   {
     num: "01",
+
     t: "Owner-Aligned Stewardship",
+
     d: "We manage every rupee, procurement invoice, and customer touchpoint with the exact rigor of an equity partner.",
+
     sub: "Fiduciary Discipline",
+
     icon: (
       <path
         strokeLinecap="round"
@@ -55,11 +86,16 @@ const VALUES = [
       />
     ),
   },
+
   {
     num: "02",
+
     t: "Obsessive Craft in the Details",
+
     d: "Hospitality standards live in nuances — acoustic balance, warm lighting temperatures, plating symmetry, and glassware hygiene.",
+
     sub: "Sensory Architecture",
+
     icon: (
       <path
         strokeLinecap="round"
@@ -68,11 +104,16 @@ const VALUES = [
       />
     ),
   },
+
   {
     num: "03",
+
     t: "Pressure-Tested Systems",
+
     d: "Repeatable operational playbooks and kitchen workflows engineered to hold firm during peak Saturday evening rushes without compromise.",
+
     sub: "Zero Operational Drift",
+
     icon: (
       <path
         strokeLinecap="round"
@@ -81,11 +122,16 @@ const VALUES = [
       />
     ),
   },
+
   {
     num: "04",
+
     t: "Warmth as the Core Product",
+
     d: "Rigorous processes create consistency, but heartfelt empathy creates lasting patron loyalty. Professionalism with genuine human connection.",
+
     sub: "Guest Devotion Engine",
+
     icon: (
       <path
         strokeLinecap="round"
@@ -97,13 +143,19 @@ const VALUES = [
 ]
 
 /* ---------- STATS / HIGHLIGHTS ---------- */
+
 const STATS = [
   { val: "10+", label: "Years in Mumbai F&B", sub: "Operational track record" },
+
   { val: "5", label: "Core Disciplines", sub: "End-to-end execution" },
+
   { val: "90–120", label: "Days Pre-Opening", sub: "Rapid turnkey deployment" },
+
   {
     val: "100%",
+
     label: "Open-Book P&L",
+
     sub: "Complete fiduciary transparency",
   },
 ]
@@ -158,7 +210,9 @@ export function About({ go }) {
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
                   "Mumbai Operational Core",
+
                   "Turnkey Development",
+
                   "Joint Venture Structures",
                 ].map((chip) => (
                   <span

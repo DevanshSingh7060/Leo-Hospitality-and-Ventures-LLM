@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Arrow } from "../lib/ui"
 import { NAV_ITEMS } from "./Nav"
+import logoDark from "../assets/LEO Logo-dark.svg"
 
 export function Footer({ go }) {
   const [email, setEmail] = useState("")
@@ -11,15 +12,17 @@ export function Footer({ go }) {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="grid gap-12 border-b border-white/10 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:py-20">
           <div>
-            <span
-              className="flex items-baseline gap-2"
-              style={{ fontFamily: "var(--font-display)" }}
+            <button
+              onClick={() => go("home")}
+              className="flex items-center transition-opacity duration-300 hover:opacity-90 cursor-pointer focus:outline-none"
+              aria-label="Leo Hospitality & Ventures — Back to home"
             >
-              <span className="text-3xl font-semibold tracking-tight">Leo</span>
-              <span className="text-xl font-medium tracking-tight text-paper/80">
-                Hospitality
-              </span>
-            </span>
+              <img
+                src={logoDark}
+                alt="Leo Hospitality & Ventures"
+                className="h-10 w-auto object-contain sm:h-11"
+              />
+            </button>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-paper/65">
               Creating experiences. Building hospitality brands. A management
               partner for restaurants, cafés, clubhouse cafeterias and cloud
